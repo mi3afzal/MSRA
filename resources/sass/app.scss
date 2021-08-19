@@ -10,8 +10,13 @@
 // AdminLte
 @import '../css/adminlte.min.css';
 
-// Blog.css For Home Page
-@import '../css/blog.css';
+@import '../css/main.css';
+
+@import '../css/bootstrap.min.css';
+
+// @import '../css/owl.carousel.min.css';
+
+@import '../css/owl.theme.default.min.css';
 
 $fa-font-path: "../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";

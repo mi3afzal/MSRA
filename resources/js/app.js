@@ -4,8 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+require('./jquery.min');
 require('./bootstrap');
+require('./bootstrap.bundle.min');
 require('./adminlte.min');
+require('./all');
+require('./australiamap');
+require('./mapdata');
+require('./owl.carousel.min');
 
 window.Vue = require('vue').default;
 
