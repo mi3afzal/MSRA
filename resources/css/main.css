@@ -853,7 +853,7 @@
   border-bottom: 2px solid #06396c;
 }
 
-.latestjob .sidebar {
+.latestjob .sidebar-job {
   background: #fff;
   border-radius: 5px;
   -webkit-box-shadow: 0px 5px 25.65px 1.35px rgba(10, 74, 125, 0.11);
@@ -862,38 +862,38 @@
   min-height: 600px;
 }
 
-.latestjob .sidebar h4 {
+.latestjob .sidebar-job h4 {
   margin: 0;
   font-size: 18px;
   margin-bottom: 15px;
   font-weight: 700;
 }
 
-.latestjob .sidebar h2 {
+.latestjob .sidebar-job h2 {
   margin-bottom: 0;
 }
 
-.latestjob .sidebar .accordion-body {
+.latestjob .sidebar-job .accordion-body {
   padding: 10px 15px;
   border-top: 1px solid #ddd;
 }
 
-.latestjob .sidebar ul.innnerlist {
+.latestjob .sidebar-job ul.innnerlist {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.latestjob .sidebar ul.innnerlist li {
+.latestjob .sidebar-job ul.innnerlist li {
   margin: 10px 0px;
 }
 
-.latestjob .sidebar ul.innnerlist li a {
+.latestjob .sidebar-job ul.innnerlist li a {
   text-decoration: none;
   color: #222221;
 }
 
-.latestjob .sidebar .accordion-button {
+.latestjob .sidebar-job .accordion-button {
   padding: 10px 12px;
   background: transparent;
   outline: none;
@@ -903,11 +903,11 @@
   font-weight: 500;
 }
 
-.latestjob .sidebar .accordion-item {
+.latestjob .sidebar-job .accordion-item {
   margin-bottom: 7px;
 }
 
-.latestjob .sidebar .accordion-button:not(.collapsed)::after {
+.latestjob .sidebar-job .accordion-button:not(.collapsed)::after {
   content: '-';
   font-size: 49px;
   font-weight: 500;
@@ -923,7 +923,7 @@
   border-radius: 2px;
 }
 
-.latestjob .sidebar .accordion-button::after {
+.latestjob .sidebar-job .accordion-button::after {
   content: '+';
   font-size: 30px;
   font-weight: 500;
@@ -1125,7 +1125,7 @@
   .latestjob {
     padding: 70px 0;
   }
-  .latestjob .sidebar {
+  .latestjob .sidebar-job {
     min-height: auto;
     margin-bottom: 25px;
   }

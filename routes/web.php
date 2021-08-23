@@ -129,6 +129,46 @@ Route::prefix('admin')->group(function () {
         [App\Http\Controllers\Admin\JobTypeController::class, 'destroy']
     )->name('jobtype.delete');
 
+
+    // States Module
+    Route::get('/state', [App\Http\Controllers\Admin\StateController::class, 'create'])->name('admin.state.create');
+    Route::post('/state-store', [App\Http\Controllers\Admin\StateController::class, 'store'])->name('admin.state.store');
+    Route::get('/state/list', [App\Http\Controllers\Admin\StateController::class, 'lists'])->name('admin.state.list');
+
+    Route::get('/state/enable/{id}', [App\Http\Controllers\Admin\StateController::class, 'enable'])->name('admin.state.enable');
+    Route::get('/state/disable/{id}', [App\Http\Controllers\Admin\StateController::class, 'disable'])->name('admin.state.disable');
+
+    Route::get(
+        '/state/datatable',
+        [App\Http\Controllers\Admin\StateController::class, 'datatable']
+    )->name('state.datatables');
+
+    Route::get(
+        '/state/delete/{id}',
+        [App\Http\Controllers\Admin\StateController::class, 'destroy']
+    )->name('state.delete');
+
+
+    // Cities Module
+    Route::get('/city', [App\Http\Controllers\Admin\CityController::class, 'create'])->name('admin.city.create');
+    Route::post('/city-store', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('admin.city.store');
+    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'lists'])->name('admin.city.list');
+
+    Route::get('/city/enable/{id}', [App\Http\Controllers\Admin\CityController::class, 'enable'])->name('admin.city.enable');
+    Route::get('/city/disable/{id}', [App\Http\Controllers\Admin\CityController::class, 'disable'])->name('admin.city.disable');
+
+    Route::get(
+        '/city/datatable',
+        [App\Http\Controllers\Admin\CityController::class, 'datatable']
+    )->name('city.datatables');
+
+    Route::get(
+        '/city/delete/{id}',
+        [App\Http\Controllers\Admin\CityController::class, 'destroy']
+    )->name('city.delete');
+
+
+
     // Ajax Route
     Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities');
     Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs');

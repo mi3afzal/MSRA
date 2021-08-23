@@ -11,7 +11,7 @@
                 <div class="topbar">
                     <div class="row justify-content-between align-items-center">
                         <div class="col-md-3">
-                            <a class="navbar-brand" href="javascript:void(0);"><img src="images/logo.png" alt=""></a>
+                            <a class="navbar-brand" href="{{ route('home') }}"><img src="images/logo.png" alt="logo"></a>
                         </div>
                         <div class="col-md-9 text-right">
                             <ul class="list-unstyled">

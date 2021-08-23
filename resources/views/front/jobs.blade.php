@@ -24,7 +24,7 @@
         </div>
         <div class="row">
             <div class="col-xl-3 col-lg-4">
-                <div class="sidebar">
+                <div class="sidebar-job">
                     <h4>Filter</h4>
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
