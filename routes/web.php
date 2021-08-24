@@ -111,6 +111,27 @@ Route::prefix('admin')->group(function () {
     // Admin route for dashboard
     Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
 
+
+    // Profession Module
+    Route::get('/profession', [App\Http\Controllers\Admin\ProfessionController::class, 'create'])->name('admin.profession.create');
+    Route::post('/profession-store', [App\Http\Controllers\Admin\ProfessionController::class, 'store'])->name('admin.profession.store');
+    Route::get('/profession/list', [App\Http\Controllers\Admin\ProfessionController::class, 'lists'])->name('admin.profession.list');
+
+    Route::get('/profession/enable/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'enable'])->name('admin.profession.enable');
+    Route::get('/profession/disable/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'disable'])->name('admin.profession.disable');
+
+    Route::get(
+        '/profession/datatable',
+        [App\Http\Controllers\Admin\ProfessionController::class, 'datatable']
+    )->name('profession.datatables');
+
+    Route::get(
+        '/profession/delete/{id}',
+        [App\Http\Controllers\Admin\ProfessionController::class, 'destroy']
+    )->name('profession.delete');
+
+
+
     // Job Type Module
     Route::get('/jobtype', [App\Http\Controllers\Admin\JobTypeController::class, 'create'])->name('admin.jobtype.create');
     Route::post('/jobtype-store', [App\Http\Controllers\Admin\JobTypeController::class, 'store'])->name('admin.jobtype.store');

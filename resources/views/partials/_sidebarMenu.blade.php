@@ -59,6 +59,37 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.profession.create')) || url()->current() == route('admin.profession.list')) {
+                                            echo 'active';
+                                        } ?>">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                    Profession
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.profession.create') }}" class="nav-link <?php if (url()->current() == route('admin.profession.create')) {
+                                                                                            echo 'active';
+                                                                                        } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add profession</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.profession.list') }}" class="nav-link <?php if (url()->current() == route('admin.profession.list')) {
+                                                                                        echo 'active';
+                                                                                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View professions</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         <?php /* ?>
         <li class="nav-item">
             <a href="#" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
