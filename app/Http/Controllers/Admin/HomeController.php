@@ -36,7 +36,6 @@ class HomeController extends Controller
         $jobtypes = JobType::where(["status" => "1"])->count();
         $title = "dashboard";
         $module = "dashboard";
-
         return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module"));
     }
 }
