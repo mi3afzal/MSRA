@@ -5,7 +5,7 @@
             <a class="nav-link" data-widget="pushmenu" href="javascript:void(0);" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link">Home</a>
+            <a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a>
         </li>
         <!-- 
                     <li class="nav-item d-none d-sm-inline-block">
