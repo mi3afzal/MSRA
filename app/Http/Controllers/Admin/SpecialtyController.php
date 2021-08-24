@@ -32,7 +32,7 @@ class SpecialtyController extends Controller
         $title = "specialty lists";
         $module = "specialty";
         $data = Specialty::where("status", "1")->orderBy('created_at', 'desc')->get();
-        return view('admin.profession.index', compact('data', 'title', 'module'));
+        return view('admin.specialty.index', compact('data', 'title', 'module'));
     }
 
 
@@ -67,23 +67,23 @@ class SpecialtyController extends Controller
     {
         // return Datatables::of(Specialty::query())->make(true);
 
-        $specialtydata = Specialty::select('specialty.id', 'specialty.profession', 'specialty.status', 'specialty.created_at', 'specialty.updated_at');
+        $specialtydata = Specialty::select('specialties.id', 'specialties.specialty', 'specialties.status', 'specialties.created_at', 'specialties.updated_at');
         return Datatables::of($specialtydata)
             ->filter(function ($query) use ($request) {
                 if ($request->has('status') && $request->get('status') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('professions.status', 'like', "%{$request->get('status')}%");
+                        $q->where('specialties.status', 'like', "%{$request->get('status')}%");
                     });
                 }
 
-                if ($request->has('profession') && $request->get('profession') != '') {
+                if ($request->has('specialty') && $request->get('specialty') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('professions.profession', 'like', "%{$request->get('profession')}%");
+                        $q->where('specialties.specialty', 'like', "%{$request->get('specialty')}%");
                     });
                 }
             })
-            ->addColumn('profession', function ($specialtydata) {
-                return $profession = ucwords($specialtydata->profession);
+            ->addColumn('specialty', function ($specialtydata) {
+                return $specialty = ucwords($specialtydata->specialty);
             })
             ->addColumn('created_at', function ($specialtydata) {
                 return $status = date("F j, Y, g:i a", strtotime($specialtydata->created_at));
@@ -95,23 +95,23 @@ class SpecialtyController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('profession.delete', $specialtydata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the profession?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('specialty.delete', $specialtydata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the specialty?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
                 $activelink = '
                         <div class="btn-group">
-                            <a href="' . route('admin.profession.enable', $specialtydata->id) . '" class="btn btn-sm btn-warning" title="Enable"><i class="fas fa-lock"></i></a>
+                            <a href="' . route('admin.specialty.enable', $specialtydata->id) . '" class="btn btn-sm btn-warning" title="Enable"><i class="fas fa-lock"></i></a>
                         </div>
                     ';
                 $inactivelink = '
                         <div class="btn-group">
-                            <a href="' . route('admin.profession.disable', $specialtydata->id) . '" class="btn btn-sm btn-success" title="Disable"><i class="fas fa-lock-open"></i></a>
+                            <a href="' . route('admin.specialty.disable', $specialtydata->id) . '" class="btn btn-sm btn-success" title="Disable"><i class="fas fa-lock-open"></i></a>
                         </div>
                     ';
 
                 $final = ($specialtydata->status == 1) ? $link . $inactivelink : $link . $activelink;
-                // $link = '<a href="' . route('profession.delete', $specialtydata->id) . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</a> ';
+                // $link = '<a href="' . route('specialty.delete', $specialtydata->id) . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</a> ';
                 return $final;
             })
             ->make(true);
@@ -139,7 +139,7 @@ class SpecialtyController extends Controller
         $specialty->user_id = Auth::user()->id;
         $specialty->save();
 
-        $str = "SPEC";
+        $str = "SPETY";
         $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $specialty->id;
 
         $specialty->unique_code = $uid;
@@ -153,10 +153,10 @@ class SpecialtyController extends Controller
      * Enable the specified specialty in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Specialty  $profession
+     * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
-    public function enable(Request $request, Specialty $profession, $id)
+    public function enable(Request $request, Specialty $specialty, $id)
     {
         $specialty = Specialty::findOrFail($id);
         $specialty->status = "1";

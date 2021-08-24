@@ -15,6 +15,16 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('admin.state.list') }}" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-map-marked-alt"></i>
+                <p>
+                    States
+                </p>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a href="#" class="nav-link <?php if ((url()->current() == route('admin.jobtype.create')) || url()->current() == route('admin.jobtype.list')) {
@@ -49,17 +59,6 @@
 
 
         <li class="nav-item">
-            <a href="{{ route('admin.state.list') }}" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
-                                                                            echo 'active';
-                                                                        } ?>">
-                <i class="nav-icon fas fa-map-marked-alt"></i>
-                <p>
-                    States
-                </p>
-            </a>
-        </li>
-
-        <li class="nav-item">
             <a href="#" class="nav-link <?php if ((url()->current() == route('admin.profession.create')) || url()->current() == route('admin.profession.list')) {
                                             echo 'active';
                                         } ?>">
@@ -85,6 +84,38 @@
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
                         <p>View professions</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li class="nav-item">
+            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
+                                            echo 'active';
+                                        } ?>">
+                <i class="nav-icon fas fa-briefcase-medical"></i>
+                <p>
+                    Specialty
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.specialty.create') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.create')) {
+                                                                                        echo 'active';
+                                                                                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add specialty</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.specialty.list') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.list')) {
+                                                                                        echo 'active';
+                                                                                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View specialties</p>
                     </a>
                 </li>
             </ul>

@@ -69,4 +69,48 @@
         </div>
     </div>
     <!-- ./col -->
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-secondary">
+            <div class="inner">
+                <h3><?php echo $specialty; ?></h3>
+                <p>Active Specialties</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-briefcase-medical"></i>
+            </div>
+            <a href="{{ route('admin.specialty.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+    <?php /* ?>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-light">
+            <div class="inner">
+                <h3><?php echo $specialty; ?></h3>
+                <p>Active Specialties</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-briefcase-medical"></i>
+            </div>
+            <a href="{{ route('admin.profession.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-dark">
+            <div class="inner">
+                <h3><?php echo $specialty; ?></h3>
+                <p>Active Specialties</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-briefcase-medical"></i>
+            </div>
+            <a href="{{ route('admin.profession.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <?php */ ?>
 </div>

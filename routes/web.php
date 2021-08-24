@@ -132,6 +132,26 @@ Route::prefix('admin')->group(function () {
 
 
 
+    // Speciality  Module
+    Route::get('/specialty', [App\Http\Controllers\Admin\SpecialtyController::class, 'create'])->name('admin.specialty.create');
+    Route::post('/specialty-store', [App\Http\Controllers\Admin\SpecialtyController::class, 'store'])->name('admin.specialty.store');
+    Route::get('/specialty/list', [App\Http\Controllers\Admin\SpecialtyController::class, 'lists'])->name('admin.specialty.list');
+
+    Route::get('/specialty/enable/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'enable'])->name('admin.specialty.enable');
+    Route::get('/specialty/disable/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'disable'])->name('admin.specialty.disable');
+
+    Route::get(
+        '/specialty/datatable',
+        [App\Http\Controllers\Admin\SpecialtyController::class, 'datatable']
+    )->name('specialty.datatables');
+
+    Route::get(
+        '/specialty/delete/{id}',
+        [App\Http\Controllers\Admin\SpecialtyController::class, 'destroy']
+    )->name('specialty.delete');
+
+
+
     // Job Type Module
     Route::get('/jobtype', [App\Http\Controllers\Admin\JobTypeController::class, 'create'])->name('admin.jobtype.create');
     Route::post('/jobtype-store', [App\Http\Controllers\Admin\JobTypeController::class, 'store'])->name('admin.jobtype.store');
