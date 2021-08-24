@@ -12,12 +12,12 @@
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">
-                <a href="{{ route('admin.jobtype.create') }}" class="btn btn-primary">
+            <!-- <h3 class="card-title">
+                <a href="{{ route('admin.state.create') }}" class="btn btn-primary">
                     <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
                     Add State
                 </a>
-            </h3>
+            </h3> -->
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>

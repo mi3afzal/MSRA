@@ -10,6 +10,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\Suburb;
 use App\Models\JobType;
+use App\Models\Profession;
 
 class HomeController extends Controller
 {
@@ -34,8 +35,9 @@ class HomeController extends Controller
         $states = State::where(["status" => "1"])->count();
         $suburbs = Suburb::where(["status" => "1"])->count();
         $jobtypes = JobType::where(["status" => "1"])->count();
+        $professions = Profession::where(["status" => "1"])->count();
         $title = "dashboard";
         $module = "dashboard";
-        return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module"));
+        return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions"));
     }
 }
