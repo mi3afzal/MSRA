@@ -32,74 +32,79 @@ Route::get('/jobdetails', [App\Http\Controllers\Front\JobDetailController::class
 
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/jobseeker-register', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'index'])->name('jobseeker.register');
+Route::post('/jobseeker-register-store', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'store'])->name('jobseeker.register.store');
+
+/** 
+ * Authentication routes
+ */
+
+// Login route
+Route::get(
+    'login',
+    [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']
+)->name('login');
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+
+// Registeration route
+Route::get(
+    'register',
+    [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']
+)->name('register');
+Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+
+// Logout Route
+Route::post(
+    'logout',
+    [App\Http\Controllers\Auth\LoginController::class, 'logout']
+)->name('logout');
+
+// Register the typical reset password routes for an application.
+Route::get(
+    'password/reset',
+    [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm']
+)->name('password.request');
+Route::post(
+    'password/email',
+    [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail']
+)->name('password.email');
+Route::get(
+    'password/reset/{token}',
+    [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm']
+)->name('password.reset');
+Route::post(
+    'password/reset',
+    [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']
+)->name('password.update');
+
+
+// Register the typical confirm password routes for an application.
+Route::get(
+    'password/confirm',
+    [App\Http\Controllers\Auth\ConfirmPasswordController::class, 'showConfirmForm']
+)->name('password.confirm');
+Route::post(
+    'password/confirm',
+    [App\Http\Controllers\Auth\ConfirmPasswordController::class, 'confirm']
+)->name('password.update');
+
+// Register the typical email verification routes for an application.
+Route::get(
+    'email/verify',
+    [App\Http\Controllers\Auth\VerificationController::class, 'show']
+)->name('verification.notice');
+Route::get(
+    'email/verify/{id}/{hash}',
+    [App\Http\Controllers\Auth\VerificationController::class, 'verify']
+)->name('verification.verify');
+Route::post(
+    'email/resend',
+    [App\Http\Controllers\Auth\VerificationController::class, 'resend']
+)->name('verification.resend');
+
 Route::prefix('admin')->group(function () {
 
-    /** 
-     * Authentication routes
-     */
 
-    // Login route
-    Route::get(
-        'login',
-        [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']
-    )->name('login');
-    Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-
-    // Registeration route
-    Route::get(
-        'register',
-        [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']
-    )->name('register');
-    Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
-
-    // Logout Route
-    Route::post(
-        'logout',
-        [App\Http\Controllers\Auth\LoginController::class, 'logout']
-    )->name('logout');
-
-    // Register the typical reset password routes for an application.
-    Route::get(
-        'password/reset',
-        [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm']
-    )->name('password.request');
-    Route::post(
-        'password/email',
-        [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail']
-    )->name('password.email');
-    Route::get(
-        'password/reset/{token}',
-        [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm']
-    )->name('password.reset');
-    Route::post(
-        'password/reset',
-        [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset']
-    )->name('password.update');
-
-
-    // Register the typical confirm password routes for an application.
-    Route::get(
-        'password/confirm',
-        [App\Http\Controllers\Auth\ConfirmPasswordController::class, 'showConfirmForm']
-    )->name('password.confirm');
-    Route::post(
-        'password/confirm',
-        [App\Http\Controllers\Auth\ConfirmPasswordController::class, 'confirm']
-    )->name('password.update');
-
-    // Register the typical email verification routes for an application.
-    Route::get(
-        'email/verify',
-        [App\Http\Controllers\Auth\VerificationController::class, 'show']
-    )->name('verification.notice');
-    Route::get(
-        'email/verify/{id}/{hash}',
-        [App\Http\Controllers\Auth\VerificationController::class, 'verify']
-    )->name('verification.verify');
-    Route::post(
-        'email/resend',
-        [App\Http\Controllers\Auth\VerificationController::class, 'resend']
-    )->name('verification.resend');
 
 
 

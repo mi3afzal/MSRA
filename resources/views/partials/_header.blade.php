@@ -91,7 +91,8 @@
                                         <li>
                                             <a href="{{ route('login') }}">Login</a>
                                             /
-                                            <a href="{{ route('register') }}">Signup</a>
+                                            <!-- <a href="{{ route('register') }}">Signup</a> -->
+                                            <a href="{{ route('jobseeker.register') }}">Registration</a>
                                         </li>
                                     </ul>
 
