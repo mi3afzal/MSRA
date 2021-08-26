@@ -15,3 +15,7 @@ A medical staff recruitment website build in Laravel 8
 2. Job
 3. JobDetails
 4. Specialty
+
+### Registrations
+
+Implemented Job seekers Registration
