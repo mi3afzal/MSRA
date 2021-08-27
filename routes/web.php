@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\isAdmin;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -102,25 +104,34 @@ Route::post(
     [App\Http\Controllers\Auth\VerificationController::class, 'resend']
 )->name('verification.resend');
 
-Route::prefix('admin')->group(function () {
 
 
+// Route::middleware([EnsureTokenIsValid::class])->group(function () {
+//     Route::get('/', function () {
+//         //
+//     });
 
+//     Route::get('/profile', function () {
+//         //
+//     })->withoutMiddleware([EnsureTokenIsValid::class]);
+// });
+// Admin route for dashboard
+Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
 
-
+Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
     /**
      * Admin Panel Routes
      */
 
-    // Admin route for dashboard
-    Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
+    // // Admin route for dashboard
+    // Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
 
 
     // Profession Module
     Route::get('/profession', [App\Http\Controllers\Admin\ProfessionController::class, 'create'])->name('admin.profession.create');
     Route::post('/profession-store', [App\Http\Controllers\Admin\ProfessionController::class, 'store'])->name('admin.profession.store');
-    Route::get('/profession/list', [App\Http\Controllers\Admin\ProfessionController::class, 'lists'])->name('admin.profession.list');
+    Route::get('/profession/list', [App\Http\Controllers\Admin\ProfessionController::class, 'lists'])->name('admin.profession.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/profession/enable/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'enable'])->name('admin.profession.enable');
     Route::get('/profession/disable/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'disable'])->name('admin.profession.disable');
@@ -128,7 +139,7 @@ Route::prefix('admin')->group(function () {
     Route::get(
         '/profession/datatable',
         [App\Http\Controllers\Admin\ProfessionController::class, 'datatable']
-    )->name('profession.datatables');
+    )->name('profession.datatables')->withoutMiddleware([isAdmin::class]);
 
     Route::get(
         '/profession/delete/{id}',
@@ -140,7 +151,7 @@ Route::prefix('admin')->group(function () {
     // Speciality  Module
     Route::get('/specialty', [App\Http\Controllers\Admin\SpecialtyController::class, 'create'])->name('admin.specialty.create');
     Route::post('/specialty-store', [App\Http\Controllers\Admin\SpecialtyController::class, 'store'])->name('admin.specialty.store');
-    Route::get('/specialty/list', [App\Http\Controllers\Admin\SpecialtyController::class, 'lists'])->name('admin.specialty.list');
+    Route::get('/specialty/list', [App\Http\Controllers\Admin\SpecialtyController::class, 'lists'])->name('admin.specialty.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/specialty/enable/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'enable'])->name('admin.specialty.enable');
     Route::get('/specialty/disable/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'disable'])->name('admin.specialty.disable');
@@ -148,7 +159,7 @@ Route::prefix('admin')->group(function () {
     Route::get(
         '/specialty/datatable',
         [App\Http\Controllers\Admin\SpecialtyController::class, 'datatable']
-    )->name('specialty.datatables');
+    )->name('specialty.datatables')->withoutMiddleware([isAdmin::class]);
 
     Route::get(
         '/specialty/delete/{id}',
@@ -160,7 +171,7 @@ Route::prefix('admin')->group(function () {
     // Job Type Module
     Route::get('/jobtype', [App\Http\Controllers\Admin\JobTypeController::class, 'create'])->name('admin.jobtype.create');
     Route::post('/jobtype-store', [App\Http\Controllers\Admin\JobTypeController::class, 'store'])->name('admin.jobtype.store');
-    Route::get('/jobtype/list', [App\Http\Controllers\Admin\JobTypeController::class, 'lists'])->name('admin.jobtype.list');
+    Route::get('/jobtype/list', [App\Http\Controllers\Admin\JobTypeController::class, 'lists'])->name('admin.jobtype.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/jobtype/enable/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'enable'])->name('admin.jobtype.enable');
     Route::get('/jobtype/disable/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'disable'])->name('admin.jobtype.disable');
@@ -168,7 +179,7 @@ Route::prefix('admin')->group(function () {
     Route::get(
         '/jobtype/datatable',
         [App\Http\Controllers\Admin\JobTypeController::class, 'datatable']
-    )->name('jobtype.datatables');
+    )->name('jobtype.datatables')->withoutMiddleware([isAdmin::class]);
 
     Route::get(
         '/jobtype/delete/{id}',
@@ -179,7 +190,7 @@ Route::prefix('admin')->group(function () {
     // States Module
     Route::get('/state', [App\Http\Controllers\Admin\StateController::class, 'create'])->name('admin.state.create');
     Route::post('/state-store', [App\Http\Controllers\Admin\StateController::class, 'store'])->name('admin.state.store');
-    Route::get('/state/list', [App\Http\Controllers\Admin\StateController::class, 'lists'])->name('admin.state.list');
+    Route::get('/state/list', [App\Http\Controllers\Admin\StateController::class, 'lists'])->name('admin.state.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/state/enable/{id}', [App\Http\Controllers\Admin\StateController::class, 'enable'])->name('admin.state.enable');
     Route::get('/state/disable/{id}', [App\Http\Controllers\Admin\StateController::class, 'disable'])->name('admin.state.disable');
@@ -187,7 +198,7 @@ Route::prefix('admin')->group(function () {
     Route::get(
         '/state/datatable',
         [App\Http\Controllers\Admin\StateController::class, 'datatable']
-    )->name('state.datatables');
+    )->name('state.datatables')->withoutMiddleware([isAdmin::class]);
 
     Route::get(
         '/state/delete/{id}',
@@ -198,7 +209,7 @@ Route::prefix('admin')->group(function () {
     // Cities Module
     Route::get('/city', [App\Http\Controllers\Admin\CityController::class, 'create'])->name('admin.city.create');
     Route::post('/city-store', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('admin.city.store');
-    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'lists'])->name('admin.city.list');
+    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'lists'])->name('admin.city.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/city/enable/{id}', [App\Http\Controllers\Admin\CityController::class, 'enable'])->name('admin.city.enable');
     Route::get('/city/disable/{id}', [App\Http\Controllers\Admin\CityController::class, 'disable'])->name('admin.city.disable');
@@ -206,7 +217,7 @@ Route::prefix('admin')->group(function () {
     Route::get(
         '/city/datatable',
         [App\Http\Controllers\Admin\CityController::class, 'datatable']
-    )->name('city.datatables');
+    )->name('city.datatables')->withoutMiddleware([isAdmin::class]);
 
     Route::get(
         '/city/delete/{id}',
@@ -216,8 +227,8 @@ Route::prefix('admin')->group(function () {
 
 
     // Ajax Route
-    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities');
-    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs');
+    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);;
+    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);;
 
     /*
     // Admin routes for Front / Home page

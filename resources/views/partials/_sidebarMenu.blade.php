@@ -15,6 +15,9 @@
             </a>
         </li>
 
+
+
+
         <li class="nav-item">
             <a href="{{ route('admin.state.list') }}" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
                                                                             echo 'active';
@@ -37,6 +40,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
                 <li class="nav-item">
                     <a href="{{ route('admin.jobtype.create') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.create')) {
                                                                                         echo 'active';
@@ -45,6 +49,7 @@
                         <p>Add Jobtype</p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('admin.jobtype.list') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.list')) {
@@ -54,6 +59,7 @@
                         <p>View Jobtypes</p>
                     </a>
                 </li>
+
             </ul>
         </li>
 
@@ -69,6 +75,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
                 <li class="nav-item">
                     <a href="{{ route('admin.profession.create') }}" class="nav-link <?php if (url()->current() == route('admin.profession.create')) {
                                                                                             echo 'active';
@@ -77,6 +84,7 @@
                         <p>Add profession</p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('admin.profession.list') }}" class="nav-link <?php if (url()->current() == route('admin.profession.list')) {
@@ -101,6 +109,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
                 <li class="nav-item">
                     <a href="{{ route('admin.specialty.create') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.create')) {
                                                                                         echo 'active';
@@ -109,6 +118,7 @@
                         <p>Add specialty</p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('admin.specialty.list') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.list')) {
@@ -120,6 +130,9 @@
                 </li>
             </ul>
         </li>
+
+
+
 
         <?php /* ?>
         <li class="nav-item">

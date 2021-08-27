@@ -18,10 +18,12 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">
+                @if (( Auth::user()->role == "1"))
                 <a href="{{ route('admin.jobtype.create') }}" class="btn btn-primary">
                     <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
                     Add JobType
                 </a>
+                @endif
             </h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">

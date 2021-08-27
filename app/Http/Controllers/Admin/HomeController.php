@@ -38,8 +38,16 @@ class HomeController extends Controller
         $jobtypes = JobType::where(["status" => "1"])->count();
         $professions = Profession::where(["status" => "1"])->count();
         $specialty = Specialty::where(["status" => "1"])->count();
-        $title = "dashboard";
-        $module = "dashboard";
-        return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty"));
+        $user = Auth::user();
+
+        if ($user->role == 1) {
+            $title = "dashboard";
+            $module = "dashboard";
+            return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty"));
+        } else {
+            $title = "dashboard";
+            $module = "jobseeker dashboard";
+            return view('admin.jobseeker', compact("title", "module"));
+        }
     }
 }

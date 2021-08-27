@@ -136,6 +136,23 @@
                 </li>
                 <?php */ ?>
         <li class="nav-item">
+
+            @if (Auth::user()->role == "1")
+            <span class="right badge badge-success p-2 mt-2 mr-2">
+                <i class="fas fa-user-tie"></i>&nbsp;&nbsp;Admin
+            </span>
+            @elseif (Auth::user()->role == "2")
+            <span class="right badge badge-primary p-2 mt-2 mr-2">
+                <i class="fas fa-user-md"></i>&nbsp;&nbsp;Job Seeker
+            </span>
+            @else
+            <span class="right badge badge-info p-2 mt-2 mr-2">
+                <i class="far fa-user-circle"></i>&nbsp;&nbsp;User
+            </span>
+            @endif
+
+        </li>
+        <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="javascript:void(0);" role="button">
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>

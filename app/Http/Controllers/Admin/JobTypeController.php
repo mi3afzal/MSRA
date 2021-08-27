@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 
 class JobTypeController extends Controller
 {
@@ -19,7 +20,7 @@ class JobTypeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        // $this->middleware('auth')->except('index');
     }
 
     /**
@@ -97,8 +98,16 @@ class JobTypeController extends Controller
                         </div>
                     ';
 
-                $final = ($jobtypedata->status == 1) ? $link . $inactivelink : $link . $activelink;
-                // $link = '<a href="' . route('jobtype.delete', $jobtypedata->id) . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</a> ';
+                if (Gate::allows('isAdmin')) {
+                    $final = ($jobtypedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                } else {
+                    $final = '
+                        <span class="bg-warning p-1">
+                            You are not an admin.
+                        </span>
+                    ';
+                }
+
                 return $final;
             })
             ->make(true);

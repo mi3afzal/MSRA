@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 
 class StateController extends Controller
 {
@@ -123,7 +124,16 @@ class StateController extends Controller
                         </div>
                     ';
 
-                $final = ($statedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                if (Gate::allows('isAdmin')) {
+                    $final = ($statedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                } else {
+                    $final = '
+                        <span class="bg-warning p-1">
+                            You are not an admin.
+                        </span>
+                    ';
+                }
+
                 // $link = '<a href="' . route('jobtype.delete', $statedata->id) . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</a> ';
                 return $final;
             })
