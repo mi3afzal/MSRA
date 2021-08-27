@@ -29,4 +29,14 @@ class State extends Model
     {
         return strtoupper($value);
     }
+
+    public function cities()
+    {
+        return $this->hasMany('App\Models\City', 'state_id');
+    }
+
+    public function suburbs()
+    {
+        return $this->hasMany('App\Models\Suburb', 'state_id');
+    }
 }

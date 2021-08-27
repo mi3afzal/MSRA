@@ -19,4 +19,28 @@ class JobSeekerRegistration extends Model
     {
         return ucwords($value);
     }
+
+    /**
+     * Get the user that owns the record.
+     */
+    public function user()
+    {
+        return $this->belongsTo("App\Models\User", "id");
+    }
+
+    /**
+     * Get the profession details.
+     */
+    public function profession()
+    {
+        return $this->belongsTo("App\Models\Profession", "profession", "id")->select("id", "unique_code", "profession");
+    }
+
+    /**
+     * Get the speciality details.
+     */
+    public function speciality()
+    {
+        return $this->belongsTo("App\Models\Specialty", "specialty", "id")->select("id", "unique_code", "specialty");
+    }
 }

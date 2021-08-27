@@ -12,6 +12,7 @@ use App\Models\Suburb;
 use App\Models\JobType;
 use App\Models\Profession;
 use App\Models\Specialty;
+use App\Models\User;
 
 class HomeController extends Controller
 {
