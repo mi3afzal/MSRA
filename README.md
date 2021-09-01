@@ -2,7 +2,7 @@
 
 A medical staff recruitment website build in Laravel 8
 
-## Current Admin Modules
+## Current Backend Modules
 
 1. States [Delete, Enable, Disable]
 2. JobTypes [Create, Delete (Softdelete), Enable, Disable]
