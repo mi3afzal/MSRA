@@ -9,6 +9,7 @@ A medical staff recruitment website build in Laravel 8
 3. Professions [Create, Delete (Softdelete), Enable, Disable]
 4. Specialty [Create, Delete (Softdelete), Enable, Disable]
 5. Social Links [Update ]
+6. Job Category [Create, Delete (Softdelete), Enable, Disable]
 
 ## Current Frontend Pages
 
@@ -23,3 +24,4 @@ Application currently has two registrations :
 
 1. Admin
 2. Jobseekers
+3. Medical Center [ Future ]
