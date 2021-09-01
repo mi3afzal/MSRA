@@ -127,6 +127,10 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // // Admin route for dashboard
     // Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
 
+    // Social Link
+    Route::get('/sociallink', [App\Http\Controllers\Admin\SocialLinkController::class, 'edit'])->name('admin.sociallink.edit');
+    Route::put('/sociallink/update/{id}', [App\Http\Controllers\Admin\SocialLinkController::class, 'update'])->name('admin.sociallink.update');
+
 
     // Profession Module
     Route::get('/profession', [App\Http\Controllers\Admin\ProfessionController::class, 'create'])->name('admin.profession.create');

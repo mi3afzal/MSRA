@@ -1,5 +1,7 @@
 @include('partials._header')
 
+
+
 <section class="top-banner" style="background: url(images/dreamjobbg.png) top center no-repeat;">
     <div class="container">
         <div class="row">
@@ -142,20 +144,7 @@
     </div>
 </section>
 
-<section class="downloadapp">
-    <div class="container">
-        <div class="row justify-content-center text-center">
-            <div class="col-lg-8 col-md-12">
-                <h2>Download The App</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam possimus eaque magnam eum praesentium unde.</p>
-                <ul class="list-unstyled">
-                    <li><img src="{{url('/images/appstore.png')}}" alt="apple"></li>
-                    <li><img src="{{url('/images/googleplay.png')}}" alt="google"></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+@include('partials._downloadApp', ['sociallinks' => $sociallinks])
 
 <script>
     $(document).ready(function() {
@@ -199,4 +188,4 @@
     });
 </script>
 
-@include('partials._footer')
+@include('partials._footer', ['sociallinks' => $sociallinks])

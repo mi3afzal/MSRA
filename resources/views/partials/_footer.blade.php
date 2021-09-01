@@ -62,14 +62,28 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <h3>Get In Touch</h3>
+                <?php
+                // echo "<pre>";
+                // print_r($sociallinks);
+                // die;
+
+                ?>
                 <ul class="sociallink">
                     <li>
-                        <a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a>
+                        <a href="<?php echo $sociallinks->facebook; ?>"><i class="fab fa-facebook-f"></i></a>
                     </li>
-                    <li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="javascript:void(0);"><i class="fab fa-linkedin-in"></i></a></li>
-                    <li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-                    <li><a href="javascript:void(0);"><i class="fab fa-google"></i></a></li>
+                    <li>
+                        <a href="<?php echo $sociallinks->twitter; ?>"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $sociallinks->linkedin; ?>"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $sociallinks->instagram; ?>"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $sociallinks->google; ?>"><i class="fab fa-google"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>

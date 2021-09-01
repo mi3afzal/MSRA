@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\JobDetail;
+use App\Models\SocialLink;
+use App\Models\Profession;
+use App\Models\Specialty;
+use App\Models\State;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +20,11 @@ class JobDetailController extends Controller
      */
     public function index()
     {
-        return view('front.jobdetails');
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $sociallinks = SocialLink::where("status", "1")->first();
+        $states = State::where("status", "1")->get();
+        return view('front.jobdetails', compact("sociallinks", "professions", "specialties","states"));
     }
 
     /**

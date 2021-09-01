@@ -8,6 +8,7 @@ use App\Models\JobType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\SocialLink;
 
 class FrontController extends Controller
 {
@@ -20,7 +21,8 @@ class FrontController extends Controller
     {
         $states = State::where("status", "1")->orderBy('name', 'asc')->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->pluck("jobtype", "id");
-        return view('front.home', compact("jobtypes", "states"));
+        $sociallinks = SocialLink::where("status", "1")->first();
+        return view('front.home', compact("jobtypes", "states", "sociallinks"));
     }
 
     /**

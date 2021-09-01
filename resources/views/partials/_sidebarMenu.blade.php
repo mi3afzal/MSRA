@@ -15,7 +15,16 @@
             </a>
         </li>
 
-
+        <li class="nav-item">
+            <a href="{{ route('admin.sociallink.edit') }}" class="nav-link <?php if (url()->current() == route('admin.sociallink.edit')) {
+                                                                                echo 'active';
+                                                                            } ?>">
+                <i class="nav-icon fas fa-hashtag"></i>
+                <p>
+                    Social Links
+                </p>
+            </a>
+        </li>
 
 
         <li class="nav-item">

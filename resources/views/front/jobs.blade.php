@@ -24,91 +24,14 @@
         </div>
         <div class="row">
             <div class="col-xl-3 col-lg-4">
-                <div class="sidebar-job">
-                    <h4>Filter</h4>
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Profession
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="innnerlist">
-                                        <li>
-                                            <a href="#">Allied Health Professionals</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Doctor</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Healthcare Executives
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Nurse</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Specialty
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="innnerlist">
-                                        <li class=""><a href="#">Anesthetics</a></li>
-                                        <li class=""><a href="#">Emergency Medicine</a></li>
-                                        <li class=""><a href="#">General Practice</a></li>
-                                        <li class=""><a href="#">Intensive care</a></li>
-                                        <li class=""><a href="#">Medicine</a></li>
-                                        <li class=""><a href="#">Obtetrics &amp; Gyneacology</a></li>
-                                        <li class=""><a href="#">Pathologist</a></li>
-                                        <li class=""><a href="#">Peadiatrics</a></li>
-                                        <li class=""><a href="#">Psychiatry</a></li>
-                                        <li class=""><a href="#">Radiology</a></li>
-                                        <li class=""><a href="#">Surgery</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Locations
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="innnerlist">
 
-                                        <li><a href="#"> Victoria </a></li>
-                                        <li><a href="#"> Queensland</a></li>
-                                        <li><a href="#"> South Australia</a></li>
-                                        <li><a href="#"> Tasmania</a></li>
-                                        <li><a href="#"> New South Wales</a></li>
-                                        <li><a href="#"> Australian Capital Territory</a></li>
-                                        <li><a href="#"> Western Australia</a></li>
-                                        <li><a href="#"> Northern Territory</a></li>
-                                        <li><a href="#"> South Australia</a></li>
-                                        <li><a href="#"> Queensland</a></li>
-                                        <li><a href="#"> New South Wales</a></li>
-                                        <li><a href="#"> Tasmania</a></li>
-                                        <li><a href="#"> Queensland</a></li>
-                                        <li><a href="#"> Victoria</a></li>
+                @include('partials._sidebarJobs',
+                [
+                'professions' => $professions,
+                'specialties' => $specialties,
+                'states' => $states,
+                ])
 
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
                     <li>
                         <a href="#">
@@ -328,20 +251,6 @@
 </section>
 
 
-<section class="downloadapp">
-    <div class="container">
-        <div class="row justify-content-center text-center">
-            <div class="col-md-8">
-                <h2>Download The App</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam possimus eaque magnam eum praesentium unde.</p>
-                <ul class="list-unstyled">
-                    <li><img src="images/appstore.png" alt=""></li>
-                    <li><img src="images/googleplay.png" alt=""></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+@include('partials._downloadApp', ['sociallinks' => $sociallinks])
 
-
-@include('partials._footer')
+@include('partials._footer', ['sociallinks' => $sociallinks])
