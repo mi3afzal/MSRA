@@ -191,6 +191,25 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     )->name('jobtype.delete');
 
 
+    // Job Category Module
+    Route::get('/jobcategory', [App\Http\Controllers\Admin\JobCategoryController::class, 'create'])->name('admin.jobcategory.create');
+    Route::post('/jobcategory-store', [App\Http\Controllers\Admin\JobCategoryController::class, 'store'])->name('admin.jobcategory.store');
+    Route::get('/jobcategory/list', [App\Http\Controllers\Admin\JobCategoryController::class, 'lists'])->name('admin.jobcategory.list')->withoutMiddleware([isAdmin::class]);
+
+    Route::get('/jobcategory/enable/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'enable'])->name('admin.jobcategory.enable');
+    Route::get('/jobcategory/disable/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'disable'])->name('admin.jobcategory.disable');
+
+    Route::get(
+        '/jobcategory/datatable',
+        [App\Http\Controllers\Admin\JobCategoryController::class, 'datatable']
+    )->name('jobcategory.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/jobcategory/delete/{id}',
+        [App\Http\Controllers\Admin\JobCategoryController::class, 'destroy']
+    )->name('jobcategory.delete');
+
+
     // States Module
     Route::get('/state', [App\Http\Controllers\Admin\StateController::class, 'create'])->name('admin.state.create');
     Route::post('/state-store', [App\Http\Controllers\Admin\StateController::class, 'store'])->name('admin.state.store');

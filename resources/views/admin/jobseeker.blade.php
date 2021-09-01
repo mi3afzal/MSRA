@@ -6,7 +6,10 @@
 
     <div class="container-fluid">
 
+        @include('partials._messages')
 
+        <!-- Small boxes (Stat box) -->
+        @include('partials._adminStats')
     </div>
 
 </section>

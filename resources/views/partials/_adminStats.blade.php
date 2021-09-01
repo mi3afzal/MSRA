@@ -1,4 +1,5 @@
 <div class="row">
+    @if(Gate::allows('isAdmin'))
     <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-warning">
@@ -41,19 +42,7 @@
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-            <div class="inner">
-                <h3><?php echo $jobtypes; ?></h3>
-                <p>Active JobTypes</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-user"></i>
-            </div>
-            <a href="{{ route('admin.jobtype.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
+
 
     <div class="col-lg-3 col-6">
         <!-- small box -->
@@ -83,6 +72,35 @@
             <a href="{{ route('admin.specialty.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+    @endif
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-light">
+            <div class="inner">
+                <h3><?php echo $jobcategories; ?></h3>
+                <p>Active Job Categories</p>
+            </div>
+            <div class="icon">
+                <i class="nav-icon fas fa-list-alt"></i>
+            </div>
+            <a href="{{ route('admin.jobcategory.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3><?php echo $jobtypes; ?></h3>
+                <p>Active JobTypes</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <a href="{{ route('admin.jobtype.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
 
     <?php /* ?>
     <div class="col-lg-3 col-6">
