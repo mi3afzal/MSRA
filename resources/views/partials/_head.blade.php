@@ -8,5 +8,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/mapdata.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/australiamap.js') }}"></script>
     <title>247FS</title>
 </head>

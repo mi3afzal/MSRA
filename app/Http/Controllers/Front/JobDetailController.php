@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Job;
 use App\Models\JobDetail;
 use App\Models\SocialLink;
 use App\Models\Profession;
@@ -24,7 +25,7 @@ class JobDetailController extends Controller
         $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
         $sociallinks = SocialLink::where("status", "1")->first();
         $states = State::where("status", "1")->get();
-        return view('front.jobdetails', compact("sociallinks", "professions", "specialties","states"));
+        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states"));
     }
 
     /**
@@ -54,9 +55,19 @@ class JobDetailController extends Controller
      * @param  \App\Models\JobDetail  $jobDetail
      * @return \Illuminate\Http\Response
      */
-    public function show(JobDetail $jobDetail)
+    public function show(JobDetail $jobDetail, Request $request, $slug)
     {
-        //
+
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $sociallinks = SocialLink::where("status", "1")->first();
+        $states = State::where("status", "1")->get();
+
+        $job = Job::where(["status" => "1", "slug" => $slug])
+            ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+            ->first();
+
+        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "job"));
     }
 
     /**

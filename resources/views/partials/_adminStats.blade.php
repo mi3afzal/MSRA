@@ -75,7 +75,7 @@
     @endif
 
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-purple">
+        <div class="small-box bg-cyan">
             <div class="inner">
                 <h3><?php echo $jobcategories; ?></h3>
                 <p>Active Job Categories</p>

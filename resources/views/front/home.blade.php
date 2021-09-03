@@ -6,54 +6,60 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="borderbox">
-                    <h2>GP Requirements in Australia</h2>
-                    <ul>
-                        <li>
-                            <div class="form-group">
-                                <select name="jobtype" id="jobtype" class="form-control">
-                                    <option value="">Select Job Type</option>
-                                    @foreach($jobtypes as $id => $jobtype)
-                                    <option value="{{ $id }}">{{ ucwords($jobtype) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <select name="states" id="states" class="form-control">
-                                    <option value="">Select State</option>
-                                    @foreach($states as $key => $value)
-                                    <option value="{{ $value->id }}">{{ ucwords($value->name) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="city_div">
+
+                <form action="{{ route('front.job.search') }}" method="GET" enctype="multipart/form-data">
+                    {{ method_field('GET') }}
+                    @csrf
+                    <div class="borderbox">
+                        <h2>GP Requirements in Australia</h2>
+                        <ul>
+                            <li>
                                 <div class="form-group">
-                                    <select name="cities" id="cities" class="form-control">
-                                        <option value="">Select City</option>
+                                    <select name="jobtype" id="jobtype" class="form-control">
+                                        <option value="">Select Job Type</option>
+                                        @foreach($jobtypes as $id => $jobtype)
+                                        <option value="{{ $id }}">{{ ucwords($jobtype) }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="suburb_div">
+                            </li>
+                            <li>
                                 <div class="form-group">
-                                    <select name="suburbs" id="suburbs" class="form-control">
-                                        <option value="">Select Suburb</option>
+                                    <select name="states" id="states" class="form-control">
+                                        <option value="">Select State</option>
+                                        @foreach($states as $key => $value)
+                                        <option value="{{ $value->id }}">{{ ucwords($value->name) }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="btnbar">
-                        <button class="btn btn-primary">
-                            Search
-                        </button>
+                            </li>
+                            <li>
+                                <div id="city_div">
+                                    <div class="form-group">
+                                        <select name="cities" id="cities" class="form-control">
+                                            <option value="">Select City</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="suburb_div">
+                                    <div class="form-group">
+                                        <select name="suburbs" id="suburbs" class="form-control">
+                                            <option value="">Select Suburb</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="btnbar">
+                            <button class="btn btn-primary">
+                                Search
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>

@@ -216,7 +216,7 @@ class JobController extends Controller
                 'suburb' => 'required',
                 'rate' => 'required',
                 'work_days' => 'required',
-                'title' => 'required|max:500',
+                'title' => 'required|max:500|unique:jobs',
                 'from_date' => 'required',
                 'to_date' => 'required',
                 'address' => 'required|max:500',

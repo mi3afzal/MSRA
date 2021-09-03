@@ -1,14 +1,13 @@
 @include('partials._header')
 
-<section class=" innerbanner text-center" style="background: url(images/dreamjobbg.png) top center no-repeat;">
+<section class=" innerbanner text-center" style="background: url('{{ asset('images/dreamjobbg.png') }}') top center no-repeat;">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="borderbox">
-          <h3>Immediate Start GP Required
-            *Busy Medical Practice * - Cannon Hill, QLD</h3>
-
-
+          <h3>
+            {!! $job->title !!}
+          </h3>
         </div>
       </div>
     </div>
@@ -36,7 +35,7 @@
         <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
           <li>
             <a href="#">
-              <span><img src="images/jobalert.png" alt="" class="img-fluid"></span>
+              <span><img src="{{url('/images/jobalert.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Job Alert
                 <small>Lorem ipsum dolor sit amet, consectetur adipiscing </small>
@@ -45,7 +44,7 @@
           </li>
           <li>
             <a href="#">
-              <span><img src="images/phoneicon.png" alt="" class="img-fluid"></span>
+              <span><img src="{{url('/images/phoneicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Call Me
                 <small>Lorem ipsum dolor sit amet, consectetur adipiscing </small>
@@ -54,7 +53,7 @@
           </li>
           <li>
             <a href="#">
-              <span><img src="images/inviteicon.png" alt="" class="img-fluid"></span>
+              <span><img src="{{url('/images/inviteicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Refer & Earn
                 <small>Lorem ipsum dolor sit amet, consectetur adipiscing </small>
@@ -77,7 +76,7 @@
                   <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"><i class="far fa-times-circle"></i></button>
                 </div>
                 <div class="modal-body">
-                  <img src="images/watermarked.png" alt="" class="img-fluid">
+                  <img src="{{url('/images/watermarked.png')}}" alt="" class="img-fluid">
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -199,38 +198,29 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="card">
                 <div class="jobdate">
-                  <strong>15 APR</strong>
-                  <span>Job Id: RP001137</span>
+                  <strong>{{ date('d M', strtotime($job->created_at)) }}</strong>
+                  <span>Job Id: {!! $job->unique_code !!}</span>
                 </div>
-                <h3 class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</h3>
+                <h3 class="card-tittle">{!! $job->title !!}</h3>
                 <span class="jobtype">
-                  Full Time
+                  {!! $job->associatedJobtype->jobtype !!}
                 </span>
                 <ul class="joblabels">
                   <li>
                     <i class="fas fa-map-marker-alt"></i>
-                    NON-DPA
+                    {!! $job->jobcategory->name !!}
                   </li>
                   <li>
-                    <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
+                    <i class="fas fa-dollar-sign"></i>{!! $job->rate !!}
                   </li>
                   <li>
                     <i class="far fa-clock"></i>
-                    7 days a week
+                    {!! $job->work_days !!}
                   </li>
 
                 </ul>
                 <ul class="contentlist">
-                  <li>
-                    We are looking for you!! Yes You!
-                  </li>
-                  <li>
-                    We are looking for experienced General Practitioner to join our established friendly Chapel Hill Practice.
-                  </li>
-                  <li>
-                    Located within a busy shopping district, offering a large patient data base.
-                  </li>
-                  <li> We are looking for the next Gp to join our team. Is that you? </li>
+                  {!! $job->description !!}
                 </ul>
 
                 <h4>
@@ -238,56 +228,14 @@
                 </h4>
                 <ul class="contentlist">
 
-                  <li>* QML Pathology Onsite </li>
-
-                  <li>* Close to Private & Public Schools</li>
-
-                  <li>* Close to Day Care Services</li>
-
-                  <li>* Close to Mt Cootha walking tracks & Botanical Gardens</li>
-
-                  <li>* Bulk Billing</li>
-
-                  <li>* Open 7 days (8.00 am – 5.00pm)</li>
-
-                  <li>* 70% or $140.00 per Hour for first 3 Months</li>
-
-                  <li>* Full time Nursing support</li>
-
-                  <li>* Comprehensive allied health services on-site</li>
-
-                  <li>* Flexible working hours</li>
-
-                  <li>* Best Practice software with online booking</li>
-
-                  <li>* Nursing support to assist with the delivery of treatment plans, wound care, vaccines, immunization, ear syringing, and health assessments</li>
-
-                  <li>* Fully supported by reception & admin staff</li>
-
-
+                  {!! $job->practice_offer !!}
 
                 </ul>
                 <h4>Essential Criteria</h4>
 
                 <ul class="contentlist">
 
-                  <li>* VR GP with FRACGP/FACRRM </li>
-
-                  <li>* GP registrars with eligibility for limited/provisional registration with AHPRA </li>
-
-                  <li>* MBBS </li>
-
-                  <li>* Transfer DPAs available for restricted or Locum GPs to rotate till the moratorium is over. </li>
-
-                  <li>* Working in afterhours home visiting under the AMDS also available to make extra income. </li>
-
-                  <li>* Relocation allowance considered for interstate candidates. We can help with arrangements. </li>
-
-                  <li>* Strong verbal and written communication skills </li>
-
-                  <li>* Passion and commitment to providing a high level of care to patients </li>
-
-                  <li>* Attention to Detail, empathy & the upmost patience. </li>
+                  {!! $job->essential_criteria !!}
 
                 </ul>
                 <div class="btmbar">
@@ -310,14 +258,14 @@
                 </h5>
                 <a href="#" class="weblink">
                   <span>
-                    <img src="images/web.png" alt="">
+                    <img src="{{url('/images/web.png')}}" alt="">
                   </span>
                   www.msra.com.au
                 </a>
                 <br>
                 <a href="#" class="phonelink">
                   <span>
-                    <img src="images/phonebg.png" alt="">
+                    <img src="{{url('/images/phonebg.png')}}" alt="">
                   </span>
                   0410 863 301
                 </a>
@@ -347,7 +295,7 @@
         <ul class="fixedbutton list-unstyled d-xl-none d-lg-none">
           <li>
             <a href="#">
-              <span><img src="images/jobalert.png" alt="" class="img-fluid"></span>
+              <span><img src="{{url('/images/jobalert.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Job Alert
                 <small>Lorem ipsum dolor sit amet, consectetur adipiscing </small>
@@ -356,7 +304,7 @@
           </li>
           <li>
             <a href="#">
-              <span><img src="images/phoneicon.png" alt="" class="img-fluid"></span>
+              <span><img src="{{url('/images/phoneicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Call Me
                 <small>Lorem ipsum dolor sit amet, consectetur adipiscing </small>
@@ -365,7 +313,7 @@
           </li>
           <li>
             <a href="#">
-              <span><img src="images/inviteicon.png" alt="" class="img-fluid"></span>
+              <span><img src="{{url('/images/inviteicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Refer & Earn
                 <small>Lorem ipsum dolor sit amet, consectetur adipiscing </small>

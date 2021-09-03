@@ -42,11 +42,45 @@ class JobController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function search(Request $request, Job $job)
     {
-        //
+
+        $jobtype = $request->input("jobtype");
+        $state = (int) $request->input("states");
+        $city = (int) $request->input("cities");
+        $suburb = (int) $request->input("suburb");
+
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $sociallinks = SocialLink::where("status", "1")->first();
+        $states = State::where("status", "1")->get();
+
+        if (!empty($jobtype) && !empty($state) && !empty($city) && !empty($suburb)) {
+            $jobs = Job::where(["status" => "1", "job_type" => $jobtype, "state" => $state, "city" => $city, "suburb" => $suburb])
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->get();
+        } elseif (!empty($jobtype) && !empty($state) && !empty($city) && empty($suburb)) {
+            $jobs = Job::where(["status" => "1", "job_type" => $jobtype, "state" => $state, "city" => $city])
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->get();
+        } elseif (!empty($jobtype) && !empty($state) && empty($city) && empty($suburb)) {
+            $jobs = Job::where(["status" => "1", "job_type" => $jobtype, "state" => $state])
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->get();
+        } elseif (empty($jobtype) && !empty($state) && empty($city) && empty($suburb)) {
+            $jobs = Job::where(["status" => "1", "state" => $state])
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->get();
+        } else {
+            $jobs = Job::where(["status" => "1", "job_type" => $jobtype])
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->get();
+        }
+
+        return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "jobs"));
     }
 
     /**

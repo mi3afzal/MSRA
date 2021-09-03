@@ -19,7 +19,7 @@ class Job extends Model
     public function setSlugAttribute($value)
     {
         $slug = Str::slug($value, '-');
-        $this->attributes['slug'] = strtolower($slug);
+        $this->attributes['slug'] = strtolower($slug) . "-" . time();
     }
 
     public function createdby()

@@ -11,13 +11,13 @@
                 <div class="topbar">
                     <div class="row justify-content-between align-items-center">
                         <div class="col-md-3">
-                            <a class="navbar-brand" href="{{ route('home') }}"><img src="images/logo.png" alt="logo"></a>
+                            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{url('/images/logo.png')}}" alt="logo"></a>
                         </div>
                         <div class="col-md-9 text-right">
                             <ul class="list-unstyled">
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="images/whatsapp.png" alt="">
+                                        <img src="{{url('/images/whatsapp.png')}}" alt="">
                                         0406804559
                                     </a>
                                 </li>
@@ -63,7 +63,7 @@
                                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                                     <ul class="navbar-nav ">
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="javascript:void(0);"> Find Jobs </a>
+                                            <a class="nav-link active" aria-current="page" href="{{ route('job'); }}"> Find Jobs </a>
                                         </li>
 
                                         <li class="nav-item dropdown">
