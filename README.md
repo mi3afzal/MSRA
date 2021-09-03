@@ -10,6 +10,7 @@ A medical staff recruitment website build in Laravel 8
 4. Specialty [Create, Delete (Softdelete), Enable, Disable]
 5. Social Links [Update ]
 6. Job Category [Create, Delete (Softdelete), Enable, Disable]
+7. Jobs [Create, View, Delete (Softdelete), Enable, Disable]
 
 ## Current Frontend Pages
 
