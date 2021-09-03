@@ -68,157 +68,109 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Permanent</button>
-
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Locum</button>
                         </li>
+
                     </ul>
 
                 </div>
                 <div class="joblisting">
                     <div class="tab-content" id="myTabContent">
+                        @if(count($jobs) > 0 )
+
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            @foreach($jobs as $job )
+                            @if($job->job_type == 1)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
+                                <a href="#" class="card-tittle">{!! $job->title !!}</a>
                                 <span class="jobtype">
-                                    Full Time
+                                    {!! $job->associatedJobtype->jobtype !!}
                                 </span>
                                 <ul class="joblabels">
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
+                                        {!! $job->jobcategory->name !!}
                                     </li>
                                     <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
+                                        <i class="fas fa-dollar-sign"></i>{!! $job->rate !!}
                                     </li>
                                     <li>
                                         <i class="far fa-clock"></i>
-                                        7 days a week
+                                        {!! $job->work_days !!}
                                     </li>
 
                                 </ul>
                                 <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
+                                    <a href="javascript:void(0);">Read More</a>
                                 </p>
                                 <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
+                                    <a href="javascript:void(0);" class="linkgreen">Quick Application</a>
                                     <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
+                                    <a href="javascript:void(0);" class="linkblue">Apply Now</a>
                                 </div>
 
                             </div>
-                            <div class="card">
-                                <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
-                                </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
-                                <span class="jobtype">
-                                    Full Time
-                                </span>
-                                <ul class="joblabels">
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
-                                    </li>
-                                    <li>
-                                        <i class="far fa-clock"></i>
-                                        7 days a week
-                                    </li>
+                            @endif
+                            @endforeach
 
-                                </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
-                                </p>
-                                <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
-                                    <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
-                                </div>
-
-                            </div>
-                            <div class="card">
-                                <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
-                                </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
-                                <span class="jobtype">
-                                    Full Time
-                                </span>
-                                <ul class="joblabels">
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
-                                    </li>
-                                    <li>
-                                        <i class="far fa-clock"></i>
-                                        7 days a week
-                                    </li>
-
-                                </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
-                                </p>
-                                <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
-                                    <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
-                                </div>
-
-                            </div>
-                            <div class="card">
-                                <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
-                                </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
-                                <span class="jobtype">
-                                    Full Time
-                                </span>
-                                <ul class="joblabels">
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
-                                    </li>
-                                    <li>
-                                        <i class="far fa-clock"></i>
-                                        7 days a week
-                                    </li>
-
-                                </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
-                                </p>
-                                <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
-                                    <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
-                                </div>
-
-                            </div>
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            @foreach($jobs as $job )
+                            @if($job->job_type == 2)
+                            <div class="card">
+                                <div class="jobdate">
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <span>Job Id: {!! $job->unique_code !!}</span>
+                                </div>
+                                <a href="#" class="card-tittle">{!! $job->title !!}</a>
+                                <span class="jobtype">
+                                    {!! $job->associatedJobtype->jobtype !!}
+                                </span>
+                                <ul class="joblabels">
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {!! $job->jobcategory->name !!}
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-dollar-sign"></i>{!! $job->rate !!}
+                                    </li>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                        {!! $job->work_days !!}
+                                    </li>
+
+                                </ul>
+                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
+                                    <a href="javascript:void(0);">Read More</a>
+                                </p>
+                                <div class="bottombar">
+                                    <a href="javascript:void(0);" class="linkgreen">Quick Application</a>
+                                    <span>|</span>
+                                    <a href="javascript:void(0);" class="linkblue">Apply Now</a>
+                                </div>
+
+                            </div>
+                            @endif
+                            @endforeach
+                        </div>
+                        @else
+                        <div class=" card text-muted text-center">
+                            <h3> <strong>CURRENTY NO JOB OPENING </strong></h3>
+                        </div>
+                        @endif
 
                     </div>
                 </div>
                 <ul class="fixedbutton list-unstyled d-xl-none d-lg-none">
                     <li>
-                        <a href="#">
+                        <a href="javascript:void(0);">
                             <span><img src="images/jobalert.png" alt="" class="img-fluid"></span>
                             <h5>
                                 Job Alert

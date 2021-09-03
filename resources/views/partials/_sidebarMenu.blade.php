@@ -39,9 +39,9 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.jobtype.create')) || url()->current() == route('admin.jobtype.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.jobtype.create')) || url()->current() == route('admin.jobtype.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon fas fa-wrench"></i>
                 <p>
                     Jobtypes
@@ -73,9 +73,9 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.jobcategory.create')) || url()->current() == route('admin.jobcategory.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.jobcategory.create')) || url()->current() == route('admin.jobcategory.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon far fa-list-alt"></i>
                 <p>
                     JobCategory
@@ -106,11 +106,44 @@
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.job.create')) || url()->current() == route('admin.job.list')) {
+                                                                echo 'active';
+                                                            } ?>">
+                <i class="nav-icon fas fa-user-md"></i>
+                <p>
+                    Job
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
+                <li class="nav-item">
+                    <a href="{{ route('admin.job.create') }}" class="nav-link <?php if (url()->current() == route('admin.job.create')) {
+                                                                                    echo 'active';
+                                                                                } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create Job</p>
+                    </a>
+                </li>
+                @endif
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.job.list') }}" class="nav-link <?php if (url()->current() == route('admin.job.list')) {
+                                                                                echo 'active';
+                                                                            } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View Jobs</p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.profession.create')) || url()->current() == route('admin.profession.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.profession.create')) || url()->current() == route('admin.profession.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                     Profession
@@ -142,9 +175,9 @@
 
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon fas fa-briefcase-medical"></i>
                 <p>
                     Specialty
@@ -179,7 +212,7 @@
 
         <?php /* ?>
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
                                             echo 'active';
                                         } ?>">
                 <i class="nav-icon fas fa-map-marked-alt"></i>
@@ -213,7 +246,7 @@
 
         <?php /* ?>
         <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="javascript:void(0);" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Dashboard
@@ -251,7 +284,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="javascript:void(0);" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                     Layout Options
@@ -311,7 +344,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="javascript:void(0);" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
                     Charts

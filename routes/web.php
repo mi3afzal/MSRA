@@ -172,6 +172,27 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
 
 
+    // Job Module
+    Route::get('/job', [App\Http\Controllers\Admin\JobController::class, 'create'])->name('admin.job.create');
+    Route::post('/job-store', [App\Http\Controllers\Admin\JobController::class, 'store'])->name('admin.job.store');
+    Route::get('/job/list', [App\Http\Controllers\Admin\JobController::class, 'lists'])->name('admin.job.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/job-details/{id}', [App\Http\Controllers\Admin\JobController::class, 'show'])->name('admin.job.show');
+
+    Route::get('/job/enable/{id}', [App\Http\Controllers\Admin\JobController::class, 'enable'])->name('admin.job.enable');
+    Route::get('/job/disable/{id}', [App\Http\Controllers\Admin\JobController::class, 'disable'])->name('admin.job.disable');
+
+    Route::get(
+        '/job/datatable',
+        [App\Http\Controllers\Admin\JobController::class, 'datatable']
+    )->name('job.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/job/delete/{id}',
+        [App\Http\Controllers\Admin\JobController::class, 'destroy']
+    )->name('job.delete');
+
+
+
     // Job Type Module
     Route::get('/jobtype', [App\Http\Controllers\Admin\JobTypeController::class, 'create'])->name('admin.jobtype.create');
     Route::post('/jobtype-store', [App\Http\Controllers\Admin\JobTypeController::class, 'store'])->name('admin.jobtype.store');

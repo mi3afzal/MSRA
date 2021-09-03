@@ -2,5 +2,8 @@
     <label for="suburb">Suburbs :</label>
     <select name="suburb" id="suburb" class="form-control">
         <option value="0">Select Suburb</option>
+        @foreach($suburbs as $suburb)
+        <option value="{{ $suburb['id'] }}" {{ (old("suburb") == $suburb['id'] ? "selected":"") }}> {{ $suburb['suburb'] }}</option>
+        @endforeach
     </select>
 </div>

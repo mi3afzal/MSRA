@@ -75,7 +75,7 @@
     @endif
 
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-light">
+        <div class="small-box bg-purple">
             <div class="inner">
                 <h3><?php echo $jobcategories; ?></h3>
                 <p>Active Job Categories</p>
@@ -98,6 +98,20 @@
                 <i class="fas fa-user"></i>
             </div>
             <a href="{{ route('admin.jobtype.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-pink">
+            <div class="inner">
+                <h3><?php echo $jobs; ?></h3>
+                <p>Current Job Opnenings</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <a href="{{ route('admin.job.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
 

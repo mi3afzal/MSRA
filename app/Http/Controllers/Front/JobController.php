@@ -24,7 +24,8 @@ class JobController extends Controller
         $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
         $sociallinks = SocialLink::where("status", "1")->first();
         $states = State::where("status", "1")->get();
-        return view('front.jobs', compact("sociallinks", "professions", "specialties", "states"));
+        $jobs = Job::where("status", "1")->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->get();
+        return view('front.jobs', compact("sociallinks", "professions", "specialties", "states", "jobs"));
     }
 
     /**

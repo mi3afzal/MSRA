@@ -62,12 +62,6 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <h3>Get In Touch</h3>
-                <?php
-                // echo "<pre>";
-                // print_r($sociallinks);
-                // die;
-
-                ?>
                 <ul class="sociallink">
                     <li>
                         <a href="<?php echo $sociallinks->facebook; ?>"><i class="fab fa-facebook-f"></i></a>
@@ -101,7 +95,6 @@
     </div>
 </footer>
 
-
 <script>
     $('.owl-carousel').owlCarousel({
         loop: true,
@@ -119,8 +112,9 @@
                 items: 3
             }
         }
-    })
+    });
 </script>
+
 
 </body>
 
