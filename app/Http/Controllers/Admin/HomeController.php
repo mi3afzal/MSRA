@@ -52,7 +52,7 @@ class HomeController extends Controller
         } else {
             $title = "dashboard";
             $module = "jobseeker dashboard";
-            return view('admin.jobseeker', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs`"));
+            return view('admin.jobseeker', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs"));
         }
     }
 }

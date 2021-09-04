@@ -146,7 +146,7 @@
                 <i class="fas fa-user-md"></i>&nbsp;&nbsp;Job Seeker
             </span>
             @else
-            <span class="right badge badge-info p-2 mt-2 mr-2">
+            <span class="right badge bg-purple p-2 mt-2 mr-2">
                 <i class="far fa-user-circle"></i>&nbsp;&nbsp;User
             </span>
             @endif

@@ -26,6 +26,9 @@
                 @endif
             </h3>
             <div class="card-tools">
+                <a href="{{ route('admin.job.list') }}" class="btn btn-primary">
+                    Clear Search
+                </a>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                 </button>

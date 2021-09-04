@@ -30,6 +30,7 @@
                 'professions' => $professions,
                 'specialties' => $specialties,
                 'states' => $states,
+                'jobtypes' => $jobtypes,
                 ])
 
                 <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
