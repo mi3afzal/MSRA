@@ -281,4 +281,5 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Ajax Route
     Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);;
     Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);;
+    Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);;
 });

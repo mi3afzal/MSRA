@@ -77,7 +77,7 @@
                     </ul>
 
                 </div>
-                <div class="joblisting">
+                <div class="joblisting" id="js-joblisting">
                     <div class="tab-content" id="myTabContent">
                         @if(count($jobs) > 0 )
 
@@ -198,6 +198,10 @@
                         </a>
                     </li>
                 </ul>
+            </div>
+
+            <div id="job_ajax">
+
             </div>
         </div>
     </div>

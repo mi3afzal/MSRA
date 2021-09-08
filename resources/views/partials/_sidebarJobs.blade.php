@@ -119,5 +119,49 @@
 
             document.getElementById("job-filter-form").submit();
         });
+
+        // $(".js-filter").click(function() {
+        //     if ($(this).attr("filter-name") == "profession") {
+        //         localStorage.setItem("profession", $(this).attr("filter-val"));
+        //         filterJobs("profession", $(this).attr("filter-val"));
+        //     } else if ($(this).attr("filter-name") == "specialty") {
+        //         localStorage.setItem("specialty", $(this).attr("filter-val"));
+        //         filterJobs("specialty", $(this).attr("filter-val"));
+        //     } else if ($(this).attr("filter-name") == "state") {
+        //         localStorage.setItem("state", $(this).attr("filter-val"));
+        //         filterJobs("state", $(this).attr("filter-val"));
+        //     } else if ($(this).attr("filter-name") == "jobtype") {
+        //         localStorage.setItem("jobtype", $(this).attr("filter-val"));
+        //         filterJobs("jobtype", $(this).attr("filter-val"));
+        //     }
+
+        // });
+
+        // function filterJobs(name, id) {
+        //     const items = {
+        //         ...localStorage
+        //     };
+
+        //     // console.log(items);
+        //     return false;
+
+        //     $.ajax({
+        //         url: "{!! route('filterjobs') !!}",
+        //         type: "POST",
+        //         data: {
+        //             name: name,
+        //             id: id,
+        //             _token: '{{csrf_token()}}'
+        //         },
+        //         // dataType: 'json',
+        //         dataType: 'html',
+        //         success: function(result) {
+        //             // alert(result);
+        //             console.log(result);
+        //             $("#js-joblisting").html(result);
+        //         }
+        //     });
+        // }
+
     });
 </script>
