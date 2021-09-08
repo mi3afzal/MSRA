@@ -60,11 +60,11 @@ class JobTableSeeder extends Seeder
         //     });
 
         \App\Models\User::factory(10)->create();
-        \App\Models\JobType::factory(12)->create();
+        \App\Models\JobType::factory(2)->create();
         \App\Models\JobCategory::factory(10)->create();
         \App\Models\Profession::factory(9)->create();
         \App\Models\Specialty::factory(11)->create();
         \App\Models\JobSeekerRegistration::factory(10)->create();
-        \App\Models\Job::factory(20)->create();
+        \App\Models\Job::factory(10)->create();
     }
 }

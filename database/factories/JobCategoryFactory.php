@@ -26,7 +26,7 @@ class JobCategoryFactory extends Factory
         return [
             'unique_code' => Str::random(10),
             'name' => $this->faker->company(),
-            'user_id' => User::pluck('id')->random(),
+            'user_id' => User::where("role", 1)->pluck('id')->random(),
             'status' => "1",
         ];
     }

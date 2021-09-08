@@ -27,7 +27,7 @@ class SpecialtyFactory extends Factory
             'unique_code' => Str::random(10),
             'specialty' => $this->faker->company(),
             'description' => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
-            'user_id' => User::pluck('id')->random(),
+            'user_id' => User::where("role", 1)->pluck('id')->random(),
             'status' => "1",
         ];
     }

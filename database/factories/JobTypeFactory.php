@@ -23,10 +23,11 @@ class JobTypeFactory extends Factory
      */
     public function definition()
     {
+        $jobtype = array('locum', 'permanent');
         return [
             'unique_id' => Str::random(10),
-            'jobtype' => $this->faker->jobTitle(),
-            'user_id' => User::pluck('id')->random(),
+            'jobtype' => $jobtype[rand(0, 1)],
+            'user_id' => User::where("role", 1)->pluck('id')->random(),
             'status' => "1",
         ];
     }

@@ -48,9 +48,9 @@ class JobFactory extends Factory
             'slug' => Str::slug($this->faker->sentence(), '-'),
             'from_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
             'to_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
-            'description' => $this->faker->text(),
-            'practice_offer' => $this->faker->text(),
-            'essential_criteria' => $this->faker->text(),
+            'description' => $this->faker->realText($maxNbChars = 600, $indexSize = 2),
+            'practice_offer' => $this->faker->realText($maxNbChars = 1200, $indexSize = 2),
+            'essential_criteria' => $this->faker->realText($maxNbChars = 1200, $indexSize = 2),
             'status' => "1",
         ];
     }
