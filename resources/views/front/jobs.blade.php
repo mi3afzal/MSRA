@@ -107,8 +107,9 @@
                                     </li>
 
                                 </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="javascript:void(0);">Read More</a>
+                                <p>
+                                    {!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
                                     <a href="javascript:void(0);" class="linkgreen">Quick Application</a>
@@ -119,7 +120,6 @@
                             </div>
                             @endif
                             @endforeach
-
                         </div>
 
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -148,8 +148,8 @@
                                     </li>
 
                                 </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="javascript:void(0);">Read More</a>
+                                <p>{!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
                                     <a href="javascript:void(0);" class="linkgreen">Quick Application</a>
