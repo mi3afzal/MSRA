@@ -115,18 +115,12 @@
                 <div class="healthcarestaff">
                     <h3><strong>Healthcare</strong> Staff</h3>
                     <ul class="healthlist list-unstyled">
+                        @foreach($professions as $profession)
                         <li>
-                            <a href="javascript:void(0);">Nurses</a>
+                            <!-- http://msra.test/job-search?_method=GET&suburb=&cities=&profession=1&specialty=&states=&jobtype= -->
+                            <a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => $profession->id,'specialty' => '','states' => '','jobtype' => '']) }}">{!! $profession->profession !!}</a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);">Allied Health</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Practice manager</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Recruitment</a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -140,11 +134,9 @@
                 <div class="servicesbox">
                     <h3>Services</h3>
                     <ul class="serviceslist">
-                        <li><a href="javascript:void(0);">Service-1</a></li>
-                        <li><a href="javascript:void(0);">Service-2</a></li>
-                        <li><a href="javascript:void(0);">Service-3</a></li>
-                        <li><a href="javascript:void(0);">Service-4</a></li>
-                        <li><a href="javascript:void(0);">Service-5</a></li>
+                        @foreach($jobtypes as $id => $jobtype)
+                        <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => '','specialty' => '','states' => '','jobtype' => $id]) }}">{!! ucwords($jobtype) !!}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -156,6 +148,56 @@
 
 <script>
     $(document).ready(function() {
+
+        $(".sm_state_NS").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3909&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
+        $(".sm_state_NT").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3910&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
+        $(".sm_state_SA").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3904&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
+        $(".sm_state_VI").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3903&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
+        $(".sm_state_WA").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3906&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
+        $(".sm_state_TS").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3908&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
+        $(".sm_state_QL").on("click", function(e) {
+            e.preventDefault();
+            var currenturl = window.location.href;
+            var querystring = "job-search?_method=GET&suburb=&cities=&profession=&specialty=&states=3905&jobtype="
+            window.open(currenturl + querystring, '_blank');
+        });
+
         var states_id = $("#states").val();
 
         $('#states').on('change', function() {

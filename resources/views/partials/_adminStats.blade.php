@@ -92,7 +92,7 @@
         <div class="small-box bg-danger">
             <div class="inner">
                 <h3><?php echo $jobtypes; ?></h3>
-                <p>Active JobTypes</p>
+                <p>JobTypes / Services</p>
             </div>
             <div class="icon">
                 <i class="fas fa-user"></i>

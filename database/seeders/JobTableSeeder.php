@@ -26,44 +26,22 @@ class JobTableSeeder extends Seeder
     public function run()
     {
         DB::statement("SET foreign_key_checks=0");
-        DB::table('users')->truncate();
+        // DB::table('users')->truncate();
         DB::table('jobs')->truncate();
         DB::table('job_seeker_registrations')->truncate();
-        DB::table('job_types')->truncate();
-        DB::table('job_categories')->truncate();
-        DB::table('professions')->truncate();
-        DB::table('specialties')->truncate();
+        // DB::table('job_types')->truncate();
+        // DB::table('job_categories')->truncate();
+        // DB::table('professions')->truncate();
+        // DB::table('specialties')->truncate();
         DB::statement("SET foreign_key_checks=1");
         //
 
-        // \App\Models\User::factory(10)->create()
-        //     ->each(function ($u) {
 
-        //         $u->jobtype()->saveMany(
-        //             \App\Models\JobType::factory(2)->make()
-        //         );
-        //         $u->jobcategory()->saveMany(
-        //             \App\Models\JobCategory::factory(2)->make()
-        //         );
-        //         $u->profession()->saveMany(
-        //             \App\Models\Profession::factory(2)->make()
-        //         );
-        //         $u->specialty()->saveMany(
-        //             \App\Models\Specialty::factory(2)->make()
-        //         );
-        //         $u->job()->saveMany(
-        //             \App\Models\Job::factory(2)->make()
-        //         );
-        //         $u->jobseekerregistration()->saveMany(
-        //             \App\Models\JobSeekerRegistration::factory(1)->make()
-        //         );
-        //     });
-
-        \App\Models\User::factory(10)->create();
-        \App\Models\JobType::factory(2)->create();
-        \App\Models\JobCategory::factory(10)->create();
-        \App\Models\Profession::factory(9)->create();
-        \App\Models\Specialty::factory(11)->create();
+        // \App\Models\User::factory(10)->create();
+        // \App\Models\JobType::factory(2)->create();
+        // \App\Models\JobCategory::factory(10)->create();
+        // \App\Models\Profession::factory(9)->create();
+        // \App\Models\Specialty::factory(11)->create();
         \App\Models\JobSeekerRegistration::factory(10)->create();
         \App\Models\Job::factory(10)->create();
     }

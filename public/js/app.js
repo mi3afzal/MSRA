@@ -3194,7 +3194,7 @@ var app = new Vue({
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*Copyright 2010-2021 Simplemaps.com
-html5australiamapv4.12 - trial version
+html5australiamapv4.15 - trial version
 Use pursuant to license agreement at https://simplemaps.com/license */
 
 /* shifty - v1.5.3 - http://jeremyckahn.github.io/shifty, embedded within map logic*/
@@ -7635,8 +7635,8 @@ var simplemaps_australiamap_mapinfo = {
           C,
           T,
           S,
-          B,
           O,
+          B,
           F,
           I,
           P,
@@ -7692,8 +7692,8 @@ var simplemaps_australiamap_mapinfo = {
           Ce,
           Te,
           Se,
-          Be,
           Oe,
+          Be,
           Fe,
           Ie,
           Pe,
@@ -7746,8 +7746,8 @@ var simplemaps_australiamap_mapinfo = {
           Ct,
           Tt,
           St,
-          Bt,
           Ot,
+          Bt,
           Ft,
           It,
           Pt,
@@ -7871,7 +7871,7 @@ var simplemaps_australiamap_mapinfo = {
     }
 
     function po() {
-      C = !(!_.background_image_url || "no" == _.background_image_url) && _.background_image_url, T = !!_.background_image_bbox && _.background_image_bbox, Y = "yes" == _.background_transparent ? 0 : 1, Q = _.label_size ? _.label_size : 22, _.label_color ? _.label_color : "#ffffff", X = "yes" == _.url_new_tab, U = _.location_opacity ? _.location_opacity : 1, "yes" == _.js_hooks, Z = _.border_size ? _.border_size : 1.5, G = _.popup_color ? _.popup_color : "#ffffff", P = _.popup_orientation ? _.popup_orientation : "auto", I = _.popup_centered ? _.popup_centered : "auto", K = _.popup_opacity ? _.popup_opacity : .9, $ = _.popup_shadow > -1 ? _.popup_shadow : 1, ee = _.popup_corners ? _.popup_corners : 5, te = "yes" == _.popup_nocss, J = !!_.popup_maxwidth && _.popup_maxwidth, oe = _.popup_font ? _.popup_font : "12px/1.5 Verdana, Arial, Helvetica, sans-serif", V = "no" != _.zoom_out_incrementally, W = _.adjacent_opacity ? _.adjacent_opacity : .3, S = _.zoom_time ? _.zoom_time : .5, O = _.zoom_increment ? _.zoom_increment : 2, B = "no" != _.zoom_mobile, D = _.fade_time ? 1e3 * _.fade_time : 200, q = i.labels, F = _.custom_shapes ? _.custom_shapes : {}, j = !(!_.initial_back || "no" == _.initial_back) && _.initial_back, H = "yes" == _.hide_eastern_labels, N = _.link_text ? _.link_text : "View Website", !!_.order_number && _.order_number, R = _.zoom_percentage ? _.zoom_percentage : .99;
+      C = !(!_.background_image_url || "no" == _.background_image_url) && _.background_image_url, T = !!_.background_image_bbox && _.background_image_bbox, Y = "yes" == _.background_transparent ? 0 : 1, Q = _.label_size ? _.label_size : 22, _.label_color ? _.label_color : "#ffffff", X = "yes" == _.url_new_tab, U = _.location_opacity ? _.location_opacity : 1, "yes" == _.js_hooks, Z = _.border_size ? _.border_size : 1.5, G = _.popup_color ? _.popup_color : "#ffffff", P = _.popup_orientation ? _.popup_orientation : "auto", I = _.popup_centered ? _.popup_centered : "auto", K = _.popup_opacity ? _.popup_opacity : .9, $ = _.popup_shadow > -1 ? _.popup_shadow : 1, ee = _.popup_corners ? _.popup_corners : 5, te = "yes" == _.popup_nocss, J = !!_.popup_maxwidth && _.popup_maxwidth, oe = _.popup_font ? _.popup_font : "12px/1.5 Verdana, Arial, Helvetica, sans-serif", V = "no" != _.zoom_out_incrementally, W = _.adjacent_opacity ? _.adjacent_opacity : .3, S = _.zoom_time ? _.zoom_time : .5, B = _.zoom_increment ? _.zoom_increment : 2, O = "no" != _.zoom_mobile, D = _.fade_time ? 1e3 * _.fade_time : 200, q = i.labels, F = _.custom_shapes ? _.custom_shapes : {}, j = !(!_.initial_back || "no" == _.initial_back) && _.initial_back, H = "yes" == _.hide_eastern_labels, N = _.link_text ? _.link_text : "View Website", !!_.order_number && _.order_number, R = _.zoom_percentage ? _.zoom_percentage : .99;
     }
 
     function _o(e) {
@@ -7913,7 +7913,7 @@ var simplemaps_australiamap_mapinfo = {
 
         Nt = document.createElement("div");
         var e = s || l ? "20px" : "5px";
-        Nt.style.cssText = "overflow: visible !important; clip-path: none !important; display:inline !important; opacity:1 !important; transform: none !important; visibility: visible !important; z-index: 1 !important; right: 5px !important; bottom:" + e + " !important; z-index: 1 !important; position: absolute !important; filter: opacity(1) !important;", _e.appendChild(Nt), Nt.innerHTML = '<a style="overflow: visible !important; clip-path: none !important; opacity: 1 !important;  filter: opacity(1) !important; transform: none !important; display: block !important; visibility: visible !important; font: 18px Verdana, Arial, Helvetica, sans-serif !important; cursor: pointer !important; font-weight: bold !important; float: right !important; color: #000000 !important; text-decoration: none !important;" href="https://simplemaps.com" title="For evaluation use only.">Simplemaps.com Trial</a>', 503 != Nt.innerHTML.length && (_e.innerHTML = "");
+        Nt.style.cssText = "overflow: visible !important; clip-path: none !important; display:inline !important; opacity:1 !important; transform: none !important; visibility: visible !important; z-index: 1 !important; right: 5px !important; bottom:" + e + " !important; z-index: 1 !important; position: absolute !important; filter: opacity(1) !important;", _e.appendChild(Nt), Nt.innerHTML = '<a style="overflow: visible !important; clip-path: none !important; opacity: 1 !important;  filter: opacity(1) !important; transform: none !important; display: block !important; visibility: visible !important; font: 18px Verdana, Arial, Helvetica, sans-serif !important; cursor: pointer !important; font-weight: bold !important; float: right !important; color: #000000 !important; text-decoration: none !important;" href="https://simplemaps.com" title="For evaluation use only.">Simplemaps.com Trial</a>', ne || 503 != Nt.innerHTML.length && (_e.innerHTML = "");
       }
     }
 
@@ -8034,11 +8034,11 @@ var simplemaps_australiamap_mapinfo = {
 
                     if (o && n) {
                       var a = Io(vt, ft[x]);
-                      if (a || w) return Bo(ft[x]), !1;
+                      if (a || w) return Oo(ft[x]), !1;
                     }
                   }
 
-                  if (o && t > ft[-1].sm.zooming_dimensions.w - 1) return w || Bo(ft[-1]), !1;
+                  if (o && t > ft[-1].sm.zooming_dimensions.w - 1) return w || Oo(ft[-1]), !1;
                   return !0;
                 }(e)) return;
                 var o = {
@@ -8078,16 +8078,16 @@ var simplemaps_australiamap_mapinfo = {
                 }(e, t);
 
                 if (!i) return;
-                o.sm.zooming_dimensions = i, Bo(o);
+                o.sm.zooming_dimensions = i, Oo(o);
               }
             }
 
             Ge.transform(c), ve.style.top = f + 2 * v + "px", ve.style.left = v + "px", (Ge = Te.set()).push(u, p), Ke = function Ke() {
-              _(O);
+              _(B);
             }, et = function et(e, t) {
               _(e, t);
             }, $e = function $e() {
-              _(1 / O);
+              _(1 / B);
             }, e.zoom_in = Ke, e.zoom_out = $e, Ze.click(Ke), Ge.click($e), Ze.touchend(Ke), Ge.touchend($e);
           }();
         }
@@ -8289,9 +8289,9 @@ var simplemaps_australiamap_mapinfo = {
             y: b - y
           }
         }),
-            B = o.distance(x, z) / A;
+            O = o.distance(x, z) / A;
 
-        return Math.abs(o.distance(S.opt1, a) - B) < Math.abs(o.distance(S.opt2, a) - B) ? {
+        return Math.abs(o.distance(S.opt1, a) - O) < Math.abs(o.distance(S.opt2, a) - O) ? {
           x: S.opt1.x,
           y: S.opt1.y
         } : {
@@ -8481,12 +8481,12 @@ var simplemaps_australiamap_mapinfo = {
       z.sm && M && (Rt.hide(), M = !1, z.sm && St.call(z), re = !1);
     }
 
-    function Bo(i, n, a) {
+    function Oo(i, n, a) {
       if (!Dt) {
         So(), Kt && (Kt.stop(), Kt = !1), Jt && i != Jt && St.call(Jt), z = !1, i, Rt.hide(), M = !1, Dt = !0, i.sm.zooming_dimensions = xo(i);
         var r = To(i.sm.zooming_dimensions),
             s = To(vt.sm.zooming_dimensions);
-        if (Ae = i.sm.zooming_dimensions.r, Ao(i, n), ie || me && !B || n) dt = r, Te.setViewBox(r.x, r.y, r.w, r.h, !1), c();else {
+        if (Ae = i.sm.zooming_dimensions.r, Ao(i, n), ie || me && !O || n) dt = r, Te.setViewBox(r.x, r.y, r.w, r.h, !1), c();else {
           var l = t.Tweenable ? new t.Tweenable() : new Tweenable();
           pt = l.tween({
             from: s,
@@ -8510,7 +8510,7 @@ var simplemaps_australiamap_mapinfo = {
       }
     }
 
-    function Oo(e) {
+    function Bo(e) {
       var t = "",
           o = {};
 
@@ -8681,7 +8681,7 @@ var simplemaps_australiamap_mapinfo = {
           y: h.y,
           y2: h.y2
         };
-        r.sm.bbox = f, r.sm.bbox.width = f.x2 - f.x, r.sm.bbox.height = f.y2 - f.y, r.sm.pulse_speed = i.pulse_speed, r.sm.pulse_size = i.pulse_size, r.sm.pulse_color = i.pulse_color ? i.pulse_color : i.border_color, r.sm.hide ? r.hide() : o && Be.push(r), o && (ht[e] = r, He.push(r));
+        r.sm.bbox = f, r.sm.bbox.width = f.x2 - f.x, r.sm.bbox.height = f.y2 - f.y, r.sm.pulse_speed = i.pulse_speed, r.sm.pulse_size = i.pulse_size, r.sm.pulse_color = i.pulse_color ? i.pulse_color : i.border_color, r.sm.hide ? r.hide() : o && Oe.push(r), o && (ht[e] = r, He.push(r));
       }, nt) {
         _t(o);
       }
@@ -8863,16 +8863,16 @@ var simplemaps_australiamap_mapinfo = {
                     C = E.height * M * .5,
                     T = .5 * (E.x2 + E.x),
                     S = .5 * (E.y2 + E.y),
-                    B = T + A,
-                    O = (h = S - C, S + C),
-                    F = (d = T - A) > k.x && B < k.x2,
-                    I = h > k.y && O < k.y2;
+                    O = T + A,
+                    B = (h = S - C, S + C),
+                    F = (d = T - A) > k.x && O < k.x2,
+                    I = h > k.y && B < k.y2;
 
                 if (F && I) {
                   var P = Raphael.isPointInsidePath(w, d, h),
-                      R = Raphael.isPointInsidePath(w, B, h),
-                      j = Raphael.isPointInsidePath(w, d, O),
-                      N = Raphael.isPointInsidePath(w, B, O),
+                      R = Raphael.isPointInsidePath(w, O, h),
+                      j = Raphael.isPointInsidePath(w, d, B),
+                      N = Raphael.isPointInsidePath(w, O, B),
                       L = P && R && j && N,
                       D = E.width / M < ke;
 
@@ -8917,7 +8917,7 @@ var simplemaps_australiamap_mapinfo = {
               v.sm.pill = G, De.push(G), s.push(G), s.push(v);
             } else s.push(v);
 
-            if ("out" != v.sm.display && "all" != v.sm.display || v.sm.hide ? s.hide() : Ie.push(s), "location" != v.sm.parent.sm.type || v.sm.line || Oe.push(s), Qe.push(s), bt[e] = s, ie || v.node.setAttribute("class", "sm_label_" + e), u) {
+            if ("out" != v.sm.display && "all" != v.sm.display || v.sm.hide ? s.hide() : Ie.push(s), "location" != v.sm.parent.sm.type || v.sm.line || Be.push(s), Qe.push(s), bt[e] = s, ie || v.node.setAttribute("class", "sm_label_" + e), u) {
               var K = (_.location_auto_padding ? 1 + 2 * _.location_auto_padding : 1.3) * v.sm.bbox.width / Ee,
                   $ = (oe = v.sm.parent).sm.labels,
                   ee = oe.sm.shape_type;
@@ -9122,9 +9122,9 @@ var simplemaps_australiamap_mapinfo = {
     }
 
     function Xo() {
-      Bt = function Bt() {
+      Ot = function Ot() {
         this.sm.parent && Tt.call(this.sm.parent);
-      }, Ot = function Ot() {
+      }, Bt = function Bt() {
         this.sm.parent && St.call(this.sm.parent);
       }, At = function At(e) {
         this.sm.parent && Ct.call(this.sm.parent, e);
@@ -9134,7 +9134,7 @@ var simplemaps_australiamap_mapinfo = {
 
           if (!("location" != e.sm.type || "image" == o || Ae < .05)) {
             var i = e.clone();
-            Ye.toFront(), Oe.toFront();
+            Ye.toFront(), Be.toFront();
             var n = 1 * e.sm.pulse_size,
                 a = {
               "stroke-width": 4 * e.attrs["stroke-width"],
@@ -9193,7 +9193,7 @@ var simplemaps_australiamap_mapinfo = {
                 });
               });
             }(e), !e.sm.inactive)) if (function (e) {
-              "state" == e.sm.type && e.sm.emphasizable && (Zt = !0, e.insertBefore(Be), setTimeout(function () {
+              "state" == e.sm.type && e.sm.emphasizable && (Zt = !0, e.insertBefore(Oe), setTimeout(function () {
                 Zt = !1;
               }, 1));
             }(e), no(e), t) {
@@ -9262,20 +9262,20 @@ var simplemaps_australiamap_mapinfo = {
                 }
               }
             } else lo(i, o), ri(), z && z.sm ? St.call(z, !0, function () {
-              Bo(i), z = i;
-            }) : (Bo(i), z = i);
+              Oo(i), z = i;
+            }) : (Oo(i), z = i);
             var l, c;
           }
         }
       }, Ft = function Ft(e) {
         if (void 0 === e && (e = !1), uo("back", []), ("out" == vt.sm.type || "region" == vt.sm.type && w) && j) window.location.href = "javascript:" + j;else if (V && "state" == vt.sm.type && vt.sm.region) z ? St.call(z, !0, function () {
-          Bo(ft[vt.sm.region]);
-        }) : Bo(ft[vt.sm.region], !1, e);else {
+          Oo(ft[vt.sm.region]);
+        }) : Oo(ft[vt.sm.region], !1, e);else {
           var t = Io(vt, ft[x]),
               o = "manual" == vt.sm.type && t ? ft[x] : ft[-1];
           z && z.sm && "region" != z.sm.type ? St.call(z, !0, function () {
-            Bo(o);
-          }) : Bo(o, !1, e);
+            Oo(o);
+          }) : Oo(o, !1, e);
         }
       }, It = function It() {
         Ft();
@@ -9332,7 +9332,7 @@ var simplemaps_australiamap_mapinfo = {
     }
 
     function Go() {
-      He.toBack(), Ve.toBack(), je.toBack(), Fe && Fe.toFront(), Qe.toFront(), Ye.toFront(), Oe.toFront();
+      He.toBack(), Ve.toBack(), je.toBack(), Fe && Fe.toFront(), Qe.toFront(), Ye.toFront(), Be.toFront();
     }
 
     function Jo(e) {
@@ -9419,7 +9419,7 @@ var simplemaps_australiamap_mapinfo = {
         });
       }
 
-      We.hover(Tt, St), We.click(Ct), Qe.hover(Bt, Ot), Qe.click(At), g && (We.touchend(Ct), We.touchstart(Ct), Qe.touchend(At));
+      We.hover(Tt, St), We.click(Ct), Qe.hover(Ot, Bt), Qe.click(At), g && (We.touchend(Ct), We.touchstart(Ct), Qe.touchend(At));
     }
 
     function Ko() {
@@ -9454,7 +9454,7 @@ var simplemaps_australiamap_mapinfo = {
 
       if (j || Ue.hide(), !e) {
         if (Vt) var i = Vt;else if (yt) i = yt;else i = t;
-        Bo(i, !Vt && !yt || !v);
+        Oo(i, !Vt && !yt || !v);
       }
 
       if (w && -1 != x) {
@@ -9474,10 +9474,10 @@ var simplemaps_australiamap_mapinfo = {
 
         return Fe.forEach(function (e) {
           Raphael.isPointInsideBBox(o.sm.bbox, e.sm.bbox.x, e.sm.bbox.y) && e.show();
-        }), void (!e && v && Bo(ft[x]));
+        }), void (!e && v && Oo(ft[x]));
       }
 
-      je.show(), Be.show(), Ie.show(), Fe.show(), e || !v || Vt || yt || Bo(ft[x]);
+      je.show(), Oe.show(), Ie.show(), Fe.show(), e || !v || Vt || yt || Oo(ft[x]);
     }
 
     function ei(e) {
@@ -9485,14 +9485,14 @@ var simplemaps_australiamap_mapinfo = {
     }
 
     function ti(t) {
-      var r, m, S, B, O, F, R, j, N, D;
+      var r, m, S, O, B, F, R, j, N, D;
       (i = e.mapdata, n = e.mapinfo, _e && delete window.paper, vi(), function () {
         d = i.state_specific, _ = i.main_settings;
         var e = document.getElementsByTagName("script"),
             t = e[e.length - 1].src,
             o = "no" != _.back_image && _.back_image;
         c = "no" != _.back_image_url && _.back_image_url, u = "default" != _.images_directory && _.images_directory, p = u || t.substring(0, t.lastIndexOf("/usmap.js") + 1) + "map_images/", !c && o && (c = p + o);
-      }(), ie = "VML" == Raphael.type, ne = !!document.all, ae = !!o.isMobile.iOS(), me = !!o.isMobile.any(), ue = _.pop_ups ? _.pop_ups : _.popups, pe = void 0 === _.mobile_scaling && "no" != _.mobile_scaling ? 1 : _.mobile_scaling, re = !1, jt = ho(ue), ce = void 0 === _.div ? "map" : _.div, x = void 0 === _.initial_zoom ? -1 : _.initial_zoom, w = "yes" == _.initial_zoom_solo && -1 != x, v = void 0 !== _.fly_in_from && "no" != _.fly_in_from && _.fly_in_from, b = "responsive" == _.width, "0" == (y = !!_.rotate && _.rotate) && (y = !1), L = "no" != _.zoom, g = "yes" == _.manual_zoom, f = void 0 === _.keyboard_navigation ? "auto" : _.keyboard_navigation, A = "no" != _.allow_scrolling, E = !(!n.default_regions || !L) && n.default_regions, i.regions && (E = i.regions), i.labels && (q = i.labels), k = !1, z = !1, M = !1, h = !1, function () {
+      }(), ie = "VML" == Raphael.type, ne = !!window.document.documentMode, ae = !!o.isMobile.iOS(), me = !!o.isMobile.any(), ue = _.pop_ups ? _.pop_ups : _.popups, pe = void 0 === _.mobile_scaling && "no" != _.mobile_scaling ? 1 : _.mobile_scaling, re = !1, jt = ho(ue), ce = void 0 === _.div ? "map" : _.div, x = void 0 === _.initial_zoom ? -1 : _.initial_zoom, w = "yes" == _.initial_zoom_solo && -1 != x, v = void 0 !== _.fly_in_from && "no" != _.fly_in_from && _.fly_in_from, b = "responsive" == _.width, "0" == (y = !!_.rotate && _.rotate) && (y = !1), L = "no" != _.zoom, g = "yes" == _.manual_zoom, f = void 0 === _.keyboard_navigation ? "auto" : _.keyboard_navigation, A = "no" != _.allow_scrolling, E = !(!n.default_regions || !L) && n.default_regions, i.regions && (E = i.regions), i.labels && (q = i.labels), k = !1, z = !1, M = !1, h = !1, function () {
         if ("continent" != a) return !1;
         var e = 0;
 
@@ -9516,7 +9516,7 @@ var simplemaps_australiamap_mapinfo = {
           Le = Te.image(C, e.x, e.y, e.x2 - e.x, e.y2 - e.y), je.push(Le);
         }
 
-        je.push(Ne), je.transform(Re), je.hide(), He = Te.set(), Be = Te.set(), qe = Te.set(), We = Te.set(), Ye = Te.set(), Ve = Te.set(), Qe = Te.set(), Oe = Te.set(), Ie = Te.set(), Fe = Te.set(), De = Te.set(), Se = Te.set(), Te.set().push(He, We, je, Qe, Fe);
+        je.push(Ne), je.transform(Re), je.hide(), He = Te.set(), Oe = Te.set(), qe = Te.set(), We = Te.set(), Ye = Te.set(), Ve = Te.set(), Qe = Te.set(), Be = Te.set(), Ie = Te.set(), Fe = Te.set(), De = Te.set(), Se = Te.set(), Te.set().push(He, We, je, Qe, Fe);
       }(), vo(), function () {
         (Lt = document.createElement("div")).style.cssText = "overflow: visible !important; clip-path: none !important; display:inline !important; opacity:1 !important; transform: none !important; visibility: visible !important; z-index: 1 !important; right: 5px !important; bottom: 5px !important; z-index: 1 !important; position: absolute !important; filter: opacity(1) !important;", _e.appendChild(Lt);
         var e = "font: 12px Verdana, Arial, Helvetica, sans-serif !important; cursor: pointer !important; float: right !important; color: #000000 !important; text-decoration: none !important;";
@@ -9557,13 +9557,13 @@ var simplemaps_australiamap_mapinfo = {
         }
       }(), F = o.findPos(_e), R = F[0], j = F[1], N = 0, D = 0, Rt = {
         create: function create() {
-          (O = document.createElement("div")).setAttribute("id", "tt_sm_" + ce), O.style.position = "absolute", O.style.display = "none", _e.appendChild(O), _e.onmousemove = this.pos, O.onmousemove = this.pos;
+          (B = document.createElement("div")).setAttribute("id", "tt_sm_" + ce), B.style.position = "absolute", B.style.display = "none", _e.appendChild(B), _e.onmousemove = this.pos, B.onmousemove = this.pos;
         },
         show: function show(e) {
-          jt || (h = !1, null == O && Rt.create(), O.style.display = "block", O.style.zIndex = 2, O.style.maxWidth = ut + "px", O.innerHTML = e.sm.content, Rt.update_pos(e));
+          jt || (h = !1, null == B && Rt.create(), B.style.display = "block", B.style.zIndex = 2, B.style.maxWidth = ut + "px", B.innerHTML = e.sm.content, Rt.update_pos(e));
         },
         reset_pos: function reset_pos(e, t, o) {
-          null == O && Rt.create(), Rt.set_pos(0 + t, 0 + e, o);
+          null == B && Rt.create(), Rt.set_pos(0 + t, 0 + e, o);
         },
         update_pos: function update_pos(e) {
           Rt.set_pos(r, m, e);
@@ -9572,22 +9572,22 @@ var simplemaps_australiamap_mapinfo = {
           t ? (r = t.u, m = t.l) : (r = ne ? event.clientY + document.documentElement.scrollTop : e.pageY, m = ne ? event.clientX + document.documentElement.scrollLeft : e.pageX), r -= j, m -= R, jt || k || h || M && re || Rt.set_pos(r, m);
         },
         set_pos: function set_pos(e, t, o) {
-          if (O) {
+          if (B) {
             var i = !e || !t;
 
             if (o && o.sm.on_click && ("yes" == I || "auto" == I && be < 401) || i) {
-              O.style.top = "-100px", O.style.left = "-100px", O.style.bottom = "auto", O.style.right = "auto", N = parseInt(O.offsetHeight, 10), D = parseInt(O.offsetWidth, 10);
+              B.style.top = "-100px", B.style.left = "-100px", B.style.bottom = "auto", B.style.right = "auto", N = parseInt(B.offsetHeight, 10), D = parseInt(B.offsetWidth, 10);
               var n = be - D > 0 ? .5 * (be - D) : 0,
                   a = xe - N > 0 ? .5 * (xe - N) : 0;
-              O.style.top = a + "px", O.style.left = n + "px", O.style.right = "auto", O.style.bottom = "auto";
+              B.style.top = a + "px", B.style.left = n + "px", B.style.right = "auto", B.style.bottom = "auto";
             } else {
-              if (B = 0 + .5 * xe, t > (S = 0 + .5 * be) && e > B) r = 4;else if (t < S && e > B) r = 3;else if (t > S && e < B) r = 2;else var r = 1;
-              "below" == P ? (3 == r && (r = 1), 4 == r && (r = 2)) : "above" == P && (1 == r && (r = 3), 2 == r && (r = 4)), 1 == r ? (O.style.bottom = "auto", O.style.top = e + 5 + "px", O.style.left = t + 5 + 5 + "px", O.style.right = "auto") : 2 == r ? (O.style.bottom = "auto", O.style.top = e + 5 + "px", O.style.right = be - t + 5 + "px", O.style.left = "auto") : 3 == r ? (O.style.bottom = xe - e + 5 + "px", O.style.top = "auto", O.style.left = t + 5 + 3 + "px", O.style.right = "auto") : (O.style.bottom = xe - e + 5 + "px", O.style.top = "auto", O.style.right = be - t + 5 + "px", O.style.left = "auto");
+              if (O = 0 + .5 * xe, t > (S = 0 + .5 * be) && e > O) r = 4;else if (t < S && e > O) r = 3;else if (t > S && e < O) r = 2;else var r = 1;
+              "below" == P ? (3 == r && (r = 1), 4 == r && (r = 2)) : "above" == P && (1 == r && (r = 3), 2 == r && (r = 4)), 1 == r ? (B.style.bottom = "auto", B.style.top = e + 5 + "px", B.style.left = t + 5 + 5 + "px", B.style.right = "auto") : 2 == r ? (B.style.bottom = "auto", B.style.top = e + 5 + "px", B.style.right = be - t + 5 + "px", B.style.left = "auto") : 3 == r ? (B.style.bottom = xe - e + 5 + "px", B.style.top = "auto", B.style.left = t + 5 + 3 + "px", B.style.right = "auto") : (B.style.bottom = xe - e + 5 + "px", B.style.top = "auto", B.style.right = be - t + 5 + "px", B.style.left = "auto");
             }
           }
         },
         hide: function hide() {
-          null != O && (O.style.display = "none"), (F = o.findPos(_e)) && (R = F[0], j = F[1]);
+          null != B && (B.style.display = "none"), (F = o.findPos(_e)) && (R = F[0], j = F[1]);
         }
       }, yo(), go(), jo(), Ro(), No(), setTimeout(function () {
         Wo(), Do(), function () {
@@ -9635,46 +9635,63 @@ var simplemaps_australiamap_mapinfo = {
           }
         }(), function () {
           ye.style.right = "0em", ye.style.top = "0em";
-          var e = void 0 === _.navigate_title ? "Navigate" : _.navigate_title;
-          (c = document.createElement("select")).options.add(new Option(e, "-1")), c.options.add(new Option("Back", "back")), c.options.add(new Option("Zoom in", "in")), c.options.add(new Option("Zoom out", "out")), c.options.add(new Option("Left", "left")), c.options.add(new Option("Right", "right")), c.options.add(new Option("Up", "up")), c.options.add(new Option("Down", "down")), c.style.marginRight = ".5em", c.style.marginTop = ".5em", c.style["float"] = "left", ye.appendChild(c), c.onchange = function (e) {
-            if ("-2" == this.value) return !1;
-            "back" == this.value && Ft(), "out" == this.value && $e(), "in" == this.value && Ke(), "left" == this.value && et("-.25", "x"), "right" == this.value && et(".25", "x"), "up" == this.value && et("-.25", "y"), "down" == this.value && et(".25", "y"), setTimeout(function () {
-              this.value = "-1";
-            }, 500);
-          };
-          var t = void 0 === _.states_title ? "States" : _.states_title,
-              i = void 0 === _.regions_title ? "Regions" : _.regions_title,
-              n = void 0 === _.locations_title ? "Locations" : _.locations_title,
-              a = {
+          var e = void 0 === _.navigate_title ? "Navigate" : _.navigate_title,
+              t = void 0 === _.keyboard_omit ? "" : _.keyboard_omit;
+
+          if (!(t.indexOf("navigat") > -1)) {
+            var i = document.createElement("select");
+            i.options.add(new Option(e, "-1")), i.options.add(new Option("Back", "back")), g && (i.options.add(new Option("Zoom in", "in")), i.options.add(new Option("Zoom out", "out")), i.options.add(new Option("Left", "left")), i.options.add(new Option("Right", "right")), i.options.add(new Option("Up", "up")), i.options.add(new Option("Down", "down"))), i.style.marginRight = ".5em", i.style.marginTop = ".5em", i.style["float"] = "left", ye.appendChild(i), i.onchange = function (e) {
+              if ("-1" == this.value) return !1;
+              "back" == this.value && Ft(), "out" == this.value && $e(), "in" == this.value && Ke(), "left" == this.value && et("-.25", "x"), "right" == this.value && et(".25", "x"), "up" == this.value && et("-.25", "y"), "down" == this.value && et(".25", "y"), setTimeout(function () {
+                i.value = "-1";
+              }, 1e3);
+            };
+          }
+
+          var n = void 0 === _.states_title ? "States" : _.states_title,
+              a = void 0 === _.regions_title ? "Regions" : _.regions_title,
+              r = void 0 === _.locations_title ? "Locations" : _.locations_title,
+              s = {
             state: {
-              title: t,
+              title: n,
               array: ht
             },
             location: {
-              title: n,
+              title: r,
               array: kt
             },
             region: {
-              title: i,
+              title: a,
               array: ft
             }
           };
 
-          for (var r in a) {
-            var s = a[r],
-                l = Object.size(s.array);
+          for (var l in s) {
+            var c = s[l],
+                m = t.indexOf(l) > -1,
+                u = Object.size(c.array);
 
-            if (!(l < 1 || l < 2 && "region" == r)) {
-              var c = document.createElement("select");
+            if (!(u < 1 || u < 2 && "region" == l || m)) {
+              var p = document.createElement("select");
+              p.options.add(new Option(c.title, "-1")), p.style.marginRight = ".5em", p.style.marginTop = ".5em", p.style["float"] = "left";
+              var d = [];
 
-              for (var m in c.options.add(new Option(s.title, "-1")), c.style.marginRight = ".5em", c.style.marginTop = ".5em", c.style["float"] = "left", s.array) {
-                var u = s.array[m];
-                "out" == u.sm.type || u.sm.inactive || u.sm.hide || c.options.add(new Option(u.sm.name, u.sm.id));
+              for (var h in c.array) {
+                d.push(c.array[h]);
               }
 
-              c.onchange = o.callback_closure({
-                entry: s,
-                dropdown: c
+              var f = d.sort(function (e, t) {
+                e.sm.name, t.sm.name;
+              });
+
+              for (h = 0; h < f.length; h++) {
+                var v = f[h];
+                "out" == v.sm.type || v.sm.inactive || v.sm.hide || p.options.add(new Option(v.sm.name, v.sm.id));
+              }
+
+              p.onchange = o.callback_closure({
+                entry: c,
+                dropdown: p
               }, function (e) {
                 var t = e.dropdown,
                     o = e.entry;
@@ -9708,7 +9725,7 @@ var simplemaps_australiamap_mapinfo = {
 
                   Gt(z, _r4);
                 }
-              }), ye.appendChild(c);
+              }), ye.appendChild(p);
             }
           }
         }(), function () {
@@ -9773,15 +9790,15 @@ var simplemaps_australiamap_mapinfo = {
     }
 
     function oi(e, t) {
-      Bo(ft[e], !1, t);
+      Oo(ft[e], !1, t);
     }
 
     function ii(e, t) {
-      Bo(ht[e], !1, t);
+      Oo(ht[e], !1, t);
     }
 
     function ni(e, t, o) {
-      void 0 === t && (t = 4), void 0 === o && (o = function o() {}), Bo({
+      void 0 === t && (t = 4), void 0 === o && (o = function o() {}), Oo({
         sm: {
           type: "manual",
           zp: t,
@@ -9812,7 +9829,7 @@ var simplemaps_australiamap_mapinfo = {
         w: a,
         h: r,
         r: c
-      }, Bo(i, !1, function () {
+      }, Oo(i, !1, function () {
         o(), Ue.show();
       });
     }
@@ -9892,7 +9909,7 @@ var simplemaps_australiamap_mapinfo = {
     }
 
     function vi() {
-      e.calibrate = Oo, e.get_xy = oo, e.proj = bo, e.load = ti, e.region_zoom = oi, e.state_zoom = ii, e.zoom_in = !1, e.zoom_out = !1, e.location_zoom = ai, e.back = hi, e.popup = si, e.pulse = li, e.pulse_state = fi, e.popup_hide = ci, e.zoom_level = "out", e.ignore_clicks = !1, e.zoom_level_id = !1, e.disable_urls = di, e.enable_urls = _i, e.disable_popups = ui, e.enable_popups = pi, e.refresh = ei, e.refresh_state = mi, e.loaded = !0, e.trial = r;
+      e.calibrate = Bo, e.get_xy = oo, e.proj = bo, e.load = ti, e.region_zoom = oi, e.state_zoom = ii, e.zoom_in = !1, e.zoom_out = !1, e.location_zoom = ai, e.back = hi, e.popup = si, e.pulse = li, e.pulse_state = fi, e.popup_hide = ci, e.zoom_level = "out", e.ignore_clicks = !1, e.zoom_level_id = !1, e.disable_urls = di, e.enable_urls = _i, e.disable_popups = ui, e.enable_popups = pi, e.refresh = ei, e.refresh_state = mi, e.loaded = !0, e.trial = r;
     }
 
     function yi() {
@@ -18012,19 +18029,18 @@ var simplemaps_australiamap_mapdata = {
   main_settings: {
     //General settings
     width: "responsive",
-    //or 'responsive'
+    //'700' or 'responsive'
     background_color: "#FFFFFF",
     background_transparent: "yes",
-    popups: "detect",
+    border_color: "#ffffff",
     //State defaults
-    state_description: "State description",
+    state_description: "Have multiple links for each state.<br /><a  href=\"#\" onClick='alert(\"You would go to Link 1\")'>Link 1</a><br /><a  href=\"#\" onClick='alert(\"You would go to Link 2\")'>Link 2</a><br /><a  href=\"#\" onClick='alert(\"You would go to Link 3\")'>Link 3</a><br />",
     state_color: "#88A4BC",
     state_hover_color: "#3B729F",
-    state_url: "https://simplemaps.com",
+    state_url: "http://simplemaps.com",
     border_size: 1.5,
-    border_color: "#ffffff",
     all_states_inactive: "no",
-    all_states_zoomable: "no",
+    all_states_zoomable: "yes",
     //Location defaults
     location_description: "Location description",
     location_color: "#FF0067",
@@ -18033,26 +18049,24 @@ var simplemaps_australiamap_mapdata = {
     location_url: "",
     location_size: 25,
     location_type: "square",
+    location_image_source: "frog.png",
     location_border_color: "#FFFFFF",
     location_border: 2,
     location_hover_border: 2.5,
     all_locations_inactive: "no",
     all_locations_hidden: "no",
     //Label defaults
-    label_color: "#ffffff",
-    label_hover_color: "#ffffff",
+    label_color: "#d5ddec",
+    label_hover_color: "#d5ddec",
     label_size: 22,
     label_font: "Arial",
     hide_labels: "no",
+    hide_eastern_labels: "no",
     //Zoom settings
-    manual_zoom: "yes",
+    zoom: "yes",
     back_image: "no",
-    arrow_box: "no",
-    navigation_size: "40",
-    navigation_color: "#f7f7f7",
-    navigation_border_color: "#636363",
     initial_back: "no",
-    initial_zoom: -1,
+    initial_zoom: "-1",
     initial_zoom_solo: "no",
     region_opacity: 1,
     region_hover_opacity: 0.6,
@@ -18069,12 +18083,11 @@ var simplemaps_australiamap_mapdata = {
     //Advanced settings
     div: "map",
     auto_load: "yes",
-    rotate: "0",
-    url_new_tab: "yes",
+    url_new_tab: "no",
     images_directory: "default",
-    import_labels: "no",
     fade_time: 0.1,
-    link_text: "View Website"
+    link_text: "View Website",
+    popups: "detect"
   },
   state_specific: {
     CT: {
@@ -18148,7 +18161,11 @@ var simplemaps_australiamap_mapdata = {
       name: "Sydney"
     }
   },
-  labels: {}
+  labels: {},
+  legend: {
+    entries: []
+  },
+  regions: {}
 };
 
 /***/ }),

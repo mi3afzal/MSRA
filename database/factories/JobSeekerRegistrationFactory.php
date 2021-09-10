@@ -42,7 +42,7 @@ class JobSeekerRegistrationFactory extends Factory
             'location' => State::pluck('id')->random(),
             'city' => City::pluck('id')->random(),
             'suburb' => Suburb::pluck('id')->random(),
-            'token' => Str::random(20),
+            'token' => Str::random(50),
             'status' => "1",
         ];
     }

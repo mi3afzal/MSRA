@@ -40,7 +40,7 @@ class JobTypeController extends Controller
      */
     public function lists()
     {
-        $title = "jobtype lists";
+        $title = "jobtype ( services ) lists";
         $module = "jobtype";
         $data = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
         return view('admin.jobtype.index', compact('data', 'title', 'module'));
@@ -121,7 +121,7 @@ class JobTypeController extends Controller
      */
     public function create()
     {
-        $title = "add job type";
+        $title = "add job type / service";
         $module = "jobtype";
         return view('admin.jobtype.add', compact('title', 'module'));
     }

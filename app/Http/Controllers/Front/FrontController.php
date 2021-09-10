@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Models\Front;
 use App\Models\State;
 use App\Models\JobType;
+use App\Models\Profession;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -17,12 +18,14 @@ class FrontController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
         $states = State::where("status", "1")->orderBy('name', 'asc')->get();
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->pluck("jobtype", "id");
         $sociallinks = SocialLink::where("status", "1")->first();
-        return view('front.home', compact("jobtypes", "states", "sociallinks"));
+        return view('front.home', compact("jobtypes", "states", "sociallinks", "professions"));
     }
 
     /**

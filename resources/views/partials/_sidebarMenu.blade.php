@@ -44,7 +44,7 @@
                                                             } ?>">
                 <i class="nav-icon fas fa-wrench"></i>
                 <p>
-                    Jobtypes
+                    Jobtypes / Services
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
@@ -55,7 +55,7 @@
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add Jobtype</p>
+                        <p>Add</p>
                     </a>
                 </li>
                 @endif
@@ -65,7 +65,7 @@
                                                                                     echo 'active';
                                                                                 } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View Jobtypes</p>
+                        <p>View</p>
                     </a>
                 </li>
 
@@ -89,7 +89,7 @@
                                                                                             echo 'active';
                                                                                         } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add Category</p>
+                        <p>Add</p>
                     </a>
                 </li>
                 @endif
@@ -99,7 +99,7 @@
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View Categories</p>
+                        <p>View</p>
                     </a>
                 </li>
 
@@ -123,7 +123,7 @@
                                                                                     echo 'active';
                                                                                 } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Create Job</p>
+                        <p>Create</p>
                     </a>
                 </li>
                 @endif
@@ -133,7 +133,7 @@
                                                                                 echo 'active';
                                                                             } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View Jobs</p>
+                        <p>View</p>
                     </a>
                 </li>
 
@@ -157,7 +157,7 @@
                                                                                             echo 'active';
                                                                                         } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add profession</p>
+                        <p>Add </p>
                     </a>
                 </li>
                 @endif
@@ -167,7 +167,7 @@
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View professions</p>
+                        <p>View </p>
                     </a>
                 </li>
             </ul>
@@ -191,7 +191,7 @@
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add specialty</p>
+                        <p>Add </p>
                     </a>
                 </li>
                 @endif
@@ -201,7 +201,7 @@
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View specialties</p>
+                        <p>View </p>
                     </a>
                 </li>
             </ul>
