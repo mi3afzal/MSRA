@@ -11,7 +11,7 @@
                 <div class="topbar">
                     <div class="row justify-content-between align-items-center">
                         <div class="col-md-3">
-                            <a class="navbar-brand" href="{{ route('home') }}" target="_blank"><img src="{{url('/images/logo.png')}}" alt="logo"></a>
+                            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{url('/images/logo.png')}}" alt="logo"></a>
                         </div>
                         <div class="col-md-9 text-right">
                             <ul class="list-unstyled">
@@ -75,10 +75,10 @@
                                             <a class="nav-link" href="javascript:void(0);">Employers</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="javascript:void(0);">About Us </a>
+                                            <a class="nav-link" href="{{ route('aboutus'); }}">About Us </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="javascript:void(0);"> Contact Us</a>
+                                            <a class="nav-link" href="{{ route('contactus'); }}"> Contact Us</a>
                                         </li>
 
                                     </ul>

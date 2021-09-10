@@ -853,7 +853,7 @@
   border-bottom: 2px solid #06396c;
 }
 
-.latestjob .sidebar-job {
+.latestjob .sidebar {
   background: #fff;
   border-radius: 5px;
   -webkit-box-shadow: 0px 5px 25.65px 1.35px rgba(10, 74, 125, 0.11);
@@ -862,38 +862,38 @@
   min-height: 600px;
 }
 
-.latestjob .sidebar-job h4 {
+.latestjob .sidebar h4 {
   margin: 0;
   font-size: 18px;
   margin-bottom: 15px;
   font-weight: 700;
 }
 
-.latestjob .sidebar-job h2 {
+.latestjob .sidebar h2 {
   margin-bottom: 0;
 }
 
-.latestjob .sidebar-job .accordion-body {
+.latestjob .sidebar .accordion-body {
   padding: 10px 15px;
   border-top: 1px solid #ddd;
 }
 
-.latestjob .sidebar-job ul.innnerlist {
+.latestjob .sidebar ul.innnerlist {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.latestjob .sidebar-job ul.innnerlist li {
+.latestjob .sidebar ul.innnerlist li {
   margin: 10px 0px;
 }
 
-.latestjob .sidebar-job ul.innnerlist li a {
+.latestjob .sidebar ul.innnerlist li a {
   text-decoration: none;
   color: #222221;
 }
 
-.latestjob .sidebar-job .accordion-button {
+.latestjob .sidebar .accordion-button {
   padding: 10px 12px;
   background: transparent;
   outline: none;
@@ -903,11 +903,11 @@
   font-weight: 500;
 }
 
-.latestjob .sidebar-job .accordion-item {
+.latestjob .sidebar .accordion-item {
   margin-bottom: 7px;
 }
 
-.latestjob .sidebar-job .accordion-button:not(.collapsed)::after {
+.latestjob .sidebar .accordion-button:not(.collapsed)::after {
   content: '-';
   font-size: 49px;
   font-weight: 500;
@@ -923,7 +923,7 @@
   border-radius: 2px;
 }
 
-.latestjob .sidebar-job .accordion-button::after {
+.latestjob .sidebar .accordion-button::after {
   content: '+';
   font-size: 30px;
   font-weight: 500;
@@ -1091,16 +1091,17 @@
   width: 60px;
 }
 
-/*About Us*/
+/* About Us */
 .aboutcontent {
     background: #F6F6F6;
     padding: 90px 0;
-    text-align: center
+    text-align: center;
 }
 
 .aboutcontent .whitebox {
     background: #fff;
     border-radius: 12px;
+    -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
     padding: 50px;
 }
@@ -1113,17 +1114,21 @@
 }
 
 .aboutcontent .whitebox p {
-    color: #828282
+    color: #828282;
 }
 
 .aboutcontent .whitebox ul {
     padding: 0;
     margin: 30px 0 0;
     list-style: none;
-    display: flex
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .aboutcontent .whitebox ul li {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
     flex: 0 0 25%;
 }
 
@@ -1173,6 +1178,7 @@
     width: 142px;
     height: 100px;
     text-indent: 0000;
+    -webkit-box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.13);
     box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.13);
     margin: 0 8px;
 }
@@ -1187,9 +1193,7 @@
     font-weight: 700;
     margin-bottom: 25px;
 }
-
-/*About Us*/
-
+/* About Us */
 
 /*Contact Us*/
 .contactsection {
@@ -1219,6 +1223,7 @@
     padding: 11px 35px;
     position: relative;
     z-index: 1;
+    -webkit-transition: all .7s ease;
     transition: all .7s ease;
     background: #06396c;
     border-radius: 3px;
@@ -1265,6 +1270,8 @@
 
 .contactsection .media {
     margin-bottom: 25px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -1297,7 +1304,6 @@
     border-radius: 3px;
     background: #fff;
     border: 1px solid #dbdbdb;
-
 }
 
 .lookingformore {
@@ -1319,14 +1325,16 @@
 .lookingformore a.btn1 {
     padding: 15px 25px;
     background: #000;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     color: #fff;
     text-decoration: none;
     border-radius: 10px;
-
     border: 2px solid transparent;
-
 }
 
 .lookingformore a.btn1.btn-sec {
@@ -1424,7 +1432,7 @@
   .latestjob {
     padding: 70px 0;
   }
-  .latestjob .sidebar-job {
+  .latestjob .sidebar {
     min-height: auto;
     margin-bottom: 25px;
   }
@@ -1477,39 +1485,7 @@
 }
 
 @media (max-width: 767.98px) {
-    .aboutcontent .whitebox {
-        padding: 30px 20px;
-    }
-
-    .aboutcontent .whitebox ul li strong {
-        font-size: 24px;
-    }
-
-    .aboutcontent .whitebox ul li span {
-        font-size: 14px;
-    }
-
-    .aboutcontent .whitebox ul li {
-        flex: 0 0 50%;
-    }
-
-    .aboutcontent .whitebox ul {
-        flex-wrap: wrap;
-    }
-
-    .ourmission .darkside {
-        padding: 20px;
-    }
-
-    .aboutcontent .whitebox h2 {
-        font-size: 25px;
-    }
-
-    .contactsection .contact-info {
-        margin-left: 0;
-        margin-top: 30px;
-    }
-    
+  
   .joblocation svg {
     width: 100%;
   }

@@ -24,7 +24,11 @@ use App\Http\Middleware\isAdmin;
 // })->name('dashboard');
 
 Route::get('/', [App\Http\Controllers\Front\FrontController::class, 'index'])->name('home');
-Route::get('/job', [App\Http\Controllers\Front\JobController::class, 'index'])->name('job');
+Route::get('/jobs', [App\Http\Controllers\Front\JobController::class, 'index'])->name('job');
+Route::get('/about-us', [App\Http\Controllers\Front\AboutController::class, 'index'])->name('aboutus');
+Route::get('/contact-us', [App\Http\Controllers\Front\ContactController::class, 'index'])->name('contactus');
+Route::post('/contact-us', [App\Http\Controllers\Front\ContactController::class, 'store'])->name('contactus.send');
+
 // Route::get('/jobdetails', [App\Http\Controllers\Front\JobDetailController::class, 'index'])->name('jobdetails');
 
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
@@ -275,6 +279,24 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     )->name('city.delete');
 
 
+    // Contact Us Module
+    Route::get('/contact/list', [App\Http\Controllers\Admin\ContactController::class, 'lists'])->name('admin.contact.list')->withoutMiddleware([isAdmin::class]);
+
+    Route::get('/contact/enable/{id}', [App\Http\Controllers\Admin\ContactController::class, 'enable'])->name('admin.contact.enable');
+    Route::get('/contact/disable/{id}', [App\Http\Controllers\Admin\ContactController::class, 'disable'])->name('admin.contact.disable');
+
+    Route::get(
+        '/contact/datatable',
+        [App\Http\Controllers\Admin\ContactController::class, 'datatable']
+    )->name('contact.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/contact/delete/{id}',
+        [App\Http\Controllers\Admin\ContactController::class, 'destroy']
+    )->name('contact.delete');
+
+    Route::get('/about', [App\Http\Controllers\Admin\AboutController::class, 'edit'])->name('admin.about.edit');
+    Route::put('/about/update/{id}', [App\Http\Controllers\Admin\AboutController::class, 'update'])->name('admin.about.update');
 
 
 

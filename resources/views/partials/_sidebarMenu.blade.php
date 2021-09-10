@@ -207,6 +207,28 @@
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('admin.contact.list') }}" class="nav-link <?php if (url()->current() == route('admin.contact.list')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-envelope"></i>
+                <p>
+                    Contacts Leads
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.about.edit') }}" class="nav-link <?php if (url()->current() == route('admin.about.edit')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-envelope"></i>
+                <p>
+                    About Us
+                </p>
+            </a>
+        </li>
+
 
 
 
