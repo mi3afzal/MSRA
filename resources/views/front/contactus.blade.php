@@ -1,4 +1,7 @@
-@include('partials._header')
+@include('partials._header',
+[
+'settings' => $settings,
+])
 <section class=" innerbanner text-center" style="background: url(images/dreamjobbg.png) top center no-repeat;">
     <div class="container">
         <div class="row justify-content-center">
@@ -82,7 +85,7 @@
                         <div class="col-md-12">
                             <div class="form-group message">
                                 <!-- <label for="message">Message :</label> -->
-                                <textarea name="message" id="message" rows="3" class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" placeholder="Message">{{ old('message') }}</textarea>
+                                <textarea name="message" id="message" rows="3" class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" placeholder="Type Your Message Here...">{{ old('message') }}</textarea>
                                 @if($errors->has('message'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('message') }}</strong>
@@ -103,28 +106,28 @@
                             <i class="fa fa-phone-alt"></i>
                             <div class="media-body">
                                 <h5>Phone:</h5>
-                                <p><a href="tel:0477-0477-8556-552">0477 1234 552</a></p>
+                                <p><a href="tel:{{ $settings->phone }}">{!! $settings->phone !!}</a></p>
                             </div>
                         </div>
                         <div class="media">
                             <i class="fa fa-envelope"></i>
                             <div class="media-body">
                                 <h5>Email:</h5>
-                                <p><a href="#">info@example.com</a></p>
+                                <p><a href="javascript:void(0);">{!! $settings->email !!}</a></p>
                             </div>
                         </div>
                         <div class="media">
                             <i class="fa fa-globe"></i>
                             <div class="media-body">
                                 <h5>Web:</h5>
-                                <p><a href="#">info@example.com</a></p>
+                                <p><a href="javascript:void(0);">{!! $settings->email !!}</a></p>
                             </div>
                         </div>
                         <div class="media mb-0">
                             <i class="fa fa-fax"></i>
                             <div class="media-body">
                                 <h5>Fax:</h5>
-                                <p><a href="#">0477 1234 552</a></p>
+                                <p><a href="javascript:void(0);">{!! $settings->fax !!}</a></p>
                             </div>
                         </div>
                     </div>
@@ -136,4 +139,4 @@
 
 @include('partials._downloadApp', ['sociallinks' => $sociallinks])
 
-@include('partials._footer', ['sociallinks' => $sociallinks])
+@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings])

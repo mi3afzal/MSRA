@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+use App\Models\Settings;
 
 class ContactController extends Controller
 {
@@ -20,7 +21,8 @@ class ContactController extends Controller
     {
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
         $sociallinks = SocialLink::where("status", "1")->first();
-        return view('front.contactus', compact("sociallinks"));
+        $settings = Settings::orderBy("created_at", "desc")->first();
+        return view('front.contactus', compact("sociallinks", "settings"));
     }
 
     /**

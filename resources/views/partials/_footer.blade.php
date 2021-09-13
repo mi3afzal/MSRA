@@ -38,10 +38,10 @@
                 <h3>Contact Us</h3>
                 <ul class="contactdetails">
                     <li>
-                        <a href="javascript:void(0);"><i class="fas fa-phone-alt"></i> 0406804559</a>
+                        <a href="javascript:void(0);"><i class="fas fa-phone-alt"></i> {!! $settings->whatsapp !!}</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);"><i class="fas fa-envelope"></i>enquiries@msra.com.au</a>
+                        <a href="javascript:void(0);"><i class="fas fa-envelope"></i>{!! $settings->web !!}</a>
                     </li>
                 </ul>
             </div>
@@ -87,7 +87,7 @@
 
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p>Copyright@ <?php echo date("Y"); ?> <a href="javascript:void(0);">msra.com.au</a></p>
+                    <p>Copyright @ <?php echo date("Y"); ?> | <a href="javascript:void(0);">{!! $settings->link !!}</a></p>
                 </div>
 
             </div>

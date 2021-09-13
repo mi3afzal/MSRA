@@ -53,11 +53,6 @@ class AboutController extends Controller
      */
     public function update(Request $request, About $about, $id)
     {
-        // echo "<pre>";
-        // echo $id;
-        // print_r($request->all());
-        // die;
-
         $this->validate($request, [
             'title' => 'required',
             'description' => 'required',

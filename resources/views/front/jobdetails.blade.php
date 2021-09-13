@@ -1,4 +1,7 @@
-@include('partials._header')
+@include('partials._header',
+[
+'settings' => $settings,
+])
 
 <section class=" innerbanner text-center" style="background: url('{{ asset('images/dreamjobbg.png') }}') top center no-repeat;">
   <div class="container">
@@ -330,5 +333,4 @@
 
 
 @include('partials._downloadApp', ['sociallinks' => $sociallinks])
-
-@include('partials._footer',['sociallinks' => $sociallinks])
+@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings])

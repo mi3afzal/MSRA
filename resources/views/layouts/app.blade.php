@@ -20,6 +20,7 @@
 
             <!-- Main content -->
             <section class="content">
+                @include('partials._messages')
                 <div class="container-fluid">
 
                     @yield('content')

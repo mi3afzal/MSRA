@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Models\SocialLink;
+use App\Models\Settings;
 
 class FrontController extends Controller
 {
@@ -25,7 +26,8 @@ class FrontController extends Controller
         $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->pluck("jobtype", "id");
         $sociallinks = SocialLink::where("status", "1")->first();
-        return view('front.home', compact("jobtypes", "states", "sociallinks", "professions"));
+        $settings = Settings::orderBy("created_at", "desc")->first();
+        return view('front.home', compact("jobtypes", "states", "sociallinks", "professions", "settings"));
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Settings;
 
 class AboutController extends Controller
 {
@@ -22,7 +23,8 @@ class AboutController extends Controller
         if ($count > 0) {
             $listings = About::orderBy('created_at', 'desc')->first();
             $sociallinks = SocialLink::where("status", "1")->first();
-            return view('front.aboutus', compact("sociallinks", "listings"));
+            $settings = Settings::orderBy("created_at", "desc")->first();
+            return view('front.aboutus', compact("sociallinks", "listings", "settings"));
         } else {
             abort(404, 'No record found');
         }

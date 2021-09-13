@@ -11,20 +11,24 @@
                 <div class="topbar">
                     <div class="row justify-content-between align-items-center">
                         <div class="col-md-3">
-                            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{url('/images/logo.png')}}" alt="logo"></a>
+                            <a class="navbar-brand" href="{{ route('home') }}">
+                                @if(isset($settings->main_logo))
+                                <img src="{{url('/images/settings/'.$settings->main_logo)}}" class="img-fluid" alt="Logo" />
+                                @endif
+                            </a>
                         </div>
                         <div class="col-md-9 text-right">
                             <ul class="list-unstyled">
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="{{url('/images/whatsapp.png')}}" alt="">
-                                        0406804559
+                                        <img src="{{url('/images/whatsapp.png')}}" alt="Whatsapp">
+                                        {!! $settings->whatsapp !!}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
                                         <i class="fas fa-envelope"></i>
-                                        enquiries@msra.com.au
+                                        {!! $settings->email !!}
                                     </a>
                                 </li>
                                 <li>

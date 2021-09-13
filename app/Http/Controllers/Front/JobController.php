@@ -10,6 +10,7 @@ use App\Models\Specialty;
 use App\Models\State;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
 use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
@@ -24,10 +25,11 @@ class JobController extends Controller
         $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
         $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
         $sociallinks = SocialLink::where("status", "1")->first();
+        $settings = Settings::orderBy("created_at", "desc")->first();
         $states = State::where("status", "1")->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
         $jobs = Job::where("status", "1")->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->get();
-        return view('front.jobs', compact("jobtypes", "sociallinks", "professions", "specialties", "states", "jobs"));
+        return view('front.jobs', compact("jobtypes", "sociallinks", "professions", "specialties", "states", "jobs", "settings"));
     }
 
     /**
@@ -244,7 +246,8 @@ class JobController extends Controller
                 ->get();
         }
 
-        return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "jobs", "jobtypes"));
+        $settings = Settings::orderBy("created_at", "desc")->first();
+        return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "jobs", "jobtypes", "settings"));
     }
 
 

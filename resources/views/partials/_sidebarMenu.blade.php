@@ -39,6 +39,17 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('admin.setting.edit') }}" class="nav-link <?php if (url()->current() == route('admin.setting.edit')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-cog"></i>
+                <p>
+                    Settings
+                </p>
+            </a>
+        </li>
+
         <li class="nav-header">BACKEND MODULES</li>
 
 

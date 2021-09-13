@@ -295,8 +295,13 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
         [App\Http\Controllers\Admin\ContactController::class, 'destroy']
     )->name('contact.delete');
 
+    // About Us Page
     Route::get('/about', [App\Http\Controllers\Admin\AboutController::class, 'edit'])->name('admin.about.edit');
     Route::put('/about/update/{id}', [App\Http\Controllers\Admin\AboutController::class, 'update'])->name('admin.about.update');
+
+    // Settings Front Pages
+    Route::get('/setting', [App\Http\Controllers\Admin\SettingsController::class, 'edit'])->name('admin.setting.edit');
+    Route::put('/setting/update/{id}', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.setting.update');
 
 
 

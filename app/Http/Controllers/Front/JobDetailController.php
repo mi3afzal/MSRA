@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Settings;
 use App\Models\Job;
 use App\Models\JobDetail;
 use App\Models\JobType;
@@ -25,9 +26,10 @@ class JobDetailController extends Controller
         $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
         $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
         $sociallinks = SocialLink::where("status", "1")->first();
+        $settings = Settings::orderBy("created_at", "desc")->first();
         $states = State::where("status", "1")->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
-        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "jobtypes"));
+        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "jobtypes", "settings"));
     }
 
     /**
