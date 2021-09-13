@@ -15,6 +15,8 @@
             </a>
         </li>
 
+        <li class="nav-header">FRONT PAGES</li>
+
         <li class="nav-item">
             <a href="{{ route('admin.sociallink.edit') }}" class="nav-link <?php if (url()->current() == route('admin.sociallink.edit')) {
                                                                                 echo 'active';
@@ -25,6 +27,21 @@
                 </p>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.about.edit') }}" class="nav-link <?php if (url()->current() == route('admin.about.edit')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon far fa-address-card"></i>
+                <p>
+                    About Us
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-header">BACKEND MODULES</li>
+
+
 
 
         <li class="nav-item">
@@ -213,21 +230,12 @@
                                                                         } ?>">
                 <i class="nav-icon fas fa-envelope"></i>
                 <p>
-                    Contacts Leads
+                    Contact Leads
                 </p>
             </a>
         </li>
 
-        <li class="nav-item">
-            <a href="{{ route('admin.about.edit') }}" class="nav-link <?php if (url()->current() == route('admin.about.edit')) {
-                                                                            echo 'active';
-                                                                        } ?>">
-                <i class="nav-icon fas fa-envelope"></i>
-                <p>
-                    About Us
-                </p>
-            </a>
-        </li>
+
 
 
 

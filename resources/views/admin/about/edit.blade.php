@@ -154,4 +154,5 @@
     </section>
 </form>
 
+@include('partials._ckeditor')
 @endsection
