@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\Contact;
 use App\Models\SocialLink;
+use App\Models\JobType;
+use App\Models\Profession;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +24,9 @@ class ContactController extends Controller
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
         $sociallinks = SocialLink::where("status", "1")->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        return view('front.contactus', compact("sociallinks", "settings"));
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
+        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        return view('front.contactus', compact("sociallinks", "settings", "professions", "jobtypes"));
     }
 
     /**

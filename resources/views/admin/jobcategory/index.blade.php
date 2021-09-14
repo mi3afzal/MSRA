@@ -1,14 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-<!-- jQuery -->
-<script src="//code.jquery.com/jquery.js"></script>
-<!-- DataTables -->
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<!-- Bootstrap JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
+@include('partials._datatableAssets')
+@include('partials._select2Assests')
 <section class="content">
     <div class="card">
         <div class="card-header">
@@ -50,7 +44,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Status</label>
-                        <select name="status" id="status" class="form-control" placeholder="Select Status">
+                        <select name="status" id="status" class="form-control select2" placeholder="Select Status">
                             <option value="">Select Status</option>
                             <option value="0">Inactive</option>
                             <option value="1">Active</option>

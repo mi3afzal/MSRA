@@ -63,6 +63,7 @@ class JobSeekerRegistrationController extends Controller
                 'specialty' => 'required',
                 'mobile' => 'required|min:6|max:20',
                 'postcode' => 'required',
+                'file' => 'required|mimes:pdf,docx,doc',
                 'password' => 'required|confirmed|min:6',
             ]);
 
@@ -74,6 +75,14 @@ class JobSeekerRegistrationController extends Controller
             $user->role = "2";
             $user->save();
 
+            $file1 = $request->file('file');
+
+            if ($request->file('file')) {
+                $name1 = $user->id . '_' . 'user_' .  time() . '.' . $file1->getClientOriginalExtension();
+                $destinationPath1 = public_path('/images/users/' . $user->id);
+                $file1->move($destinationPath1, $name1);
+            }
+
             $jobSeekerRegistration = new JobSeekerRegistration;
             $jobSeekerRegistration->user_id = $user->id;
             $jobSeekerRegistration->gender = $request->input('gender');
@@ -83,6 +92,7 @@ class JobSeekerRegistrationController extends Controller
             $jobSeekerRegistration->postcode = $request->input('postcode');
             $hash = md5($request->input('email')) . time();
             $jobSeekerRegistration->token = $hash;
+            $jobSeekerRegistration->cv = (isset($name1)) ? $name1 : $jobSeekerRegistration->file;
             $jobSeekerRegistration->save();
 
             $str = "JBSKRG";
@@ -94,7 +104,7 @@ class JobSeekerRegistrationController extends Controller
             ##### email send #####
 
             // $from_mail = 'oliver7415@googlemail.com';
-            // $site_title = 'Down Beat';
+            // $site_title = 'MSRA';
             // $site_title = env("APP_NAME", "MSRA");
             // $from_mail = env("FROM_EMAIL", "enquiries@msra.com.au");
 

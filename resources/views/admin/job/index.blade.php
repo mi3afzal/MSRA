@@ -1,19 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-<!-- jQuery -->
-<script src="//code.jquery.com/jquery.js"></script>
-<!-- DataTables -->
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<!-- Bootstrap JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<?php /* ?>
-<form action="{{ route('admin.front.update') }}" method="POST" enctype="multipart/form-data">
 
-    {{ method_field('PUT') }}
-    @csrf
-<?php */ ?>
+@include('partials._datatableAssets')
+
+@include('partials._select2Assests')
+
 <section class="content">
     <div class="card">
         <div class="card-header">
@@ -51,7 +43,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Job Type</label>
-                        <select name="jobtype" id="jobtype" class="form-control" placeholder="Select Job Type">
+                        <select name="jobtype" id="jobtype" class="form-control select2" placeholder="Select Job Type">
                             <option value="">Select Jobtype</option>
                             @foreach($jobtypes as $jobtype)
                             <option value="{{ $jobtype->id }}">{{ ucwords($jobtype->jobtype) }}</option>
@@ -63,7 +55,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Job Category</label>
-                        <select name="jobcategory" id="jobcategory" class="form-control" placeholder="Select Job Category">
+                        <select name="jobcategory" id="jobcategory" class="form-control select2" placeholder="Select Job Category">
                             <option value="">Select Job Category</option>
                             @foreach($jobcategories as $jobcategory)
                             <option value="{{ $jobcategory->id }}">{{ ucwords($jobcategory->name) }}</option>
@@ -75,7 +67,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Medical Center</label>
-                        <select name="medicalcenter" id="medicalcenter" class="form-control" placeholder="Select Medical Center">
+                        <select name="medicalcenter" id="medicalcenter" class="form-control select2" placeholder="Select Medical Center">
                             <option value="">Select Medical Center</option>
                             @foreach($medicalcenters as $medicalcenter)
                             <option value="{{ $medicalcenter->id }}">{{ ucwords($medicalcenter->name) }}</option>
@@ -87,7 +79,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Profession</label>
-                        <select name="profession" id="profession" class="form-control" placeholder="Select Profession">
+                        <select name="profession" id="profession" class="form-control select2" placeholder="Select Profession">
                             <option value="">Select Profession</option>
                             @foreach($professions as $profession)
                             <option value="{{ $profession->id }}">{{ ucwords($profession->profession) }}</option>
@@ -99,7 +91,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Speciality</label>
-                        <select name="speciality" id="speciality" class="form-control" placeholder="Select Speciality">
+                        <select name="speciality" id="speciality" class="form-control select2" placeholder="Select Speciality">
                             <option value="">Select Speciality</option>
                             @foreach($specialities as $speciality)
                             <option value="{{ $speciality->id }}">{{ ucwords($speciality->specialty) }}</option>
@@ -111,7 +103,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>State</label>
-                        <select name="state" id="state" class="form-control" placeholder="Select State">
+                        <select name="state" id="state" class="form-control select2" placeholder="Select State">
                             <option value="">Select State</option>
                             @foreach($states as $state)
                             <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
@@ -123,7 +115,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Status</label>
-                        <select name="status" id="status" class="form-control" placeholder="Select Status">
+                        <select name="status" id="status" class="form-control select2" placeholder="Select Status">
                             <option value="">Select Status</option>
                             <option value="0">Inactive</option>
                             <option value="1">Active</option>

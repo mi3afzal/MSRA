@@ -30,7 +30,7 @@
                             <input type="file" name="main_logo" id="main_logo" class="form-control" />
                             <br />
                             @if(isset($listings->main_logo))
-                            <img src="{{url('/images/settings/'.$listings->main_logo)}}" class="img-fluid {{ $errors->has('main_logo') ? 'is-invalid' : '' }}" alt="Image" height="150" width="150" />
+                            <img src="{{url('/images/settings/'.$listings->main_logo)}}" class="img-fluid img-thumbnail {{ $errors->has('main_logo') ? 'is-invalid' : '' }}" alt="Image" height="200" width="200" />
                             @endif
                             @if($errors->has('main_logo'))
                             <div class="invalid-feedback">

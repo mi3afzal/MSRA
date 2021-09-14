@@ -1,3 +1,8 @@
+<?php
+// echo "<pre>";
+// print_r($jobtypes);
+// die;
+?>
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -23,14 +28,16 @@
             </div>
             <div class="col-md-3">
                 <h3>Jobs</h3>
+                @if(isset($professions) && (count($professions) > 0))
                 <ul class="otherlinks">
-                    <li><a href="javascript:void(0);"><i class="fas fa-angle-double-right"></i> Healthcare jobs</a></li>
-                    <li><a href="javascript:void(0);"> <i class="fas fa-angle-double-right"></i>General Practitioners </a></li>
-                    <li><a href="javascript:void(0);"><i class="fas fa-angle-double-right"></i> Locum</a></li>
-                    <li><a href="javascript:void(0);"> <i class="fas fa-angle-double-right"></i>Nursing</a></li>
-                    <li><a href="javascript:void(0);"> <i class="fas fa-angle-double-right"></i>Hospital </a></li>
-
+                    @foreach($professions as $key => $value)
+                    <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => $value->id,'specialty' => '','states' => '','jobtype' => '']) }}"><i class="fas fa-angle-double-right"></i> {!! $value->profession !!}</a></li>
+                    @endforeach
+                    @foreach($jobtypes as $key => $value)
+                    <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => '','specialty' => '','states' => '','jobtype' => $value->id]) }}"><i class="fas fa-angle-double-right"></i> {!! ucwords($value->jobtype) !!}</a></li>
+                    @endforeach
                 </ul>
+                @endif
             </div>
         </div>
         <div class="row">

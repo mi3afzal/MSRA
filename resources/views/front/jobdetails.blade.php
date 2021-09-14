@@ -333,4 +333,4 @@
 
 
 @include('partials._downloadApp', ['sociallinks' => $sociallinks])
-@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings])
+@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings, "professions" => $professions, "jobtypes" => $jobtypes])

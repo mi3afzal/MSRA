@@ -145,6 +145,14 @@
             <span class="right badge badge-primary p-2 mt-2 mr-2">
                 <i class="fas fa-user-md"></i>&nbsp;&nbsp;Job Seeker
             </span>
+            @elseif (Auth::user()->role == "3")
+            <span class="right badge bg-cyan p-2 mt-2 mr-2">
+                <i class="fas fa-user-md"></i>&nbsp;&nbsp;Medical Center
+            </span>
+            @elseif (Auth::user()->role == "4")
+            <span class="right badge bg-maroon p-2 mt-2 mr-2">
+                <i class="fas fa-user-md"></i>&nbsp;&nbsp;Doctor
+            </span>
             @else
             <span class="right badge bg-purple p-2 mt-2 mr-2">
                 <i class="far fa-user-circle"></i>&nbsp;&nbsp;User

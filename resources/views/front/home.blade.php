@@ -72,9 +72,12 @@
 <section class="joblocation">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-xl-8 col-md-12">
-                <h2>MSRA Provide You</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <h2 class="text-muted">MSRA Provide You</h2>
+                <p>Med staff Recruitment Australia (MSRA) is a business with an experienced & dedicated team of professionals.
+                    Our core operation is providing effective recruitment solutions to both eligible candidates and centers in the healthcare industry in Australia and all over the world.With professionalism & due diligence, we provide our associates nothing but the very best in terms of their staff needs.
+                    We always partake in a deep understanding of our partners’ exclusive requirements to determine what skills, attributes and personality are required to find the perfect git for their business.
+                    At MSRA we believe that the perfect candidate is always needed to ensure minimal disruption and the continued growth of our partners.</p>
             </div>
 
 
@@ -136,8 +139,8 @@
                 <div class="servicesbox">
                     <h3>Services</h3>
                     <ul class="serviceslist">
-                        @foreach($jobtypes as $id => $jobtype)
-                        <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => '','specialty' => '','states' => '','jobtype' => $id]) }}">{!! ucwords($jobtype) !!}</a></li>
+                        @foreach($jobtypes as $key => $value)
+                        <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => '','specialty' => '','states' => '','jobtype' => $value->id]) }}">{!! ucwords($value->jobtype) !!}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -240,4 +243,4 @@
     });
 </script>
 
-@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings])
+@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings,"professions" => $professions, "jobtypes" => $jobtypes])

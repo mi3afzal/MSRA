@@ -26,7 +26,7 @@
                     <div class="col-md-12">
 
                         <div class="form-group">
-                            <label for="title">Title</label>
+                            <label for="title">TITLE</label>
                             <textarea name="title" id="title" rows="4" class="ckeditor form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" placeholder="Hero Section">{{ old('title', $listings->title) }}</textarea>
                             @if($errors->has('title'))
                             <div class="invalid-feedback">
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="description-text">Description</label>
+                            <label for="description-text">DESCRIPTION</label>
                             <textarea name="description" id="description-text" rows="10" class="ckeditor form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description">{{ old('description', $listings->description) }}</textarea>
                             @if($errors->has('description'))
                             <div class="invalid-feedback">
@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="right_h_1">Right heading 1</label>
+                            <label for="right_h_1">HEADING - 1</label>
                             <textarea name="right_h_1" id="right_h_1" rows="10" class="ckeditor form-control {{ $errors->has('right_h_1') ? 'is-invalid' : '' }}" placeholder="Right Heading 1">{{ old('right_h_1', $listings->right_h_1) }}</textarea>
                             @if($errors->has('right_h_1'))
                             <div class="invalid-feedback">
@@ -55,9 +55,19 @@
                             @endif
                         </div>
 
+                        <div class="form-group">
+                            <label for="right_p_1">PARAGRAPH - 1</label>
+                            <textarea name="right_p_1" id="right_p_1" rows="10" class="ckeditor form-control {{ $errors->has('right_p_1') ? 'is-invalid' : '' }}" placeholder="Right Paragraph 1">{{ old('right_p_1', $listings->right_p_1) }}</textarea>
+                            @if($errors->has('right_p_1'))
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('right_p_1') }}</strong>
+                            </div>
+                            @endif
+                        </div>
+
 
                         <div class="form-group">
-                            <label for="right_h_2">Right heading 2</label>
+                            <label for="right_h_2">HEADING - 2</label>
                             <textarea name="right_h_2" id="right_h_2" rows="10" class="ckeditor form-control {{ $errors->has('right_h_2') ? 'is-invalid' : '' }}" placeholder="Right Heading 2">{{ old('right_h_2', $listings->right_h_2) }}</textarea>
                             @if($errors->has('right_h_2'))
                             <div class="invalid-feedback">
@@ -67,37 +77,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="right_h_3">Right heading 2</label>
-                            <textarea name="right_h_3" id="right_h_3" rows="10" class="ckeditor form-control {{ $errors->has('right_h_3') ? 'is-invalid' : '' }}" placeholder="Right Heading 2">{{ old('right_h_3', $listings->right_h_3) }}</textarea>
-                            @if($errors->has('right_h_3'))
-                            <div class="invalid-feedback">
-                                <strong>{{ $errors->first('right_h_3') }}</strong>
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="right_h_4">Right heading 2</label>
-                            <textarea name="right_h_4" id="right_h_4" rows="10" class="ckeditor form-control {{ $errors->has('right_h_4') ? 'is-invalid' : '' }}" placeholder="Right Heading 2">{{ old('right_h_4', $listings->right_h_4) }}</textarea>
-                            @if($errors->has('right_h_4'))
-                            <div class="invalid-feedback">
-                                <strong>{{ $errors->first('right_h_4') }}</strong>
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="right_p_1">Right Paragraph 1</label>
-                            <textarea name="right_p_1" id="right_p_1" rows="10" class="ckeditor form-control {{ $errors->has('right_p_1') ? 'is-invalid' : '' }}" placeholder="Right Paragraph 1">{{ old('right_p_1', $listings->right_p_1) }}</textarea>
-                            @if($errors->has('right_p_1'))
-                            <div class="invalid-feedback">
-                                <strong>{{ $errors->first('right_p_1') }}</strong>
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="right_p_2">Right Paragraph 2</label>
+                            <label for="right_p_2">PARAGRAPH - 2</label>
                             <textarea name="right_p_2" id="right_p_2" rows="10" class="ckeditor form-control {{ $errors->has('right_p_2') ? 'is-invalid' : '' }}" placeholder="Right Paragraph 2">{{ old('right_p_2', $listings->right_p_2) }}</textarea>
                             @if($errors->has('right_p_2'))
                             <div class="invalid-feedback">
@@ -107,7 +87,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="right_p_3">Right Paragraph 3</label>
+                            <label for="right_h_3">HEADING - 3</label>
+                            <textarea name="right_h_3" id="right_h_3" rows="10" class="ckeditor form-control {{ $errors->has('right_h_3') ? 'is-invalid' : '' }}" placeholder="Right Heading 2">{{ old('right_h_3', $listings->right_h_3) }}</textarea>
+                            @if($errors->has('right_h_3'))
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('right_h_3') }}</strong>
+                            </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="right_p_3">PARAGRAPH - 3</label>
                             <textarea name="right_p_3" id="right_p_3" rows="10" class="ckeditor form-control {{ $errors->has('right_p_3') ? 'is-invalid' : '' }}" placeholder="Right Paragraph 3">{{ old('right_p_3', $listings->right_p_3) }}</textarea>
                             @if($errors->has('right_p_3'))
                             <div class="invalid-feedback">
@@ -117,7 +107,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="right_p_4">Right Paragraph 4</label>
+                            <label for="right_h_4">HEADING - 4</label>
+                            <textarea name="right_h_4" id="right_h_4" rows="10" class="ckeditor form-control {{ $errors->has('right_h_4') ? 'is-invalid' : '' }}" placeholder="Right Heading 2">{{ old('right_h_4', $listings->right_h_4) }}</textarea>
+                            @if($errors->has('right_h_4'))
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('right_h_4') }}</strong>
+                            </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="right_p_4">PARAGRAPH - 4</label>
                             <textarea name="right_p_4" id="right_p_4" rows="10" class="ckeditor form-control {{ $errors->has('right_p_4') ? 'is-invalid' : '' }}" placeholder="Right Paragraph 4">{{ old('right_p_4', $listings->right_p_4) }}</textarea>
                             @if($errors->has('right_p_4'))
                             <div class="invalid-feedback">
@@ -127,11 +127,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="about_image">About Image</label>
+                            <label for="about_image">ABOUT IMAGE</label>
                             <input type="file" name="about_image" id="about_image" class="form-control" />
                             <br />
                             @if(isset($listings->aboutcontent_image))
-                            <img src="{{url('/images/aboutus/'.$listings->aboutcontent_image)}}" class="img-fluid {{ $errors->has('about_image') ? 'is-invalid' : '' }}" alt="Image" height="150" width="150" />
+                            <img src="{{url('/images/aboutus/'.$listings->aboutcontent_image)}}" class="img-fluid img-thumbnail {{ $errors->has('about_image') ? 'is-invalid' : '' }}" alt="Image" height="200" width="200" />
                             @endif
                             @if($errors->has('about_image'))
                             <div class="invalid-feedback">
