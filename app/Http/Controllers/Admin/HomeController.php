@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Suburb;
+use App\Models\Job;
 use App\Models\JobType;
 use App\Models\Profession;
 use App\Models\Specialty;
+use App\Models\User;
+use App\Models\JobCategory;
+use App\Models\Contact;
 
 class HomeController extends Controller
 {
@@ -38,8 +42,19 @@ class HomeController extends Controller
         $jobtypes = JobType::where(["status" => "1"])->count();
         $professions = Profession::where(["status" => "1"])->count();
         $specialty = Specialty::where(["status" => "1"])->count();
-        $title = "dashboard";
-        $module = "dashboard";
-        return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty"));
+        $jobcategories = JobCategory::where(["status" => "1"])->count();
+        $jobs = Job::where(["status" => "1"])->count();
+        $contacts = Contact::where(["status" => "1"])->count();
+        $user = Auth::user();
+
+        if ($user->role == 1) {
+            $title = "dashboard";
+            $module = "dashboard";
+            return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts"));
+        } else {
+            $title = "dashboard";
+            $module = "jobseeker dashboard";
+            return view('admin.jobseeker', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts"));
+        }
     }
 }

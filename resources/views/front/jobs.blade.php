@@ -1,4 +1,7 @@
-@include('partials._header')
+@include('partials._header',
+[
+'settings' => $settings,
+])
 
 <section class=" innerbanner text-center" style="background: url(images/dreamjobbg.png) top center no-repeat;">
     <div class="container">
@@ -24,91 +27,15 @@
         </div>
         <div class="row">
             <div class="col-xl-3 col-lg-4">
-                <div class="sidebar-job">
-                    <h4>Filter</h4>
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Profession
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="innnerlist">
-                                        <li>
-                                            <a href="#">Allied Health Professionals</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Doctor</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Healthcare Executives
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Nurse</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Specialty
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="innnerlist">
-                                        <li class=""><a href="#">Anesthetics</a></li>
-                                        <li class=""><a href="#">Emergency Medicine</a></li>
-                                        <li class=""><a href="#">General Practice</a></li>
-                                        <li class=""><a href="#">Intensive care</a></li>
-                                        <li class=""><a href="#">Medicine</a></li>
-                                        <li class=""><a href="#">Obtetrics &amp; Gyneacology</a></li>
-                                        <li class=""><a href="#">Pathologist</a></li>
-                                        <li class=""><a href="#">Peadiatrics</a></li>
-                                        <li class=""><a href="#">Psychiatry</a></li>
-                                        <li class=""><a href="#">Radiology</a></li>
-                                        <li class=""><a href="#">Surgery</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Locations
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="innnerlist">
 
-                                        <li><a href="#"> Victoria </a></li>
-                                        <li><a href="#"> Queensland</a></li>
-                                        <li><a href="#"> South Australia</a></li>
-                                        <li><a href="#"> Tasmania</a></li>
-                                        <li><a href="#"> New South Wales</a></li>
-                                        <li><a href="#"> Australian Capital Territory</a></li>
-                                        <li><a href="#"> Western Australia</a></li>
-                                        <li><a href="#"> Northern Territory</a></li>
-                                        <li><a href="#"> South Australia</a></li>
-                                        <li><a href="#"> Queensland</a></li>
-                                        <li><a href="#"> New South Wales</a></li>
-                                        <li><a href="#"> Tasmania</a></li>
-                                        <li><a href="#"> Queensland</a></li>
-                                        <li><a href="#"> Victoria</a></li>
+                @include('partials._sidebarJobs',
+                [
+                'professions' => $professions,
+                'specialties' => $specialties,
+                'states' => $states,
+                'jobtypes' => $jobtypes,
+                ])
 
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
                     <li>
                         <a href="#">
@@ -145,157 +72,109 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Permanent</button>
-
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Locum</button>
                         </li>
+
                     </ul>
 
                 </div>
-                <div class="joblisting">
+                <div class="joblisting" id="js-joblisting">
                     <div class="tab-content" id="myTabContent">
+                        @if(count($jobs) > 0 )
+
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            @foreach($jobs as $job )
+                            @if($job->job_type == 1)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
+                                <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
                                 <span class="jobtype">
-                                    Full Time
+                                    {!! $job->associatedJobtype->jobtype !!}
                                 </span>
                                 <ul class="joblabels">
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
+                                        {!! $job->jobcategory->name !!}
                                     </li>
                                     <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
-                                    </li>
-                                    <li>
-                                        <i class="far fa-clock"></i>
-                                        7 days a week
-                                    </li>
-
-                                </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
-                                </p>
-                                <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
-                                    <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
-                                </div>
-
-                            </div>
-                            <div class="card">
-                                <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
-                                </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
-                                <span class="jobtype">
-                                    Full Time
-                                </span>
-                                <ul class="joblabels">
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
+                                        <i class="fas fa-dollar-sign"></i>{!! $job->rate !!}
                                     </li>
                                     <li>
                                         <i class="far fa-clock"></i>
-                                        7 days a week
+                                        {!! $job->work_days !!}
                                     </li>
 
                                 </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
+                                <p>
+                                    {!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
+                                    <a href="javascript:void(0);" class="linkgreen">Quick Application</a>
                                     <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
+                                    <a href="javascript:void(0);" class="linkblue">Apply Now</a>
                                 </div>
 
                             </div>
-                            <div class="card">
-                                <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
-                                </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
-                                <span class="jobtype">
-                                    Full Time
-                                </span>
-                                <ul class="joblabels">
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
-                                    </li>
-                                    <li>
-                                        <i class="far fa-clock"></i>
-                                        7 days a week
-                                    </li>
-
-                                </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
-                                </p>
-                                <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
-                                    <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
-                                </div>
-
-                            </div>
-                            <div class="card">
-                                <div class="jobdate">
-                                    <strong>15 APR</strong>
-                                    <span>Job Id: RP001137</span>
-                                </div>
-                                <a href="#" class="card-tittle">Immediate Start GP Required *Busy Medical Practice * - Cannon Hill, QLD</a>
-                                <span class="jobtype">
-                                    Full Time
-                                </span>
-                                <ul class="joblabels">
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NON-DPA
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-dollar-sign"></i>70% / $140.00 Per Hour *
-                                    </li>
-                                    <li>
-                                        <i class="far fa-clock"></i>
-                                        7 days a week
-                                    </li>
-
-                                </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="#">Read More</a>
-                                </p>
-                                <div class="bottombar">
-                                    <a href="#" class="linkgreen">Quick Application</a>
-                                    <span>|</span>
-                                    <a href="#" class="linkblue">Apply Now</a>
-                                </div>
-
-                            </div>
+                            @endif
+                            @endforeach
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            @foreach($jobs as $job )
+                            @if($job->job_type == 2)
+                            <div class="card">
+                                <div class="jobdate">
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <span>Job Id: {!! $job->unique_code !!}</span>
+                                </div>
+                                <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
+                                <span class="jobtype">
+                                    {!! $job->associatedJobtype->jobtype !!}
+                                </span>
+                                <ul class="joblabels">
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {!! $job->jobcategory->name !!}
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-dollar-sign"></i>{!! $job->rate !!}
+                                    </li>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                        {!! $job->work_days !!}
+                                    </li>
+
+                                </ul>
+                                <p>{!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
+                                </p>
+                                <div class="bottombar">
+                                    <a href="javascript:void(0);" class="linkgreen">Quick Application</a>
+                                    <span>|</span>
+                                    <a href="javascript:void(0);" class="linkblue">Apply Now</a>
+                                </div>
+
+                            </div>
+                            @endif
+                            @endforeach
+                        </div>
+                        @else
+                        <div class=" card text-muted text-center">
+                            <h3> <strong>CURRENTY NO JOB OPENING </strong></h3>
+                        </div>
+                        @endif
 
                     </div>
                 </div>
                 <ul class="fixedbutton list-unstyled d-xl-none d-lg-none">
                     <li>
-                        <a href="#">
+                        <a href="javascript:void(0);">
                             <span><img src="images/jobalert.png" alt="" class="img-fluid"></span>
                             <h5>
                                 Job Alert
@@ -323,25 +202,14 @@
                     </li>
                 </ul>
             </div>
-        </div>
-    </div>
-</section>
 
+            <div id="job_ajax">
 
-<section class="downloadapp">
-    <div class="container">
-        <div class="row justify-content-center text-center">
-            <div class="col-md-8">
-                <h2>Download The App</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam possimus eaque magnam eum praesentium unde.</p>
-                <ul class="list-unstyled">
-                    <li><img src="images/appstore.png" alt=""></li>
-                    <li><img src="images/googleplay.png" alt=""></li>
-                </ul>
             </div>
         </div>
     </div>
 </section>
 
 
-@include('partials._footer')
+@include('partials._downloadApp', ['sociallinks' => $sociallinks])
+@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings,"professions" => $professions, "jobtypes" => $jobtypes])

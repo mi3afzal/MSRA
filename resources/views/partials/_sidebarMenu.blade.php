@@ -15,6 +15,46 @@
             </a>
         </li>
 
+        <li class="nav-header">FRONT PAGES</li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.sociallink.edit') }}" class="nav-link <?php if (url()->current() == route('admin.sociallink.edit')) {
+                                                                                echo 'active';
+                                                                            } ?>">
+                <i class="nav-icon fas fa-hashtag"></i>
+                <p>
+                    Social Links
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.about.edit') }}" class="nav-link <?php if (url()->current() == route('admin.about.edit')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon far fa-address-card"></i>
+                <p>
+                    About Us
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.setting.edit') }}" class="nav-link <?php if (url()->current() == route('admin.setting.edit')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-cog"></i>
+                <p>
+                    Settings
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-header">BACKEND MODULES</li>
+
+
+
+
         <li class="nav-item">
             <a href="{{ route('admin.state.list') }}" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
                                                                             echo 'active';
@@ -27,41 +67,111 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.jobtype.create')) || url()->current() == route('admin.jobtype.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.jobtype.create')) || url()->current() == route('admin.jobtype.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon fas fa-wrench"></i>
                 <p>
-                    Jobtypes
+                    Jobtypes / Services
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
                 <li class="nav-item">
                     <a href="{{ route('admin.jobtype.create') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.create')) {
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add Jobtype</p>
+                        <p>Add</p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('admin.jobtype.list') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.list')) {
                                                                                     echo 'active';
                                                                                 } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View Jobtypes</p>
+                        <p>View</p>
                     </a>
                 </li>
+
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.jobcategory.create')) || url()->current() == route('admin.jobcategory.list')) {
+                                                                echo 'active';
+                                                            } ?>">
+                <i class="nav-icon far fa-list-alt"></i>
+                <p>
+                    JobCategory
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
+                <li class="nav-item">
+                    <a href="{{ route('admin.jobcategory.create') }}" class="nav-link <?php if (url()->current() == route('admin.jobcategory.create')) {
+                                                                                            echo 'active';
+                                                                                        } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add</p>
+                    </a>
+                </li>
+                @endif
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.jobcategory.list') }}" class="nav-link <?php if (url()->current() == route('admin.jobcategory.list')) {
+                                                                                        echo 'active';
+                                                                                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View</p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.profession.create')) || url()->current() == route('admin.profession.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.job.create')) || url()->current() == route('admin.job.list')) {
+                                                                echo 'active';
+                                                            } ?>">
+                <i class="nav-icon fas fa-user-md"></i>
+                <p>
+                    Job
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
+                <li class="nav-item">
+                    <a href="{{ route('admin.job.create') }}" class="nav-link <?php if (url()->current() == route('admin.job.create')) {
+                                                                                    echo 'active';
+                                                                                } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create</p>
+                    </a>
+                </li>
+                @endif
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.job.list') }}" class="nav-link <?php if (url()->current() == route('admin.job.list')) {
+                                                                                echo 'active';
+                                                                            } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View</p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.profession.create')) || url()->current() == route('admin.profession.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                     Profession
@@ -69,21 +179,23 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
                 <li class="nav-item">
                     <a href="{{ route('admin.profession.create') }}" class="nav-link <?php if (url()->current() == route('admin.profession.create')) {
                                                                                             echo 'active';
                                                                                         } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add profession</p>
+                        <p>Add </p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('admin.profession.list') }}" class="nav-link <?php if (url()->current() == route('admin.profession.list')) {
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View professions</p>
+                        <p>View </p>
                     </a>
                 </li>
             </ul>
@@ -91,9 +203,9 @@
 
 
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
-                                            echo 'active';
-                                        } ?>">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
+                                                                echo 'active';
+                                                            } ?>">
                 <i class="nav-icon fas fa-briefcase-medical"></i>
                 <p>
                     Specialty
@@ -101,29 +213,47 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (( Auth::user()->role == "1"))
                 <li class="nav-item">
                     <a href="{{ route('admin.specialty.create') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.create')) {
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Add specialty</p>
+                        <p>Add </p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('admin.specialty.list') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.list')) {
                                                                                         echo 'active';
                                                                                     } ?>">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>View specialties</p>
+                        <p>View </p>
                     </a>
                 </li>
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('admin.contact.list') }}" class="nav-link <?php if (url()->current() == route('admin.contact.list')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-envelope"></i>
+                <p>
+                    Contact Leads
+                </p>
+            </a>
+        </li>
+
+
+
+
+
+
         <?php /* ?>
         <li class="nav-item">
-            <a href="#" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
                                             echo 'active';
                                         } ?>">
                 <i class="nav-icon fas fa-map-marked-alt"></i>
@@ -157,7 +287,7 @@
 
         <?php /* ?>
         <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="javascript:void(0);" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Dashboard
@@ -195,7 +325,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="javascript:void(0);" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                     Layout Options
@@ -255,7 +385,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="javascript:void(0);" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
                     Charts

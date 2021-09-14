@@ -26,6 +26,7 @@ class CreateJobSeekerRegistrationsTable extends Migration
             $table->string('city')->nullable($value = true);
             $table->string('suburb')->nullable($value = true);
             $table->string('token')->nullable($value = true);
+            $table->string('cv')->nullable($value = true);
             $table->enum('status', ['1', '0'])->default("1")->comment('[1 => "Enabled", 0 => "Disabled"]');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

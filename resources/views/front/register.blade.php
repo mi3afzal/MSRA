@@ -1,4 +1,5 @@
 @include('partials._head')
+@include('partials._select2Assests')
 @if (session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{session('success')}}
@@ -9,7 +10,7 @@
 @endif
 
 <body class="hold-transition register-page">
-    <div class="register-box pt-3 pb-3">
+    <div class="register-box pt-3 pb-3" style="width:30%; margin:2% 0 0 2%;">
         <div class="card card-outline card-primary">
             <div class="card-header text-center text-muted">
                 <a href="javascript:void(0);" class="h1"><b>MSRA</b></a>
@@ -64,7 +65,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <select name="profession" id="profession" class="form-control {{ $errors->has('profession') ? 'is-invalid' : '' }}">
+                        <select name="profession" id="profession" class="select2 form-control {{ $errors->has('profession') ? 'is-invalid' : '' }}">
                             <option value="">Select Profession</option>
                             @foreach($professions as $profession)
                             <option value="{{ $profession->id }}" {{ (old("profession") == $profession->id ? "selected":"") }}> {{ $profession->profession }}</option>
@@ -83,7 +84,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <select name="specialty" id="specialty" class="form-control {{ $errors->has('specialty') ? 'is-invalid' : '' }}">
+                        <select name="specialty" id="specialty" class="select2 form-control {{ $errors->has('specialty') ? 'is-invalid' : '' }}">
                             <option value="">Select Specialty</option>
                             @foreach($specialties as $specialty)
                             <option value="{{ $specialty->id }}" {{ (old("specialty") == $specialty->id ? "selected":"") }}> {{ $specialty->specialty }}</option>
@@ -127,6 +128,16 @@
                         @if($errors->has('postcode'))
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('postcode') }}</strong>
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">Your Updated C.V.</label>
+                        <input type="file" name="file" id="file" class="form-control" placeholder="Upload Your Updated C.V." />
+                        @if($errors->has('file'))
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('file') }}</strong>
                         </div>
                         @endif
                     </div>
@@ -175,5 +186,9 @@
             <!-- /.form-box -->
         </div><!-- /.card -->
     </div>
-
+    <script>
+        $(function() {
+            $('.select2').select2();
+        });
+    </script>
 </body>

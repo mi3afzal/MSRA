@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 
 class StateController extends Controller
 {
@@ -25,8 +26,13 @@ class StateController extends Controller
     {
         $cities_count = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
         if ($cities_count > 0) {
-            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();;
-            return view('ajax.statecities', compact('cities'));
+            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+
+            if ((isset($_POST["label"])) && ($_POST["label"] == 1)) {
+                return view('ajax.labelstatecities', compact('cities'));
+            } else {
+                return view('ajax.statecities', compact('cities'));
+            }
         } else {
             return view('ajax.defaultstatecities');
         }
@@ -42,7 +48,11 @@ class StateController extends Controller
         $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
         if ($suburb_count > 0) {
             $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
-            return view('ajax.suburb', compact('suburbs'));
+            if (isset($_POST["label"]) && ($_POST["label"] == 1)) {
+                return view('ajax.labelsuburb', compact('suburbs'));
+            } else {
+                return view('ajax.suburb', compact('suburbs'));
+            }
         } else {
             return view('ajax.defaultsuburb');
         }
@@ -123,7 +133,16 @@ class StateController extends Controller
                         </div>
                     ';
 
-                $final = ($statedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                if (Gate::allows('isAdmin')) {
+                    $final = ($statedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                } else {
+                    $final = '
+                        <span class="bg-warning p-1">
+                            You are not an admin.
+                        </span>
+                    ';
+                }
+
                 // $link = '<a href="' . route('jobtype.delete', $statedata->id) . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</a> ';
                 return $final;
             })

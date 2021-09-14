@@ -12,6 +12,7 @@ require('./all');
 require('./australiamap');
 require('./mapdata');
 require('./owl.carousel.min');
+require('./select2.full.min');
 
 window.Vue = require('vue').default;
 

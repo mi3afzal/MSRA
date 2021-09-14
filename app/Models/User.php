@@ -58,4 +58,34 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function jobseekerregistration()
+    {
+        return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');
+    }
+
+    public function jobtype()
+    {
+        return $this->hasMany(JobType::class);
+    }
+
+    public function jobcategory()
+    {
+        return $this->hasMany(JobCategory::class);
+    }
+
+    public function profession()
+    {
+        return $this->hasMany(Profession::class);
+    }
+
+    public function specialty()
+    {
+        return $this->hasMany(Specialty::class);
+    }
+
+    public function job()
+    {
+        return $this->hasMany(Job::class);
+    }
 }

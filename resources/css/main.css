@@ -1091,6 +1091,305 @@
   width: 60px;
 }
 
+/*About Us*/
+.aboutcontent {
+    background: #F6F6F6;
+    padding: 90px 0;
+    text-align: center
+}
+
+.aboutcontent .whitebox {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    padding: 50px;
+}
+
+.aboutcontent .whitebox h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #3c3c3c;
+    font-weight: 700;
+}
+
+.aboutcontent .whitebox p {
+    color: #828282
+}
+
+.aboutcontent .whitebox ul {
+    padding: 0;
+    margin: 30px 0 0;
+    list-style: none;
+    display: flex
+}
+
+.aboutcontent .whitebox ul li {
+    flex: 0 0 25%;
+}
+
+.aboutcontent .whitebox ul li strong {
+    display: block;
+    font-size: 30px;
+    color: #3c3c3c;
+}
+
+.aboutcontent .whitebox ul li span {
+    color: #828282;
+}
+
+.ourmission {
+    overflow: hidden;
+}
+
+.ourmission .darkside {
+    background: #2C2C2C;
+    height: 100%;
+    padding: 150px;
+    margin: -15px 0;
+}
+
+.ourmission .darkside h4 {
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.ourmission .darkside p {
+    color: #AFB3B4;
+    line-height: 30px;
+    margin-bottom: 50px;
+}
+
+.ourmission .carousel {
+    padding: 100px;
+}
+
+.ourmission .carousel-indicators {
+    bottom: 60px;
+}
+
+.ourmission .carousel-indicators li {
+    width: 142px;
+    height: 100px;
+    text-indent: 0000;
+    box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.13);
+    margin: 0 8px;
+}
+
+.ourmission .carousel-indicators li img {
+    height: 100px;
+    width: 100%;
+}
+
+.ourmission h2 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/*About Us*/
+
+
+/*Contact Us*/
+.contactsection {
+    background: #F6F6F6;
+    padding: 80px 0;
+}
+
+.contactsection h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 15px;
+}
+
+.contactsection p {
+    font-size: 17px;
+    margin-bottom: 40px;
+    color: #535353;
+}
+
+.contactsection .btn-6 {
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    border: 2px solid transparent;
+    display: inline-block;
+    padding: 11px 35px;
+    position: relative;
+    z-index: 1;
+    transition: all .7s ease;
+    background: #06396c;
+    border-radius: 3px;
+}
+
+.contactsection .btn-6:hover {
+    color: #06396c;
+    border: 2px solid #06396c;
+    background: transparent;
+}
+
+.contactsection .media .fa-w-16 {
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    background: #fff;
+    line-height: 55px;
+    padding: 15px;
+    margin-right: 20px;
+    font-size: 20px;
+    color: #000;
+    border-radius: 3px;
+}
+
+.contactsection .media h5 {
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 15px;
+    font-style: normal;
+    margin: 5px 0 5px;
+    color: #fff;
+}
+
+.contactsection .media p {
+    margin-bottom: 0;
+    color: #fff;
+    font-size: 14px;
+}
+
+.contactsection .media p a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.contactsection .media {
+    margin-bottom: 25px;
+    display: flex;
+}
+
+.contactsection .form-group {
+    margin-bottom: 30px;
+}
+
+.contactsection textarea {
+    min-height: 220px !important;
+}
+
+.contactsection .contact-info {
+    padding: 30px;
+    background: url(./images/contactbg.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    border-radius: 5px;
+    margin-left: 50px;
+}
+
+.contactsection .form-control {
+    padding: 10px 17px;
+    color: #495057 !important;
+    width: 100%;
+    min-height: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 3px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+
+}
+
+.lookingformore {
+    background: #00ADEF;
+    padding: 70px 0;
+}
+
+.lookingformore h2 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lookingformore h2 i {
+    display: block;
+}
+
+.lookingformore a.btn1 {
+    padding: 15px 25px;
+    background: #000;
+    align-items: center;
+    display: flex;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+
+    border: 2px solid transparent;
+
+}
+
+.lookingformore a.btn1.btn-sec {
+    border: 2px solid #fff;
+    background: transparent;
+}
+
+.lookingformore a.btn1 strong {
+    display: block;
+}
+
+.lookingformore a.btn1 .fa {
+    font-size: 60px;
+    margin-right: 15px;
+}
+
+.propertygallary {
+    background: #F6F6F6;
+    padding: 80px 0;
+}
+
+.propertygallary h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 15px;
+}
+
+.propertygallary .innerbox {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px 30px 0px 30px;
+}
+
+.propertygallary a.gallaryimg {
+    display: block;
+    width: 100%;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.propertygallary a.gallaryimg img {
+    width: 100%;
+}
+
+.propertygallary a.gallaryimg span {
+    position: absolute;
+    text-transform: uppercase;
+    color: #fff;
+    background: #00ADEF;
+    padding: 8px 15px;
+    left: 0;
+    bottom: 15px;
+    border-radius: 0px 10px 10px 00px;
+}
+
+.propertygallary p {
+    font-size: 17px;
+    margin-bottom: 40px;
+    color: #535353;
+}
+
+/*Contact Us*/
+
 @media (max-width: 1366px) {
   .joblocation {
     position: relative;
@@ -1178,6 +1477,39 @@
 }
 
 @media (max-width: 767.98px) {
+    .aboutcontent .whitebox {
+        padding: 30px 20px;
+    }
+
+    .aboutcontent .whitebox ul li strong {
+        font-size: 24px;
+    }
+
+    .aboutcontent .whitebox ul li span {
+        font-size: 14px;
+    }
+
+    .aboutcontent .whitebox ul li {
+        flex: 0 0 50%;
+    }
+
+    .aboutcontent .whitebox ul {
+        flex-wrap: wrap;
+    }
+
+    .ourmission .darkside {
+        padding: 20px;
+    }
+
+    .aboutcontent .whitebox h2 {
+        font-size: 25px;
+    }
+
+    .contactsection .contact-info {
+        margin-left: 0;
+        margin-top: 30px;
+    }
+    
   .joblocation svg {
     width: 100%;
   }
