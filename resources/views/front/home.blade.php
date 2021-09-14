@@ -3,6 +3,13 @@
 'settings' => $settings,
 ])
 
+<?php
+// echo "<pre>";
+// print_r($jobtypes);
+// echo "</pre>";
+// die;
+
+?>
 
 <section class="top-banner" style="background: url(images/dreamjobbg.png) top center no-repeat;">
     <div class="container">
@@ -21,8 +28,8 @@
                                 <div class="form-group">
                                     <select name="jobtype" id="jobtype" class="form-control">
                                         <option value="">Select Job Type</option>
-                                        @foreach($jobtypes as $id => $jobtype)
-                                        <option value="{{ $id }}">{{ ucwords($jobtype) }}</option>
+                                        @foreach($jobtypes as $key => $value)
+                                        <option value="{{ $value->id }}">{{ ucwords($value->jobtype) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
