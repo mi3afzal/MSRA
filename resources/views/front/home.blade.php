@@ -146,8 +146,8 @@
                 <div class="servicesbox">
                     <h3>Services</h3>
                     <ul class="serviceslist">
-                        @foreach($jobtypes as $key => $value)
-                        <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => '','specialty' => '','states' => '','jobtype' => $value->id]) }}">{!! ucwords($value->jobtype) !!}</a></li>
+                        @foreach($specialties as $key => $value)
+                        <li><a href="{{ route('front.job.search', ['_method'=>'GET', 'suburb' => '','cities' => '','profession' => '','specialty' => $value->id,'states' => '','jobtype' => '']) }}">{!! ucwords($value->specialty) !!}</a></li>
                         @endforeach
                     </ul>
                 </div>

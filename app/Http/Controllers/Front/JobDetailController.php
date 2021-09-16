@@ -29,6 +29,7 @@ class JobDetailController extends Controller
         $settings = Settings::orderBy("created_at", "desc")->first();
         $states = State::where("status", "1")->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+
         return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "jobtypes", "settings"));
     }
 
@@ -67,12 +68,13 @@ class JobDetailController extends Controller
         $sociallinks = SocialLink::where("status", "1")->first();
         $states = State::where("status", "1")->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $settings = Settings::orderBy("created_at", "desc")->first();
 
         $job = Job::where(["status" => "1", "slug" => $slug])
             ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
             ->first();
 
-        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "job", "jobtypes"));
+        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "job", "jobtypes", "settings"));
     }
 
     /**
