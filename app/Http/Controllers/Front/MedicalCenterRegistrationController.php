@@ -133,28 +133,7 @@ class MedicalCenterRegistrationController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\MedicalCenterRegistration  $medicalCenterRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MedicalCenterRegistration $medicalCenterRegistration)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MedicalCenterRegistration  $medicalCenterRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, MedicalCenterRegistration $medicalCenterRegistration)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

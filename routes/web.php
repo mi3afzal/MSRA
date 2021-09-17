@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\IsMedicalCenter;
+use App\Http\Middleware\IsJobSeeker;
 
 
 /*
@@ -49,8 +51,8 @@ Route::get('/jobseeker-register', [App\Http\Controllers\Front\JobSeekerRegistrat
 Route::post('/jobseeker-register-store', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'store'])->name('jobseeker.register.store');
 
 // Medical Center Registration Routes
-Route::get('/medical-center-register', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'register_form'])->name('jobseeker.medicalcenter.register');
-Route::post('/medical-center-register-store', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'store'])->name('jobseeker.medicalcenter.register.store');
+Route::get('/medical-center-register', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'register_form'])->name('medicalcenter.register');
+Route::post('/medical-center-register-store', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'store'])->name('medicalcenter.register.store');
 
 /** 
  * Authentication routes
@@ -132,6 +134,8 @@ Route::post(
 // });
 // Admin route for dashboard
 Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
+
+
 
 Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
@@ -309,7 +313,6 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     Route::put('/setting/update/{id}', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.setting.update');
 
 
-
     // Ajax Route
     Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);
     Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);
@@ -319,4 +322,11 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Ajax Routes Registration
     Route::post('register-getcities', [App\Http\Controllers\Admin\StateController::class, 'register_getcities'])->name('register-getcities')->withoutMiddleware([isAdmin::class]);
     Route::post('register-getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'register_getasuburbs'])->name('register-getasuburbs')->withoutMiddleware([isAdmin::class]);
+});
+
+
+Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(function () {
+    // Route for medical center profile update.
+    Route::get('/medical-center-profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('admin.medicalcenterprofile.edit');
+    Route::put('/medical-center-update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('admin.medicalcenterprofile.update');
 });

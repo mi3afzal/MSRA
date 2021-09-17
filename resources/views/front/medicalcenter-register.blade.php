@@ -18,7 +18,7 @@
             <div class="card-body">
                 <p class="login-box-msg text-muted"><strong>REGISTRATION FOR MEDICAL CENTERS</strong></p>
 
-                <form action="{{ route('jobseeker.medicalcenter.register.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('medicalcenter.register.store') }}" method="POST" enctype="multipart/form-data">
                     {{ method_field('POST') }}
                     @csrf
 
