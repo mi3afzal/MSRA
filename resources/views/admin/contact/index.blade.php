@@ -2,7 +2,7 @@
 
 @section('content')
 @include('partials._datatableAssets')
-
+@include('partials._select2Assests')
 <section class="content">
     <div class="card">
         <div class="card-header">
