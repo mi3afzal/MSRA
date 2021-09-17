@@ -28,8 +28,12 @@ A medical staff recruitment website build in Laravel 8
 
 ### Registrations
 
-Application currently has two registrations :
+Application currently has three registrations :
 
 1. Admin
 2. Jobseekers
-3. Medical Center [ Future ]
+3. Medical Center
+
+## E-R Model
+
+![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/dev/e-r-model-17-09-2021.png)
