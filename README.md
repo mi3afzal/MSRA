@@ -34,6 +34,6 @@ Application currently has three registrations :
 2. Jobseekers
 3. Medical Center
 
-### E-R Model
+## E-R Model
 
 ![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/dev/e-r-model-17-09-2021.png)
