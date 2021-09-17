@@ -28,7 +28,7 @@ A medical staff recruitment website build in Laravel 8
 
 ### Registrations
 
-Application currently has two registrations :
+Application currently has three registrations :
 
 1. Admin
 2. Jobseekers
