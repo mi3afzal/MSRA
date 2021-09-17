@@ -155,25 +155,32 @@
             </span>
             @else
             <span class="right badge bg-purple p-2 mt-2 mr-2">
-                <i class="far fa-user-circle"></i>&nbsp;&nbsp;User
+                <i class="far fa-user-circle "></i>&nbsp;&nbsp;User
             </span>
             @endif
 
         </li>
+        &nbsp;
+        <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);" role="button">
+
+                <i class="fas fa-user-md fa-lg"></i>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="javascript:void(0);" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
+                <i class="fas fa-expand-arrows-alt "></i>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="javascript:void(0);" role="button">
-                <i class="fas fa-th-large"></i>
+                <i class="fas fa-th-large "></i>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();" titlle="Logout">
-                <i class="fas fa-power-off" data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
+                <i class="fas fa-power-off " data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
             </a>
         </li>
     </ul>
