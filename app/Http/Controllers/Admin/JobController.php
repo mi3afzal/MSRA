@@ -74,40 +74,40 @@ class JobController extends Controller
             ->filter(function ($query) use ($request) {
                 if ($request->has('status') && $request->get('status') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.status', 'like', "%{$request->get('status')}%");
+                        $q->where('jobs.status', 'like', $request->get('status'));
                     });
                 }
 
                 if ($request->has('jobtype') && $request->get('jobtype') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.job_type', 'like', "%{$request->get('jobtype')}%");
+                        $q->where('jobs.job_type', 'like', $request->get('jobtype'));
                     });
                 }
 
                 if ($request->has('jobcategory') && $request->get('jobcategory') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.job_category', 'like', "%{$request->get('jobcategory')}%");
+                        $q->where('jobs.job_category', '=', $request->get('jobcategory'));
                     });
                 }
 
                 if ($request->has('medicalcenter') && $request->get('medicalcenter') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.medical_center', 'like', "%{$request->get('medicalcenter')}%");
+                        $q->where('jobs.medical_center', '=', $request->get('medicalcenter'));
                     });
                 }
                 if ($request->has('profession') && $request->get('profession') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.profession', 'like', "%{$request->get('profession')}%");
+                        $q->where('jobs.profession', '=', $request->get('profession'));
                     });
                 }
                 if ($request->has('speciality') && $request->get('speciality') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.speciality', 'like', "%{$request->get('speciality')}%");
+                        $q->where('jobs.speciality', '=', $request->get('speciality'));
                     });
                 }
                 if ($request->has('state') && $request->get('state') != '') {
                     $query->where(function ($q) use ($request) {
-                        $q->where('jobs.state', 'like', "%{$request->get('state')}%");
+                        $q->where('jobs.state', '=', $request->get('state'));
                     });
                 }
             })

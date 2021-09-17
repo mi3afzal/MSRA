@@ -63,10 +63,34 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function register_getcities()
     {
-        //
+        $cities_count = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
+        if ($cities_count > 0) {
+            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+            return view('ajax.register-statecities', compact('cities'));
+        } else {
+            return view('ajax.default-register-statecities');
+        }
     }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function register_getasuburbs()
+    {
+        $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
+        if ($suburb_count > 0) {
+            $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+            return view('ajax.register-suburb', compact('suburbs'));
+        } else {
+            return view('ajax.default-register-suburb');
+        }
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -149,60 +173,6 @@ class StateController extends Controller
             ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
-     */
-    public function show(State $state)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(State $state)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, State $state)
-    {
-        //
-    }
 
     /**
      * Enable the specified state in storage.
