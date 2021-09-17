@@ -32,4 +32,4 @@ Application currently has two registrations :
 
 1. Admin
 2. Jobseekers
-3. Medical Center [ Future ]
+3. Medical Center
