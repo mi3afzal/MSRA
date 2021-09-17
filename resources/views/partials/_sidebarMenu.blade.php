@@ -14,7 +14,7 @@
                 </p>
             </a>
         </li>
-
+        @if (Gate::allows('isAdmin'))
         <li class="nav-header">FRONT PAGES</li>
 
         <li class="nav-item">
@@ -50,10 +50,9 @@
             </a>
         </li>
 
+        @endif
+
         <li class="nav-header">BACKEND MODULES</li>
-
-
-
 
         <li class="nav-item">
             <a href="{{ route('admin.state.list') }}" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
@@ -77,7 +76,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                @if (( Auth::user()->role == "1"))
+                @if (Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ route('admin.jobtype.create') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.create')) {
                                                                                         echo 'active';
@@ -111,7 +110,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                @if (( Auth::user()->role == "1"))
+                @if (Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ route('admin.jobcategory.create') }}" class="nav-link <?php if (url()->current() == route('admin.jobcategory.create')) {
                                                                                             echo 'active';
@@ -145,7 +144,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                @if (( Auth::user()->role == "1"))
+                @if (Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ route('admin.job.create') }}" class="nav-link <?php if (url()->current() == route('admin.job.create')) {
                                                                                     echo 'active';
@@ -179,7 +178,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                @if (( Auth::user()->role == "1"))
+                @if (Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ route('admin.profession.create') }}" class="nav-link <?php if (url()->current() == route('admin.profession.create')) {
                                                                                             echo 'active';
@@ -213,7 +212,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                @if (( Auth::user()->role == "1"))
+                @if (Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ route('admin.specialty.create') }}" class="nav-link <?php if (url()->current() == route('admin.specialty.create')) {
                                                                                         echo 'active';
