@@ -37,3 +37,35 @@ Application currently has three registrations :
 ## E-R Model
 
 ![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/dev/e-r-model-17-09-2021.png)
+
+## HOME PAGE
+
+![Home Page](https://github.com/aadhar-appinop/MSRA/blob/dev/home-page.png)
+
+## JOBS PAGE
+
+![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/jobs-page.png)
+
+## ABOUT US PAGE
+
+![About Us Page](https://github.com/aadhar-appinop/MSRA/blob/dev/about-us-page.png)
+
+## CONTACT US PAGE
+
+![Contact Us Page](https://github.com/aadhar-appinop/MSRA/blob/dev/contact-us-page.png)
+
+## LOGIN PAGE
+
+![Login Page](https://github.com/aadhar-appinop/MSRA/blob/dev/admin-login.png)
+
+## ADMIN REGISTRATION PAGE
+
+![Admin Registration Page](https://github.com/aadhar-appinop/MSRA/blob/dev/admin-registration.png)
+
+## JOBSEEKER REGISTRATION PAGE
+
+![Jobseeker Registration Page](https://github.com/aadhar-appinop/MSRA/blob/dev/jobseekers-registration.png)
+
+## MEDICAL CENTER REGISTRATION PAGE
+
+![Medical Center Registration Page](https://github.com/aadhar-appinop/MSRA/blob/dev/medical-center-registeration.png)
