@@ -110,8 +110,14 @@ class TestimonialController extends Controller
                         </div>
                     ';
 
+                $detailslink = '
+                    <div class="btn-group">
+                        <a href="' . route('jobseeker.testimonial.show', $testimonialdata->id) . '" class="btn btn-sm btn-primary" title="View Details" ><i class="fas fa-eye"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isJobseeker')) {
-                    $final = ($testimonialdata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($testimonialdata->status == 1) ? $link . $inactivelink . $detailslink : $link . $activelink . $detailslink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -126,7 +132,24 @@ class TestimonialController extends Controller
     }
 
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Testimonial  $testimonial
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, Testimonial $testimonial, $id)
+    {
+        $title = "Testimonial Details";
+        $module = "testimonial";
+        $count = Testimonial::where(["status" => "1", "id" => $id, "user_id" => Auth::user()->id])->with("userdetails", "usermoredetails")->count();
+        if ($count > 0) {
+            $testimonial = Testimonial::where(["status" => "1", "id" => $id, "user_id" => Auth::user()->id])->with("userdetails", "usermoredetails")->first();
+            return view('jobseeker.testimonial.show', compact('title', 'module', 'testimonial'));
+        }
 
+        abort("404");
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -155,7 +178,6 @@ class TestimonialController extends Controller
 
         $testimonial->unique_code = $uid;
         $testimonial->save();
-        die("Added Successfully");
         return redirect()->route('jobseeker.testimonial.list')->with('success', 'Testimonial added successfully.');
     }
 

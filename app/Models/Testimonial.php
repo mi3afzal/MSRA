@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class Testimonial extends Model
 {
@@ -21,5 +22,15 @@ class Testimonial extends Model
         $this->attributes['title'] = $value;
         $slug = Str::slug($value, '-');
         $this->attributes['slug'] = strtolower($slug) . "-" . time();
+    }
+
+    public function userdetails()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id')->select("id", "name", "email");
+    }
+
+    public function usermoredetails()
+    {
+        return $this->belongsTo('App\Models\JobSeekerRegistration', 'user_id');
     }
 }
