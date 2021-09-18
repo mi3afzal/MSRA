@@ -2,7 +2,7 @@
 
 A medical staff recruitment website build in Laravel 8
 
-## Current Backend Modules
+## Current Backend Options / Modules For Admin
 
 1. Social Links [Update ]
 2. About Us [Update ]
@@ -15,6 +15,37 @@ A medical staff recruitment website build in Laravel 8
 9. Specialty [Create, Delete (Softdelete), Enable, Disable]
 10. Contact Leads [Delete, Enable, Disable]
 
+## Current Backend Options / Modules For Job Seekers
+
+1. Dashboard
+2. States [View Only]
+3. Testimonials [Create, Delete (Softdelete), Enable, Disable, View]
+4. JobTypes [View Only]
+5. Job Category [View Only]
+6. Jobs [View Only]
+7. Professions [View Only]
+8. Specialty [View Only]
+
+## Current Backend Options / Modules For Medical Center
+
+1. Dashboard
+2. States [View Only]
+3. JobTypes [View Only]
+4. Job Category [View Only]
+5. Jobs [View Only]
+6. Professions [View Only]
+7. Specialty [View Only]
+
+## Current Backend Options / Modules For Doctor
+
+1. Dashboard
+2. States [View Only]
+3. JobTypes [View Only]
+4. Job Category [View Only]
+5. Jobs [View Only]
+6. Professions [View Only]
+7. Specialty [View Only]
+
 ## Current Frontend Pages
 
 1. Home
@@ -26,7 +57,7 @@ A medical staff recruitment website build in Laravel 8
 7. Register
 8. Job Seeker Registration
 
-### Registrations
+## Current Registration Modules
 
 Application currently has three registrations :
 

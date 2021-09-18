@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\User;
 use App\Models\About;
 use App\Models\SocialLink;
 use App\Models\JobType;
@@ -28,7 +29,10 @@ class AboutController extends Controller
             $settings = Settings::orderBy("created_at", "desc")->first();
             $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
             $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
-            return view('front.aboutus', compact("sociallinks", "listings", "settings", "jobtypes", "professions"));
+            $totalJobSeekers = User::where(["status" => "1", "role" => 2])->orderBy('created_at', 'desc')->count();
+            $totalMedicalCenters = User::where(["status" => "1", "role" => 3])->orderBy('created_at', 'desc')->count();
+            $totalDoctors = User::where(["status" => "1", "role" => 4])->orderBy('created_at', 'desc')->count();
+            return view('front.aboutus', compact("sociallinks", "listings", "settings", "jobtypes", "professions", "totalJobSeekers", "totalMedicalCenters", "totalDoctors"));
         } else {
             abort(404, 'No record found');
         }

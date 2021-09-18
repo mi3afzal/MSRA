@@ -12,12 +12,13 @@ class Job extends Model
     use HasFactory;
     use SoftDeletes;
 
-    // protected $table = 'job_categories';
+    protected $table = 'testimonials';
 
     protected $fillable = ['user_id', 'created_at', 'updated_at'];
 
-    public function setSlugAttribute($value)
+    public function setTitleAttribute($value)
     {
+        $this->attributes['title'] = $value;
         $slug = Str::slug($value, '-');
         $this->attributes['slug'] = strtolower($slug) . "-" . time();
     }

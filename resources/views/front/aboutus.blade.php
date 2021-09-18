@@ -26,11 +26,11 @@
                     <p>{!! $listings->description !!}</p>
                     <ul>
                         <li>
-                            <strong>35</strong>
+                            <strong>{!! $totalMedicalCenters !!}</strong>
                             <span>Medical Center</span>
                         </li>
                         <li>
-                            <strong>1400</strong>
+                            <strong>{!! $totalDoctors !!}</strong>
                             <span>Doctors</span>
                         </li>
                         <li>

@@ -3,13 +3,7 @@
 'settings' => $settings,
 ])
 
-<?php
-// echo "<pre>";
-// print_r($jobtypes);
-// echo "</pre>";
-// die;
-
-?>
+@include('partials._bootstrapModal')
 
 <section class="top-banner" style="background: url(images/dreamjobbg.png) top center no-repeat;">
     <div class="container">
@@ -86,7 +80,6 @@
                     We always partake in a deep understanding of our partners’ exclusive requirements to determine what skills, attributes and personality are required to find the perfect git for their business.
                     At MSRA we believe that the perfect candidate is always needed to ensure minimal disruption and the continued growth of our partners.</p>
             </div>
-
 
         </div>
         <div class="row">

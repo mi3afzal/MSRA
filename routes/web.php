@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\IsMedicalCenter;
+use App\Http\Middleware\IsJobSeeker;
 
 
 /*
@@ -44,8 +46,13 @@ Route::get('/job-clearsearch', [App\Http\Controllers\Front\JobController::class,
 
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Jobseeker Registration Routes
 Route::get('/jobseeker-register', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'index'])->name('jobseeker.register');
 Route::post('/jobseeker-register-store', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'store'])->name('jobseeker.register.store');
+
+// Medical Center Registration Routes
+Route::get('/medical-center-register', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'register_form'])->name('medicalcenter.register');
+Route::post('/medical-center-register-store', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'store'])->name('medicalcenter.register.store');
 
 /** 
  * Authentication routes
@@ -127,6 +134,8 @@ Route::post(
 // });
 // Admin route for dashboard
 Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
+
+
 
 Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
@@ -304,9 +313,41 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     Route::put('/setting/update/{id}', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.setting.update');
 
 
-
     // Ajax Route
-    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);;
-    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);;
-    Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);;
+    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);
+    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);
+
+    Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);
+
+    // Ajax Routes Registration
+    Route::post('register-getcities', [App\Http\Controllers\Admin\StateController::class, 'register_getcities'])->name('register-getcities')->withoutMiddleware([isAdmin::class]);
+    Route::post('register-getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'register_getasuburbs'])->name('register-getasuburbs')->withoutMiddleware([isAdmin::class]);
+});
+
+
+Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(function () {
+    // Route for medical center profile update.
+    Route::get('/medical-center-profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('admin.medicalcenterprofile.edit');
+    Route::put('/medical-center-update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('admin.medicalcenterprofile.update');
+});
+
+
+Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () {
+    // Route for job seeker.
+    Route::get('/jobseeker-testimonial', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'create'])->name('jobseeker.testimonial.create');
+    Route::post('/jobseeker-testimonial-store', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'store'])->name('jobseeker.testimonial.store');
+    Route::get('/jobseeker-testimonial/list', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'lists'])->name('jobseeker.testimonial.list');
+
+    Route::get('/jobseeker-testimonial/enable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'enable'])->name('jobseeker.testimonial.enable');
+    Route::get('/jobseeker-testimonial/disable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'disable'])->name('jobseeker.testimonial.disable');
+
+    Route::get(
+        '/jobseeker-testimonial/datatable',
+        [App\Http\Controllers\Jobseeker\TestimonialController::class, 'datatable']
+    )->name('testimonial.datatables');
+
+    Route::get(
+        '/jobseeker-testimonial/delete/{id}',
+        [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
+    )->name('testimonial.delete');
 });

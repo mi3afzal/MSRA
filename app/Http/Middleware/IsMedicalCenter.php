@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class isAdmin
+class IsMedicalCenter
 {
     /**
      * Handle an incoming request.
@@ -19,11 +19,11 @@ class isAdmin
     {
         $user = Auth::user();
         if ($user) {
-            if ($user->role == 1) {
+            if ($user->role == 3) {
                 return $next($request);
             }
-            return redirect("/")->with("danger", "This module is only available for Admins.");
+            return redirect("/")->with("warning", "This module is only available for medical centers.");
         }
-        return redirect("/")->with("danger", "This module is only available for medical Admin.");
+        return redirect("/")->with("warning", "This module is only available for medical centers.");
     }
 }
