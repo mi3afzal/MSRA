@@ -19,7 +19,7 @@ A medical staff recruitment website build in Laravel 8
 
 1. Dashboard
 2. States [View Only]
-3. Testimonials [Create, Delete (Softdelete), Enable, Disable, View]
+3. Testimonials [Create, Delete (Softdelete), Enable, Disable, View, Show]
 4. JobTypes [View Only]
 5. Job Category [View Only]
 6. Jobs [View Only]
