@@ -337,6 +337,7 @@ Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () 
     Route::get('/jobseeker-testimonial', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'create'])->name('jobseeker.testimonial.create');
     Route::post('/jobseeker-testimonial-store', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'store'])->name('jobseeker.testimonial.store');
     Route::get('/jobseeker-testimonial/list', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'lists'])->name('jobseeker.testimonial.list');
+    Route::get('/jobseeker-testimonial-details/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'show'])->name('jobseeker.testimonial.show');
 
     Route::get('/jobseeker-testimonial/enable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'enable'])->name('jobseeker.testimonial.enable');
     Route::get('/jobseeker-testimonial/disable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'disable'])->name('jobseeker.testimonial.disable');
