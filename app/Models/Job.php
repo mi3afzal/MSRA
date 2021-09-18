@@ -12,7 +12,7 @@ class Job extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'testimonials';
+    protected $table = 'jobs';
 
     protected $fillable = ['user_id', 'created_at', 'updated_at'];
 
