@@ -148,7 +148,7 @@ class TestimonialController extends Controller
             return view('jobseeker.testimonial.show', compact('title', 'module', 'testimonial'));
         }
 
-        abort("404");
+        abort("404", "Record not found.");
     }
 
     /**

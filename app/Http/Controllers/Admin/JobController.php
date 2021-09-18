@@ -266,7 +266,7 @@ class JobController extends Controller
     {
         $title = "Job Details";
         $module = "job";
-        $job = Job::where(["status" => "1", "id" => $id])->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->first();
+        $job = Job::with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->findOrFail($id);
         return view('admin.job.show', compact('title', 'module', 'job'));
     }
 

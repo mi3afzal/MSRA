@@ -33,6 +33,7 @@ class MedicalCenterRegistrationController extends Controller
         $module = "profile";
         $id = auth()->user()->id;
         $user = User::where("id", $id)->with("profile", "profile.statedetails", "profile.citydetails", "profile.suburbdetails")->first();
+        // $user = User::with("profile", "profile.statedetails", "profile.citydetails", "profile.suburbdetails")->findOrFail($id);
         return view('admin.medicalcenterprofile.edit', compact('title', 'module', 'user'));
     }
 

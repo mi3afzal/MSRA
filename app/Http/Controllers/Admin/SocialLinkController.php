@@ -81,7 +81,6 @@ class SocialLinkController extends Controller
         $count = SocialLink::orderBy('created_at', 'desc')->count();
         if ($count > 0) {
             $listings = SocialLink::orderBy('created_at', 'desc')->first();
-
             $title = "social link";
             $module = "SocialLink";
             return view('admin.sociallink.edit', compact('listings', 'title', 'module'));
