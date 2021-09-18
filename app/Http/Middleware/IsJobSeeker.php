@@ -22,8 +22,8 @@ class IsJobSeeker
             if ($user->role == 2) {
                 return $next($request);
             }
-            return redirect("/")->with("warning", "For only job seeker.");
+            return redirect("/")->with("info", "This module is only available for job seeker.");
         }
-        return redirect("/")->with("warning", "For only job seeker.");
+        return redirect("/")->with("info", "This module is only available for job seeker.");
     }
 }

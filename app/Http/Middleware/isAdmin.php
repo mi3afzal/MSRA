@@ -22,8 +22,8 @@ class isAdmin
             if ($user->role == 1) {
                 return $next($request);
             }
-            return redirect("/")->with("warning", "You are not an admin.");
+            return redirect("/")->with("danger", "This module is only available for Admins.");
         }
-        return redirect("/")->with("warning", "You are not an admin.");
+        return redirect("/")->with("danger", "This module is only available for medical Admin.");
     }
 }

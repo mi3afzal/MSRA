@@ -22,8 +22,8 @@ class IsMedicalCenter
             if ($user->role == 3) {
                 return $next($request);
             }
-            return redirect("/")->with("warning", "For only medical center.");
+            return redirect("/")->with("warning", "This module is only available for medical centers.");
         }
-        return redirect("/")->with("warning", "For only medical center.");
+        return redirect("/")->with("warning", "This module is only available for medical centers.");
     }
 }

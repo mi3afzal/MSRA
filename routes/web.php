@@ -330,3 +330,24 @@ Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(fun
     Route::get('/medical-center-profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('admin.medicalcenterprofile.edit');
     Route::put('/medical-center-update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('admin.medicalcenterprofile.update');
 });
+
+
+Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () {
+    // Route for job seeker.
+    Route::get('/jobseeker-testimonial', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'create'])->name('jobseeker.testimonial.create');
+    Route::post('/jobseeker-testimonial-store', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'store'])->name('jobseeker.testimonial.store');
+    Route::get('/jobseeker-testimonial/list', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'lists'])->name('jobseeker.testimonial.list');
+
+    Route::get('/jobseeker-testimonial/enable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'enable'])->name('jobseeker.testimonial.enable');
+    Route::get('/jobseeker-testimonial/disable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'disable'])->name('jobseeker.testimonial.disable');
+
+    Route::get(
+        '/jobseeker-testimonial/datatable',
+        [App\Http\Controllers\Jobseeker\TestimonialController::class, 'datatable']
+    )->name('testimonial.datatables');
+
+    Route::get(
+        '/jobseeker-testimonial/delete/{id}',
+        [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
+    )->name('testimonial.delete');
+});

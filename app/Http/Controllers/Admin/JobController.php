@@ -238,7 +238,6 @@ class JobController extends Controller
         $job->rate = $request->input('rate');
         $job->work_days = $request->input('work_days');
         $job->title = $request->input('title');
-        $job->slug = $request->input('title');
         $job->from_date = $request->input('from_date');
         $job->to_date = $request->input('to_date');
         $job->address = $request->input('address');
