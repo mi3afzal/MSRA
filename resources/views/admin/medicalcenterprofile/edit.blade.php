@@ -98,7 +98,12 @@
 
                                     <div class="form-group">
                                         <label for="name">Name</label>
+                                        @if (isset($user->profile->fax))
                                         <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" autocomplete="off" value="{{ old('name', $user->name) }}" />
+                                        @else
+                                        <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" autocomplete="off" value="{{ old('name') }}" />
+                                        @endif
+
                                         @if($errors->has('name'))
                                         <div class="invalid-feedback">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -118,7 +123,12 @@
 
                                     <div class="form-group">
                                         <label for="fax">Fax</label>
-                                        <input type="text" name="fax" id="fax" class="form-control {{ $errors->has('fax') ? 'is-invalid' : '' }}" placeholder="Fax" autocomplete="off" value="{{ old('fax', $user->profile->fax) }}" />
+                                        @if (isset($user->profile->fax))
+                                        <input type="text" name="fax" id="fax" class="form-control {{ $errors->has('fax') ? 'is-invalid' : '' }}" placeholder="Fax" autocomplete="off" value="{{  old('fax', $user->profile->fax) }}" />
+                                        @else
+                                        <input type="text" name="fax" id="fax" class="form-control {{ $errors->has('fax') ? 'is-invalid' : '' }}" placeholder="Fax" autocomplete="off" value="{{  old('fax') }}" />
+                                        @endif
+
                                         @if($errors->has('fax'))
                                         <div class="invalid-feedback">
                                             <strong>{{ $errors->first('fax') }}</strong>
@@ -128,7 +138,12 @@
 
                                     <div class="form-group">
                                         <label for="mobile">Mobile</label>
+                                        @if (isset($user->profile->fax))
                                         <input type="text" name="mobile" id="mobile" class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" placeholder="Mobile" autocomplete="off" value="{{ old('mobile', $user->profile->mobile) }}" />
+                                        @else
+                                        <input type="text" name="mobile" id="mobile" class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" placeholder="Mobile" autocomplete="off" value="{{ old('mobile') }}" />
+                                        @endif
+
                                         @if($errors->has('mobile'))
                                         <div class="invalid-feedback">
                                             <strong>{{ $errors->first('mobile') }}</strong>
