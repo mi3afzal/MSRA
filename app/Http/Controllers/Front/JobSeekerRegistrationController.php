@@ -79,7 +79,7 @@ class JobSeekerRegistrationController extends Controller
 
             if ($request->file('file')) {
                 $name1 = $user->id . '_' . 'user_' .  time() . '.' . $file1->getClientOriginalExtension();
-                $destinationPath1 = public_path('/images/users/' . $user->id);
+                $destinationPath1 = public_path('/images/jobseeker/' . $user->id);
                 $file1->move($destinationPath1, $name1);
             }
 

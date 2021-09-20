@@ -163,9 +163,15 @@
         &nbsp;
         @if(Auth::user()->role == "3")
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.medicalcenterprofile.edit') }}" role="button">
-
+            <a class="nav-link" href="{{ route('medicalcenterprofile.edit') }}" role="button">
                 <i class="fas fa-user-md fa-lg"></i>
+            </a>
+        </li>
+        @endif
+        @if(Auth::user()->role == "2")
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('jobseekerprofile.edit') }}" role="button">
+                <i class="fas fa-user-tie fa-lg"></i>
             </a>
         </li>
         @endif

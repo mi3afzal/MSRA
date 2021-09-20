@@ -327,8 +327,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
 Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(function () {
     // Route for medical center profile update.
-    Route::get('/medical-center-profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('admin.medicalcenterprofile.edit');
-    Route::put('/medical-center-update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('admin.medicalcenterprofile.update');
+    Route::get('/medical-center-profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('medicalcenterprofile.edit');
+    Route::put('/medical-center-update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('medicalcenterprofile.update');
 });
 
 
@@ -351,4 +351,8 @@ Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () 
         '/jobseeker-testimonial/delete/{id}',
         [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
     )->name('testimonial.delete');
+
+    // Jobseeker Profile Update Routes
+    Route::get('/jobseeker-profile', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'edit'])->name('jobseekerprofile.edit');
+    Route::put('/jobseeker-profile-update/{id}', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'update'])->name('jobseekerprofile.update');
 });
