@@ -76,11 +76,11 @@ Application currently has three registrations :
 
 ## JOBS PAGE [QUICK APPLICATION]
 
-![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/jobs-page.png)
+![Jobs Page](github.com/aadhar-appinop/MSRA/blob/dev/quick-apply-job.png)
 
 ## JOBS PAGE [DETAIL APPLICATION]
 
-![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/jobs-page.png)
+![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/job-apply-details.png)
 
 ## ABOUT US PAGE
 
