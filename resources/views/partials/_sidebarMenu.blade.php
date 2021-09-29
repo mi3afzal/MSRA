@@ -281,6 +281,22 @@
         @endif
 
 
+        @if (Gate::allows('isAdmin'))
+        <li class="nav-item">
+            <a href="{{ route('admin.jobapplication.list') }}" class="nav-link <?php if (url()->current() == route('admin.jobapplication.list')) {
+                                                                                    echo 'active';
+                                                                                } ?>">
+                <i class="nav-icon fas fa-clipboard-list"></i>
+                <p>
+                    Job Applications
+                </p>
+            </a>
+        </li>
+        @endif
+
+
+
+
 
         <?php /* ?>
         <li class="nav-item">

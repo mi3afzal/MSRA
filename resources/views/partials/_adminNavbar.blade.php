@@ -187,7 +187,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();" titlle="Logout">
+                                             document.getElementById('logout-form').submit();" title="Logout">
                 <i class="fas fa-power-off " data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
             </a>
         </li>

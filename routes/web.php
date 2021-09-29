@@ -35,6 +35,12 @@ Route::post('/contact-us', [App\Http\Controllers\Front\ContactController::class,
 
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
 
+// Job Application Module
+Route::post('/job/quickapply', [App\Http\Controllers\Front\JobApplicationController::class, 'quickapply'])->name('quickapply');
+Route::get('/job/apply/{id}', [App\Http\Controllers\Front\JobApplicationController::class, 'apply'])->name('apply');
+// Route::post('/job/application/store', [App\Http\Controllers\Front\JobApplicationController::class, 'storeapplication'])->name('storeapplication')->middleware(['auth', 'jobseeker']);
+Route::post('/job/application/store', [App\Http\Controllers\Front\JobApplicationController::class, 'storeapplication'])->name('storeapplication');
+
 Route::get('/job-search', [App\Http\Controllers\Front\JobController::class, 'search'])->name("front.job.search");
 Route::get('/job-clearsearch', [App\Http\Controllers\Front\JobController::class, 'clearsearch'])->name("front.job.clearsearch");
 
@@ -303,6 +309,27 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
         '/contact/delete/{id}',
         [App\Http\Controllers\Admin\ContactController::class, 'destroy']
     )->name('contact.delete');
+
+
+    // Job Module
+    Route::get('/jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'create'])->name('admin.jobapplication.create');
+    Route::post('/jobapplication-store', [App\Http\Controllers\Admin\JobApplicationController::class, 'store'])->name('admin.jobapplication.store');
+    Route::get('/jobapplication/list', [App\Http\Controllers\Admin\JobApplicationController::class, 'lists'])->name('admin.jobapplication.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/jobapplication-details/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'show'])->name('admin.jobapplication.show');
+
+    Route::get('/jobapplication/enable/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'enable'])->name('admin.jobapplication.enable');
+    Route::get('/jobapplication/disable/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'disable'])->name('admin.jobapplication.disable');
+
+    Route::get(
+        '/jobapplication/datatable',
+        [App\Http\Controllers\Admin\JobApplicationController::class, 'datatable']
+    )->name('jobapplication.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/jobapplication/delete/{id}',
+        [App\Http\Controllers\Admin\JobApplicationController::class, 'destroy']
+    )->name('jobapplication.delete');
+
 
     // About Us Page
     Route::get('/about', [App\Http\Controllers\Admin\AboutController::class, 'edit'])->name('admin.about.edit');

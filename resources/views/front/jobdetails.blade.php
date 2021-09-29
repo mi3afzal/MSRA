@@ -3,6 +3,8 @@
 'settings' => $settings,
 ])
 
+@include('partials._bootstrapModal')
+
 <section class=" innerbanner text-center" style="background: url('{{ asset('images/dreamjobbg.png') }}') top center no-repeat;">
   <div class="container">
     <div class="row justify-content-center">
@@ -38,7 +40,7 @@
 
         <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
           <li>
-            <a href="#">
+            <a href="javascript:void(0);">
               <span><img src="{{url('/images/jobalert.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Job Alert
@@ -47,7 +49,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="javascript:void(0);">
               <span><img src="{{url('/images/phoneicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Call Me
@@ -56,7 +58,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="javascript:void(0);">
               <span><img src="{{url('/images/inviteicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Refer & Earn
@@ -68,7 +70,7 @@
       </div>
       <div class="col-xl-9 col-lg-8">
         <div class="topheadingbar p-1">
-          <h3><a href="#" class="btn btn-primary ">Apply Now</a><a href="#exampleModal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary ml-2 ">View Exact Practice Location</a></h3>
+          <h3><a href="javascript:void(0);" onclick="applynow(<?php echo $job->id; ?>);" class="btn btn-primary ">Apply Now</a><a href="#exampleModal" onclick="practicelocation();" class="btn btn-primary ml-2 ">View Exact Practice Location</a></h3>
           <!-- Button trigger modal -->
 
           <!-- Modal -->
@@ -83,7 +85,7 @@
                   <img src="{{url('/images/watermarked.png')}}" alt="" class="img-fluid">
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" onclick="closeModal();">Close</button>
                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal1">Submit</button>
                 </div>
               </div>
@@ -99,36 +101,62 @@
                   <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"><i class="far fa-times-circle"></i></button>
                 </div>
                 <div class="modal-body">
-                  <form>
+                  <form action="{{ route('storeapplication') }}" id="storeapplicationform" method="POST" enctype="multipart/form-data">
+                    {{ method_field('POST') }}
+                    @csrf
                     <div class="row">
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label for="exampleInputEmail1" class="form-label">First Name</label>
-                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <input type="text" name="first_name" value="{{ old('first_name') }}" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : '' }}" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          @if($errors->has('first_name'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('first_name') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
+
+                      <input type="hidden" name="job_id" id="job_id" value="" />
+                      <input type="hidden" name="slug" id="slug" value="<?php echo $job->slug; ?>" />
+
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Last Name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="last_name" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : '' }}" value="{{ old('last_name') }}" />
+                          @if($errors->has('last_name'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('last_name') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class=" col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Contact Number</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="contact" value="{{ old('contact') }}" class=" form-control {{ $errors->has('contact') ? 'is-invalid' : '' }}" />
+                          @if($errors->has('contact'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('contact') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Current Place of Work</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="work_place" value="{{ old('work_place') }}" class="form-control {{ $errors->has('work_place') ? 'is-invalid' : '' }}" />
+                          @if($errors->has('work_place'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('work_place') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-12 offset-md-1 mt-2 mb-2">
                         <div class="mb-3">
                           <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input {{ $errors->has('ahpra') ? 'is-invalid' : '' }}" name="ahpra" type="checkbox" id="flexSwitchCheckDefault" value="{{ old('ahpra',1) }}">
                             <label class="form-check-label" for="flexSwitchCheckDefault">Current AHPRA Registration</label>
                           </div>
                         </div>
@@ -136,25 +164,45 @@
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Location</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="location" class="form-control {{ $errors->has('location') ? 'is-invalid' : '' }}" value="{{ old('location') }}" />
+                          @if($errors->has('location'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('location') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Suburb</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="suburb" class="form-control {{ $errors->has('suburb') ? 'is-invalid' : '' }}" value="{{ old('suburb') }}" />
+                          @if($errors->has('suburb'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('suburb') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label">State</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="state" class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" value="{{ old('state') }}" />
+                          @if($errors->has('state'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('state') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Post Code</label>
-                          <input type="number" class="form-control">
+                          <input type="number" name="postcode" class="form-control {{ $errors->has('postcode') ? 'is-invalid' : '' }}" value="{{ old('postcode') }}" />
+                          @if($errors->has('postcode'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('postcode') }}</strong>
+                          </div>
+                          @endif
                         </div>
                       </div>
                     </div>
@@ -162,8 +210,8 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Submit</button>
+                  <button type="button" class="btn btn-secondary" onclick="closeModal();">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="submit();">Submit</button>
                 </div>
               </div>
             </div>
@@ -245,10 +293,10 @@
                 <div class="btmbar">
                   <ul>
                     <li>
-                      <a href="#" class="btn btn-primary">Quick Application</a>
+                      <a href="javascript:void(0);" onclick="quickapply(<?php echo $job->id; ?>);" class="btn btn-primary">Quick Application</a>
                     </li>
                     <li>
-                      <a href="#" class="btn btn-default">Apply Now</a>
+                      <a href="javascript:void(0);" onclick="applynow(<?php echo $job->id; ?>);" class="btn btn-default">Apply Now</a>
                     </li>
                   </ul>
                 </div>
@@ -260,14 +308,14 @@
                 <h5>
                   *If you need any information regarding this position or any other positions available in Australia, Please contact MSRA (Med Staff Recruitment Australia)*
                 </h5>
-                <a href="#" class="weblink">
+                <a href="javascript:void(0);" class="weblink">
                   <span>
                     <img src="{{url('/images/web.png')}}" alt="">
                   </span>
                   www.msra.com.au
                 </a>
                 <br>
-                <a href="#" class="phonelink">
+                <a href="javascript:void(0);" class="phonelink">
                   <span>
                     <img src="{{url('/images/phonebg.png')}}" alt="">
                   </span>
@@ -283,10 +331,10 @@
                 <p>If you need any other details about this job, please get in touch with us either via email or contact number as below</p>
                 <ul class="buttonlist">
                   <li>
-                    <a href="#" class="btn btn-default">enquiries@msra.com.au</a>
+                    <a href="javascript:void(0);" class="btn btn-default">enquiries@msra.com.au</a>
 
                   </li>
-                  <li> <a href="#" class="btn btn-default">+61 410 863 301</a></li>
+                  <li> <a href="javascript:void(0);" class="btn btn-default">+61 410 863 301</a></li>
                 </ul>
               </div>
 
@@ -298,7 +346,7 @@
         </div>
         <ul class="fixedbutton list-unstyled d-xl-none d-lg-none">
           <li>
-            <a href="#">
+            <a href="javascript:void(0);">
               <span><img src="{{url('/images/jobalert.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Job Alert
@@ -307,7 +355,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="javascript:void(0);">
               <span><img src="{{url('/images/phoneicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Call Me
@@ -316,7 +364,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="javascript:void(0);">
               <span><img src="{{url('/images/inviteicon.png')}}" alt="" class="img-fluid"></span>
               <h5>
                 Refer & Earn
@@ -331,6 +379,123 @@
 </section>
 
 
+<div class="modal fade" id="quickapply" tabindex="-1" aria-labelledby="quickapplyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-green">
+
+        <h4 class="modal-title" id="quickapplyModalLabel">
+          Quick Apply
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="far fa-times-circle" style="color:#fff;"></i></span>
+        </button>
+      </div>
+      <div class="modal-body text-muted">
+        <form action="{{ route('quickapply') }}" id="quickapplyform" method="POST" enctype="multipart/form-data">
+          {{ method_field('POST') }}
+          @csrf
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Email:</label>
+            <input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="recipient-name" value="{{ old('email') }}" placeholder="Email" autocomplete="off" />
+            @if($errors->has('email'))
+            <div class="invalid-feedback">
+              <strong>{{ $errors->first('email') }}</strong>
+            </div>
+            @endif
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" name="message" id="message-text" rows="6">{{ old('message') }}</textarea>
+            @if($errors->has('message'))
+            <div class="invalid-feedback">
+              <strong>{{ $errors->first('message') }}</strong>
+            </div>
+            @endif
+          </div>
+
+          <input type="hidden" name="job_id" value="" class="job_id" id="job_id" />
+
+          <div class="input-group">
+            <label for="cv" class="col-form-label">Upload C.V.</label>
+          </div>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Upload C.V.</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" name="cv" class="custom-file-input" id="cv">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+          </div>
+
+          @if(isset($jobtypes))
+          <div class="form-group mt-3">
+            <label for="job_type" class="col-form-label">Job Type:</label>
+            <select class="custom-select custom-select-sm" name="job_type" id="job_type">
+              <option selected>Select Job Type</option>
+              @if(isset($jobtypes))
+              @foreach($jobtypes as $key => $jobtype)
+              <option value="{{ $jobtype->id }}">{!! ucwords($jobtype->jobtype) !!}</option>
+              @endforeach
+              @endif
+            </select>
+          </div>
+          @endif
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn bg-primary" onclick="submit();">Apply</button>
+        <button type="button" class="btn bg-light" onclick="closeModal();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (session('quickapplication'))
+<script>
+  $('#quickapply').modal('show');
+</script>
+@endif
+
+@if (session('application'))
+<script>
+  $('#exampleModal1').modal('show');
+</script>
+@endif
+
+<script>
+  function quickapply(id) {
+    $("#job_id").val(id);
+    $('#quickapply').modal('show');
+  }
+
+  function applynow(id) {
+    $("#job_id").val(id);
+    $('#exampleModal1').modal('show');
+  }
+
+  function viewpracticelocation() {
+    $('#exampleModal').modal('show');
+  }
+
+  function submit() {
+    document.getElementById("storeapplicationform").submit();
+    closeModal();
+  }
+
+  function practicelocation() {
+    $('#exampleModal').modal('show');
+  }
+
+  function closeModal() {
+    $('#exampleModal').modal('hide');
+    $('#exampleModal1').modal('hide');
+    $('#quickapply').modal('hide');
+  }
+</script>
 
 @include('partials._downloadApp', ['sociallinks' => $sociallinks])
 @include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings, "professions" => $professions, "jobtypes" => $jobtypes])
