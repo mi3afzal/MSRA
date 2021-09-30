@@ -139,4 +139,4 @@ Application currently has three registrations :
 
 ## E-R Model
 
-![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/dev/e-r-model-18-09-2021.png)
+![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/main/e-r-model-30-09-2021.png)
