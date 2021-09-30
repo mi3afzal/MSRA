@@ -76,6 +76,12 @@ class JobApplicationController extends Controller
                         $q->where('job_applications.job_type', '=', $request->get('jobtype'));
                     });
                 }
+
+                if ($request->has('jobapplication') && $request->get('jobapplication') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('job_applications.quickapply', '=', $request->get('jobapplication'));
+                    });
+                }
             })
             ->addColumn('jobtype', function ($jobapplicationdata) {
                 return $jobtype = ucwords($jobapplicationdata->jobtypedetails->jobtype);

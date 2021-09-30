@@ -43,7 +43,7 @@ class JobApplicationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required',
-            'message' => 'required|max:350',
+            'message' => 'required|max:500',
             'job_id' => 'required',
             'job_type' => 'required|max:150',
             'cv' => 'mimes:doc,docx,pdf',

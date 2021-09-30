@@ -16,6 +16,7 @@ use App\Models\Specialty;
 use App\Models\User;
 use App\Models\JobCategory;
 use App\Models\Contact;
+use App\Models\JobApplication;
 
 class HomeController extends Controller
 {
@@ -45,12 +46,13 @@ class HomeController extends Controller
         $jobcategories = JobCategory::where(["status" => "1"])->count();
         $jobs = Job::where(["status" => "1"])->count();
         $contacts = Contact::where(["status" => "1"])->count();
+        $jobapplications = JobApplication::where(["status" => "1"])->count();
         $user = Auth::user();
 
         if ($user->role == 1) {
             $title = "dashboard";
             $module = "dashboard";
-            return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts"));
+            return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts", "jobapplications"));
         } else {
             $title = "dashboard";
             $module = "jobseeker dashboard";

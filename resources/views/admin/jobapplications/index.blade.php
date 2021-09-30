@@ -47,6 +47,17 @@
                     </div>
                 </div>
 
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Application Type</label>
+                        <select name="jobapplication" id="jobapplication" class="form-control select2" placeholder="Select Application Type">
+                            <option value="">Select Application Type</option>
+                            <option value="1">Quick Application</option>
+                            <option value="2">Detail Application</option>
+                        </select>
+                    </div>
+                </div>
+
 
                 <div class="col-md-3">
                     <div class="form-group">
@@ -93,6 +104,7 @@
             data: function(d) {
                 d.status = $('#status').val();
                 d.jobtype = $('#jobtype').val();
+                d.jobapplication = $('#jobapplication').val();
             }
         },
 
@@ -174,6 +186,10 @@
         e.preventDefault();
     });
     $('#jobtype').on('change', function(e) {
+        oTable.draw();
+        e.preventDefault();
+    });
+    $('#jobapplication').on('change', function(e) {
         oTable.draw();
         e.preventDefault();
     });
