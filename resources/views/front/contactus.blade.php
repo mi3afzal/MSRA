@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="form-group name">
                                 <!-- <label for="name">Name :</label> -->
-                                <input type="text" name="name" value="{{ old('name') }}" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" autocomplete="off" />
+                                <input type="text" name="name" value="{{ old('name') }}" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" autocomplete="off" required="required" />
                                 @if($errors->has('name'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('name') }}</strong>
@@ -52,7 +52,7 @@
                         <div class="col-md-6">
                             <div class="form-group email">
                                 <!-- <label for="email">Email :</label> -->
-                                <input type="text" name="email" value="{{ old('email') }}" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" autocomplete="off" />
+                                <input type="text" name="email" value="{{ old('email') }}" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" autocomplete="off" required="required" />
                                 @if($errors->has('email'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('email') }}</strong>
@@ -63,7 +63,7 @@
                         <div class="col-md-6">
                             <div class="form-group subject">
                                 <!-- <label for="subject">Subject :</label> -->
-                                <input type="text" name="subject" value="{{ old('subject') }}" id="subject" class="form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}" placeholder="Subject" autocomplete="off" />
+                                <input type="text" name="subject" value="{{ old('subject') }}" id="subject" class="form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}" placeholder="Subject" autocomplete="off" required="required" />
                                 @if($errors->has('subject'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('subject') }}</strong>
@@ -74,7 +74,7 @@
                         <div class="col-md-6">
                             <div class="form-group number">
                                 <!-- <label for="number">Number :</label> -->
-                                <input type="text" name="number" value="{{ old('number') }}" id="number" class="form-control {{ $errors->has('number') ? 'is-invalid' : '' }}" placeholder="Number" autocomplete="off" />
+                                <input type="text" name="number" value="{{ old('number') }}" id="number" class="form-control {{ $errors->has('number') ? 'is-invalid' : '' }}" placeholder="Number" autocomplete="off" required="required" />
                                 @if($errors->has('number'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('number') }}</strong>

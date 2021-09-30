@@ -161,12 +161,20 @@
 
         </li>
         &nbsp;
+        @if(Auth::user()->role == "3")
         <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" role="button">
-
+            <a class="nav-link" href="{{ route('medicalcenterprofile.edit') }}" role="button">
                 <i class="fas fa-user-md fa-lg"></i>
             </a>
         </li>
+        @endif
+        @if(Auth::user()->role == "2")
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('jobseekerprofile.edit') }}" role="button">
+                <i class="fas fa-user-tie fa-lg"></i>
+            </a>
+        </li>
+        @endif
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="javascript:void(0);" role="button">
                 <i class="fas fa-expand-arrows-alt "></i>
@@ -179,7 +187,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();" titlle="Logout">
+                                             document.getElementById('logout-form').submit();" title="Logout">
                 <i class="fas fa-power-off " data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
             </a>
         </li>

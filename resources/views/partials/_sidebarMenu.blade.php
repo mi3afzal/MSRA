@@ -1,8 +1,6 @@
 <!-- Sidebar Menu -->
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
 
         <li class="nav-item">
             <a href="{{ route('admin.dashboard') }}" class="nav-link <?php if (url()->current() == route('admin.dashboard')) {
@@ -64,6 +62,41 @@
                 </p>
             </a>
         </li>
+
+        @if (Gate::allows('isJobseeker'))
+        <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('jobseeker.testimonial.create')) || url()->current() == route('jobseeker.testimonial.list')) {
+                                                                echo 'active';
+                                                            } ?>">
+                <i class="nav-icon fas fa-quote-left"></i>
+                <p>
+                    Testimonials
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('jobseeker.testimonial.create') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.create')) {
+                                                                                                echo 'active';
+                                                                                            } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('jobseeker.testimonial.list') }}" class="nav-link <?php if (url()->current() == route('admin.jobtype.list')) {
+                                                                                            echo 'active';
+                                                                                        } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View</p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        @endif
+
 
         <li class="nav-item">
             <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.jobtype.create')) || url()->current() == route('admin.jobtype.list')) {
@@ -234,6 +267,7 @@
             </ul>
         </li>
 
+        @if (Gate::allows('isAdmin'))
         <li class="nav-item">
             <a href="{{ route('admin.contact.list') }}" class="nav-link <?php if (url()->current() == route('admin.contact.list')) {
                                                                             echo 'active';
@@ -244,7 +278,21 @@
                 </p>
             </a>
         </li>
+        @endif
 
+
+        @if (Gate::allows('isAdmin'))
+        <li class="nav-item">
+            <a href="{{ route('admin.jobapplication.list') }}" class="nav-link <?php if (url()->current() == route('admin.jobapplication.list')) {
+                                                                                    echo 'active';
+                                                                                } ?>">
+                <i class="nav-icon fas fa-clipboard-list"></i>
+                <p>
+                    Job Applications
+                </p>
+            </a>
+        </li>
+        @endif
 
 
 

@@ -88,4 +88,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Job::class);
     }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Models\MedicalCenterRegistration', 'user_id');
+    }
+
+    public function jobseekerprofile()
+    {
+        return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');
+    }
 }

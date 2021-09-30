@@ -70,11 +70,15 @@ class JobDetailController extends Controller
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
         $settings = Settings::orderBy("created_at", "desc")->first();
 
-        $job = Job::where(["status" => "1", "slug" => $slug])
-            ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
-            ->first();
+        $count = Job::where(["status" => "1", "slug" => $slug])->count();
+        if ($count > 0) {
+            $job = Job::where(["status" => "1", "slug" => $slug])
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->first();
 
-        return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "job", "jobtypes", "settings"));
+            return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "job", "jobtypes", "settings"));
+        }
+        abort("404", "Record not found.");
     }
 
     /**

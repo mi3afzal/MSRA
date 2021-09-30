@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\IsMedicalCenter;
+use App\Http\Middleware\IsJobSeeker;
 
 
 /*
@@ -33,6 +35,12 @@ Route::post('/contact-us', [App\Http\Controllers\Front\ContactController::class,
 
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
 
+// Job Application Module
+Route::post('/job/quickapply', [App\Http\Controllers\Front\JobApplicationController::class, 'quickapply'])->name('quickapply');
+Route::get('/job/apply/{id}', [App\Http\Controllers\Front\JobApplicationController::class, 'apply'])->name('apply');
+// Route::post('/job/application/store', [App\Http\Controllers\Front\JobApplicationController::class, 'storeapplication'])->name('storeapplication')->middleware(['auth', 'jobseeker']);
+Route::post('/job/application/store', [App\Http\Controllers\Front\JobApplicationController::class, 'storeapplication'])->name('storeapplication');
+
 Route::get('/job-search', [App\Http\Controllers\Front\JobController::class, 'search'])->name("front.job.search");
 Route::get('/job-clearsearch', [App\Http\Controllers\Front\JobController::class, 'clearsearch'])->name("front.job.clearsearch");
 
@@ -44,8 +52,13 @@ Route::get('/job-clearsearch', [App\Http\Controllers\Front\JobController::class,
 
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Jobseeker Registration Routes
 Route::get('/jobseeker-register', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'index'])->name('jobseeker.register');
 Route::post('/jobseeker-register-store', [App\Http\Controllers\Front\JobSeekerRegistrationController::class, 'store'])->name('jobseeker.register.store');
+
+// Medical Center Registration Routes
+Route::get('/medical-center-register', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'register_form'])->name('medicalcenter.register');
+Route::post('/medical-center-register-store', [App\Http\Controllers\Front\MedicalCenterRegistrationController::class, 'store'])->name('medicalcenter.register.store');
 
 /** 
  * Authentication routes
@@ -127,6 +140,8 @@ Route::post(
 // });
 // Admin route for dashboard
 Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
+
+
 
 Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
@@ -295,6 +310,27 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
         [App\Http\Controllers\Admin\ContactController::class, 'destroy']
     )->name('contact.delete');
 
+
+    // Job Module
+    Route::get('/jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'create'])->name('admin.jobapplication.create');
+    Route::post('/jobapplication-store', [App\Http\Controllers\Admin\JobApplicationController::class, 'store'])->name('admin.jobapplication.store');
+    Route::get('/jobapplication/list', [App\Http\Controllers\Admin\JobApplicationController::class, 'lists'])->name('admin.jobapplication.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/jobapplication-details/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'show'])->name('admin.jobapplication.show');
+
+    Route::get('/jobapplication/enable/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'enable'])->name('admin.jobapplication.enable');
+    Route::get('/jobapplication/disable/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'disable'])->name('admin.jobapplication.disable');
+
+    Route::get(
+        '/jobapplication/datatable',
+        [App\Http\Controllers\Admin\JobApplicationController::class, 'datatable']
+    )->name('jobapplication.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/jobapplication/delete/{id}',
+        [App\Http\Controllers\Admin\JobApplicationController::class, 'destroy']
+    )->name('jobapplication.delete');
+
+
     // About Us Page
     Route::get('/about', [App\Http\Controllers\Admin\AboutController::class, 'edit'])->name('admin.about.edit');
     Route::put('/about/update/{id}', [App\Http\Controllers\Admin\AboutController::class, 'update'])->name('admin.about.update');
@@ -304,9 +340,46 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     Route::put('/setting/update/{id}', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.setting.update');
 
 
-
     // Ajax Route
-    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);;
-    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);;
-    Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);;
+    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);
+    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);
+
+    Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);
+
+    // Ajax Routes Registration
+    Route::post('register-getcities', [App\Http\Controllers\Admin\StateController::class, 'register_getcities'])->name('register-getcities')->withoutMiddleware([isAdmin::class]);
+    Route::post('register-getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'register_getasuburbs'])->name('register-getasuburbs')->withoutMiddleware([isAdmin::class]);
+});
+
+
+Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(function () {
+    // Route for medical center profile update.
+    Route::get('/medical-center-profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('medicalcenterprofile.edit');
+    Route::put('/medical-center-update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('medicalcenterprofile.update');
+});
+
+
+Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () {
+    // Route for job seeker.
+    Route::get('/jobseeker-testimonial', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'create'])->name('jobseeker.testimonial.create');
+    Route::post('/jobseeker-testimonial-store', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'store'])->name('jobseeker.testimonial.store');
+    Route::get('/jobseeker-testimonial/list', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'lists'])->name('jobseeker.testimonial.list');
+    Route::get('/jobseeker-testimonial-details/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'show'])->name('jobseeker.testimonial.show');
+
+    Route::get('/jobseeker-testimonial/enable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'enable'])->name('jobseeker.testimonial.enable');
+    Route::get('/jobseeker-testimonial/disable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'disable'])->name('jobseeker.testimonial.disable');
+
+    Route::get(
+        '/jobseeker-testimonial/datatable',
+        [App\Http\Controllers\Jobseeker\TestimonialController::class, 'datatable']
+    )->name('testimonial.datatables');
+
+    Route::get(
+        '/jobseeker-testimonial/delete/{id}',
+        [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
+    )->name('testimonial.delete');
+
+    // Jobseeker Profile Update Routes
+    Route::get('/jobseeker-profile', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'edit'])->name('jobseekerprofile.edit');
+    Route::put('/jobseeker-profile-update/{id}', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'update'])->name('jobseekerprofile.update');
 });

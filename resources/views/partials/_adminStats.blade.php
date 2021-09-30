@@ -129,6 +129,20 @@
         </div>
     </div>
 
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3><?php echo $jobapplications; ?></h3>
+                <p>Job Applications</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-clipboard-list "></i>
+            </div>
+            <a href="{{ route('admin.jobapplication.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
 
     <?php /* ?>
     <div class="col-lg-3 col-6">

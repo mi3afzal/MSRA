@@ -26,7 +26,7 @@ class FrontController extends Controller
         $states = State::where("status", "1")->orderBy('name', 'asc')->get();
         $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->skip(0)->take(7)->get();
         $sociallinks = SocialLink::where("status", "1")->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
         return view('front.home', compact("jobtypes", "states", "sociallinks", "professions", "settings", "specialties"));
