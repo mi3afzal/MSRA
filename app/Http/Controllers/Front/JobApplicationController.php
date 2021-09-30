@@ -42,7 +42,7 @@ class JobApplicationController extends Controller
     public function quickapply(JobApplication $jobapplication, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'email' => 'required|unique:job_applications',
             'message' => 'required|max:500',
             'job_id' => 'required',
             'job_type' => 'required|max:150',
@@ -108,13 +108,10 @@ class JobApplicationController extends Controller
      */
     public function storeapplication(Request $request, JobApplication $jobapplication)
     {
-        // echo "<pre>";
-        // print_r($request->all());
-        // echo "</pre>";
-        // die;
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:100',
             'last_name' => 'required|max:100',
+            'email' => 'required|unique:job_applications|max:100',
             'contact' => 'required|numeric',
             'work_place' => 'required|max:200',
             'location' => 'required|max:200',
@@ -138,6 +135,7 @@ class JobApplicationController extends Controller
         $jobApplication->job_id = $job->id;
         $jobApplication->job_type = $job->job_type;
         $jobApplication->first_name = $request->input("first_name");
+        $jobApplication->email = $request->input("email");
         $jobApplication->last_name = $request->input("last_name");
         $jobApplication->contact = $request->input("contact");
         $jobApplication->work_place = $request->input("work_place");

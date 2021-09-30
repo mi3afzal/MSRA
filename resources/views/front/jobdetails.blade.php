@@ -131,6 +131,19 @@
                           @endif
                         </div>
                       </div>
+
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Email</label>
+                          <input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}" />
+                          @if($errors->has('email'))
+                          <div class="invalid-feedback">
+                            <strong>{{ $errors->first('email') }}</strong>
+                          </div>
+                          @endif
+                        </div>
+                      </div>
+
                       <div class=" col-md-6">
                         <div class="mb-3">
                           <label class="form-label">Contact Number</label>

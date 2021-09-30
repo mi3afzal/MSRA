@@ -313,6 +313,7 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
 
     // Job Module
     Route::get('/jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'create'])->name('admin.jobapplication.create');
+
     Route::post('/jobapplication-store', [App\Http\Controllers\Admin\JobApplicationController::class, 'store'])->name('admin.jobapplication.store');
     Route::get('/jobapplication/list', [App\Http\Controllers\Admin\JobApplicationController::class, 'lists'])->name('admin.jobapplication.list')->withoutMiddleware([isAdmin::class]);
     Route::get('/jobapplication-details/{id}', [App\Http\Controllers\Admin\JobApplicationController::class, 'show'])->name('admin.jobapplication.show');
@@ -378,6 +379,8 @@ Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () 
         '/jobseeker-testimonial/delete/{id}',
         [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
     )->name('testimonial.delete');
+
+    Route::get('/my-jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'myapplications'])->name('admin.jobapplication.myapplications');
 
     // Jobseeker Profile Update Routes
     Route::get('/jobseeker-profile', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'edit'])->name('jobseekerprofile.edit');

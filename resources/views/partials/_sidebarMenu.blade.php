@@ -294,6 +294,18 @@
         </li>
         @endif
 
+        @if (Gate::allows('isJobseeker'))
+        <li class="nav-item">
+            <a href="{{ route('admin.jobapplication.myapplications') }}" class="nav-link <?php if (url()->current() == route('admin.jobapplication.list')) {
+                                                                                                echo 'active';
+                                                                                            } ?>">
+                <i class="nav-icon fas fa-clipboard-list"></i>
+                <p>
+                    My Job Application
+                </p>
+            </a>
+        </li>
+        @endif
 
 
 

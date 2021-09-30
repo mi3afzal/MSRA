@@ -163,14 +163,23 @@ class JobApplicationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for showing the specified resource.
      *
      * @param  \App\Models\JobApplication  $jobApplication
      * @return \Illuminate\Http\Response
      */
-    public function edit(JobApplication $jobApplication)
+    public function myapplications(JobApplication $jobApplication)
     {
-        //
+        $title = "my job application";
+        $module = "jobapplication";
+        $user = User::where("id", Auth::user()->id)->first();
+        $myemail = $user->email;
+
+        $myapplications = JobApplication::where('email', $myemail)->with("jobtypedetails", "jobdetails")->first();
+        if (!isset($myapplications)) {
+            abort(404);
+        }
+        return view('admin.jobapplications.myapplications', compact("title", "module", "myapplications"));
     }
 
     /**
