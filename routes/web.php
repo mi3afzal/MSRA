@@ -35,6 +35,7 @@ Route::post('/contact-us', [App\Http\Controllers\Front\ContactController::class,
 
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
 
+
 // Job Application Module
 Route::post('/job/quickapply', [App\Http\Controllers\Front\JobApplicationController::class, 'quickapply'])->name('quickapply');
 Route::get('/job/apply/{id}', [App\Http\Controllers\Front\JobApplicationController::class, 'apply'])->name('apply');
@@ -43,6 +44,11 @@ Route::post('/job/application/store', [App\Http\Controllers\Front\JobApplication
 
 Route::get('/job-search', [App\Http\Controllers\Front\JobController::class, 'search'])->name("front.job.search");
 Route::get('/job-clearsearch', [App\Http\Controllers\Front\JobController::class, 'clearsearch'])->name("front.job.clearsearch");
+
+
+// Job Achive Routes JobArchiveController
+Route::get('/job-archive', [App\Http\Controllers\Front\JobArchiveController::class, 'index'])->name('jobarchive');
+Route::get('/archived-job-detail/{slug}', [App\Http\Controllers\Front\JobArchiveController::class, 'show'])->name('jobarchivedetails');
 
 // Route::get('/job/{id}', [App\Http\Controllers\Front\JobDetailController::class, 'index'])->name('job');
 
