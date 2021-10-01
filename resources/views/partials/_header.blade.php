@@ -67,7 +67,11 @@
                                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                                     <ul class="navbar-nav ">
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="{{ route('job'); }}"> Find Jobs </a>
+                                            <a class="nav-link active" aria-current="page" href="{{ route('job'); }}"> Current Job Openings </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="{{ route('jobarchive'); }}"> Job Archive </a>
                                         </li>
 
                                         <li class="nav-item dropdown">
