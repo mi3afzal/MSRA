@@ -60,7 +60,7 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="card">
                 <div class="jobdate">
-                  <strong>{{ date('d M', strtotime($jobdetail->created_at)) }}</strong>
+                  <strong>{{ date('d M, Y', strtotime($jobdetail->created_at)) }}</strong>
                   <span>Job Id: {!! $jobdetail->job_number !!}</span>
                 </div>
                 <h3 class="card-tittle">{!! $jobdetail->title !!}</h3>

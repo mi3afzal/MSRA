@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="borderbox">
-                    <h3>GENERAL PRACTICE</h3>
+                    <h3>JOB ARCHIVE</h3>
                 </div>
             </div>
         </div>
@@ -22,11 +22,6 @@
 
 <section class="latestjob">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h2>LATEST JOBS</h2>
-            </div>
-        </div>
         <div class="row">
             <div class="col-xl-12 col-lg-12">
                 <div class="joblisting" id="js-joblisting">
@@ -38,7 +33,7 @@
                             @if(($jobarchive->job_type_id == 1))
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M', strtotime($jobarchive->created_at)); }}</strong>
+                                    <strong>{{ date('d M, Y', strtotime($jobarchive->created_at)); }}</strong>
                                     <span>Job Id: {!! $jobarchive->job_number !!}</span>
                                 </div>
                                 <a href="{{route('jobarchivedetails', [$jobarchive->slug])}}" class="card-tittle">{!! $jobarchive->title !!}</a>
@@ -79,7 +74,7 @@
                             @if(($jobarchive->job_type_id == 2) || ($jobarchive->job_type_id == 0))
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M', strtotime($jobarchive->created_at)); }}</strong>
+                                    <strong>{{ date('d M, Y', strtotime($jobarchive->created_at)); }}</strong>
                                     <span>Job Id: {!! $jobarchive->job_number !!}</span>
                                 </div>
                                 <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $jobarchive->title !!}</a>

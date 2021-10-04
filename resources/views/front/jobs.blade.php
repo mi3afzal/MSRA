@@ -89,7 +89,7 @@
                             @if($job->job_type == 1)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <strong>{{ date('d M, Y', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
                                 <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
@@ -133,7 +133,7 @@
                             @if($job->job_type == 2)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <strong>{{ date('d M, Y', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
                                 <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
