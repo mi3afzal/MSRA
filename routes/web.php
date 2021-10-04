@@ -31,6 +31,8 @@ Route::get('/about-us', [App\Http\Controllers\Front\AboutController::class, 'ind
 Route::get('/contact-us', [App\Http\Controllers\Front\ContactController::class, 'index'])->name('contactus');
 Route::post('/contact-us', [App\Http\Controllers\Front\ContactController::class, 'store'])->name('contactus.send');
 
+Route::post('/newsletter', [App\Http\Controllers\Front\NewsletterController::class, 'store'])->name('newsletter');
+
 // Route::get('/jobdetails', [App\Http\Controllers\Front\JobDetailController::class, 'index'])->name('jobdetails');
 
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
@@ -336,6 +338,22 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
         '/jobapplication/delete/{id}',
         [App\Http\Controllers\Admin\JobApplicationController::class, 'destroy']
     )->name('jobapplication.delete');
+
+
+    // Newsletter Module
+    Route::get('/newsletter/list', [App\Http\Controllers\Admin\NewsletterController::class, 'lists'])->name('admin.newsletter.list');
+    Route::get('/newsletter/enable/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'enable'])->name('admin.newsletter.enable');
+    Route::get('/newsletter/disable/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'disable'])->name('admin.newsletter.disable');
+
+    Route::get(
+        '/newsletter/datatable',
+        [App\Http\Controllers\Admin\NewsletterController::class, 'datatable']
+    )->name('newsletter.datatables');
+
+    Route::get(
+        '/newsletter/delete/{id}',
+        [App\Http\Controllers\Admin\NewsletterController::class, 'destroy']
+    )->name('newsletter.delete');
 
 
     // About Us Page

@@ -19,7 +19,15 @@ use Session;
 
 class MedicalCenterRegistrationController extends Controller
 {
-
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
 
     /**
      * Show the form for editing the specified resource.

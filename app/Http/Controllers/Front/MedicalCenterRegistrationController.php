@@ -54,7 +54,7 @@ class MedicalCenterRegistrationController extends Controller
         if ($request->isMethod('post')) {
             $this->validate($request, [
                 'fullname' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email:rfc,dns|max:50|unique:email',
                 'mobile' => 'required|min:6|max:20',
                 'postcode' => 'required',
                 'file' => 'mimes:pdf,docx,doc',

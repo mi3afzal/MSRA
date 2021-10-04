@@ -58,7 +58,7 @@ class JobSeekerRegistrationController extends Controller
             $this->validate($request, [
                 'fullname' => 'required',
                 'gender' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email:rfc,dns|max:50|unique:email',
                 'profession' => 'required',
                 'specialty' => 'required',
                 'mobile' => 'required|min:6|max:20',

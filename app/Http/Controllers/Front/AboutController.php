@@ -14,6 +14,7 @@ use App\Models\Settings;
 
 class AboutController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *

@@ -307,6 +307,20 @@
         </li>
         @endif
 
+        @if (Gate::allows('isAdmin'))
+        <li class="nav-item">
+            <a href="{{ route('admin.newsletter.list') }}" class="nav-link <?php if (url()->current() == route('admin.newsletter.list')) {
+                                                                                echo 'active';
+                                                                            } ?>">
+                <i class="nav-icon fas fa-newspaper"></i>
+                <p>
+                    Newsletters
+                </p>
+            </a>
+        </li>
+        @endif
+        <br />
+        <br />
 
 
 

@@ -87,6 +87,20 @@
             <a href="{{ route('admin.jobapplication.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-light">
+            <div class="inner">
+                <h3><?php echo $newsletters; ?></h3>
+                <p>Newsletters</p>
+            </div>
+            <div class="icon">
+                <i class="nav-icon fas fa-newspaper"></i>
+            </div>
+            <a href="{{ route('admin.jobapplication.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
     @endif
 
     <div class="col-lg-3 col-6">
@@ -103,8 +117,7 @@
     </div>
 
     <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
+        <div class="small-box bg-orange">
             <div class="inner">
                 <h3><?php echo $jobtypes; ?></h3>
                 <p>JobTypes / Services</p>
@@ -117,7 +130,6 @@
     </div>
 
     <div class="col-lg-3 col-6">
-        <!-- small box -->
         <div class="small-box bg-pink">
             <div class="inner">
                 <h3><?php echo $jobs; ?></h3>
@@ -131,7 +143,6 @@
     </div>
 
     <div class="col-lg-3 col-6">
-        <!-- small box -->
         <div class="small-box bg-maroon">
             <div class="inner">
                 <h3><?php echo $contacts; ?></h3>
@@ -144,35 +155,4 @@
         </div>
     </div>
 
-
-
-    <?php /* ?>
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-light">
-            <div class="inner">
-                <h3><?php echo $specialty; ?></h3>
-                <p>Active Specialties</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-briefcase-medical"></i>
-            </div>
-            <a href="{{ route('admin.profession.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-dark">
-            <div class="inner">
-                <h3><?php echo $specialty; ?></h3>
-                <p>Active Specialties</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-briefcase-medical"></i>
-            </div>
-            <a href="{{ route('admin.profession.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <?php */ ?>
 </div>

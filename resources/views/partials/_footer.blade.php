@@ -54,12 +54,13 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <h3>Newsletter</h3>
-                <form action="javascript:void(0);">
+                <form action="{{ route('newsletter') }}" method="POST" enctype="multipart/form-data">
+                    {{ method_field('POST') }}
+                    @csrf
 
-                    <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+                    <label class="sr-only" for="inlineFormInputGroupEmail">E-Mail</label>
                     <div class="input-group">
-
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Email Address">
+                        <input type="text" name="email" class="form-control" id="inlineFormInputGroupEmail" placeholder="Email Address" required>
                         <div class="input-group-prepend">
                             <button class="btn btn-primary">SUBMIT</button>
                         </div>
