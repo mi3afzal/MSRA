@@ -38,6 +38,8 @@ Route::post('/newsletter', [App\Http\Controllers\Front\NewsletterController::cla
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
 
 
+Route::get('/buy-sale', [App\Http\Controllers\Front\BuySellController::class, 'index'])->name('buysale');
+
 // Job Application Module
 Route::post('/job/quickapply', [App\Http\Controllers\Front\JobApplicationController::class, 'quickapply'])->name('quickapply');
 Route::get('/job/apply/{id}', [App\Http\Controllers\Front\JobApplicationController::class, 'apply'])->name('apply');
@@ -286,7 +288,7 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Cities Module
     Route::get('/city', [App\Http\Controllers\Admin\CityController::class, 'create'])->name('admin.city.create');
     Route::post('/city-store', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('admin.city.store');
-    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'lists'])->name('admin.city.list')->withoutMiddleware([isAdmin::class]);;
+    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'list'])->name('admin.city.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/city/enable/{id}', [App\Http\Controllers\Admin\CityController::class, 'enable'])->name('admin.city.enable');
     Route::get('/city/disable/{id}', [App\Http\Controllers\Admin\CityController::class, 'disable'])->name('admin.city.disable');
@@ -300,6 +302,25 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
         '/city/delete/{id}',
         [App\Http\Controllers\Admin\CityController::class, 'destroy']
     )->name('city.delete');
+
+
+    // Suburbs Module
+    Route::get('/suburb', [App\Http\Controllers\Admin\SuburbController::class, 'create'])->name('admin.suburb.create');
+    Route::post('/suburb-store', [App\Http\Controllers\Admin\SuburbController::class, 'store'])->name('admin.suburb.store');
+    Route::get('/suburb/list', [App\Http\Controllers\Admin\SuburbController::class, 'list'])->name('admin.suburb.list')->withoutMiddleware([isAdmin::class]);;
+
+    Route::get('/suburb/enable/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'enable'])->name('admin.suburb.enable');
+    Route::get('/suburb/disable/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'disable'])->name('admin.suburb.disable');
+
+    Route::get(
+        '/suburb/datatable',
+        [App\Http\Controllers\Admin\SuburbController::class, 'datatable']
+    )->name('suburb.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/suburb/delete/{id}',
+        [App\Http\Controllers\Admin\SuburbController::class, 'destroy']
+    )->name('suburb.delete');
 
 
     // Contact Us Module
@@ -340,6 +361,26 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     )->name('jobapplication.delete');
 
 
+    // Buy / Sell Module
+    Route::get('/buysell', [App\Http\Controllers\Admin\BuySellController::class, 'create'])->name('admin.buysell.create');
+    Route::post('/buysell-store', [App\Http\Controllers\Admin\BuySellController::class, 'store'])->name('admin.buysell.store');
+    Route::get('/buysell/list', [App\Http\Controllers\Admin\BuySellController::class, 'list'])->name('admin.buysell.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/buysell-details/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'show'])->name('admin.buysell.show');
+
+    Route::get('/buysell/enable/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'enable'])->name('admin.buysell.enable');
+    Route::get('/buysell/disable/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'disable'])->name('admin.buysell.disable');
+
+    Route::get(
+        '/buysell/datatable',
+        [App\Http\Controllers\Admin\BuySellController::class, 'datatable']
+    )->name('buysell.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/buysell/delete/{id}',
+        [App\Http\Controllers\Admin\BuySellController::class, 'destroy']
+    )->name('buysell.delete');
+
+
     // Newsletter Module
     Route::get('/newsletter/list', [App\Http\Controllers\Admin\NewsletterController::class, 'lists'])->name('admin.newsletter.list');
     Route::get('/newsletter/enable/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'enable'])->name('admin.newsletter.enable');
@@ -359,6 +400,10 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // About Us Page
     Route::get('/about', [App\Http\Controllers\Admin\AboutController::class, 'edit'])->name('admin.about.edit');
     Route::put('/about/update/{id}', [App\Http\Controllers\Admin\AboutController::class, 'update'])->name('admin.about.update');
+
+    // Buy & Sale Page
+    Route::get('/buysale', [App\Http\Controllers\Admin\BuySellController::class, 'edit'])->name('admin.buysale.edit');
+    Route::put('/buysale/update/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'update'])->name('admin.buysale.update');
 
     // Settings Front Pages
     Route::get('/setting', [App\Http\Controllers\Admin\SettingsController::class, 'edit'])->name('admin.setting.edit');
@@ -403,6 +448,26 @@ Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () 
         '/jobseeker-testimonial/delete/{id}',
         [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
     )->name('testimonial.delete');
+
+    // Recommendation Module
+    Route::get('/recommendation', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'create'])->name('admin.recommendation.create');
+
+    Route::post('/recommendation-store', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'store'])->name('admin.recommendation.store');
+    Route::get('/recommendation/list', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'lists'])->name('admin.recommendation.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/recommendation-details/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'show'])->name('admin.recommendation.show');
+
+    Route::get('/recommendation/enable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'enable'])->name('admin.recommendation.enable');
+    Route::get('/recommendation/disable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'disable'])->name('admin.recommendation.disable');
+
+    Route::get(
+        '/recommendation/datatable',
+        [App\Http\Controllers\Jobseeker\RecommendationController::class, 'datatable']
+    )->name('recommendation.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/recommendation/delete/{id}',
+        [App\Http\Controllers\Jobseeker\RecommendationController::class, 'destroy']
+    )->name('recommendation.delete');
 
     Route::get('/my-jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'myapplications'])->name('admin.jobapplication.myapplications');
 

@@ -8,9 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="borderbox">
-                    <h3>About Us</h3>
-
-
+                    <h3 class="text-uppercase">About Us</h3>
                 </div>
             </div>
         </div>
@@ -55,7 +53,7 @@
             <div class="col-md-6 ">
                 <div class="leftbox text-center">
                     @if(isset($listings->aboutcontent_image))
-                    <img src="{{url('/images/aboutus/'.$listings->aboutcontent_image)}}" class="img-fluid" alt="Image" />
+                    <img src="{{$listings->imageurl() . $listings->aboutcontent_image}}" class="img-fluid" alt="Image" />
                     @endif
                 </div>
             </div>

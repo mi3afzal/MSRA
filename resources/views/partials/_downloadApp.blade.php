@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-lg-8 col-md-12">
-                <h2>Download The App</h2>
+                <h2 class="text-uppercase">Download The App</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam possimus eaque magnam eum praesentium unde.</p>
                 <ul class="list-unstyled">
                     <a href="<?php echo $sociallinks->apple_store; ?>">

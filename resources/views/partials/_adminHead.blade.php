@@ -29,5 +29,19 @@
             border-radius: 4px;
             height: 40px;
         }
+
+        .control-sidebar.control-sidebar-dark>a.nav-link-controlsidebar>p.control-sidbar-p {
+            margin: 5%;
+            padding: 2%;
+        }
+
+        .control-sidebar.control-sidebar-dark>a.nav-link-controlsidebar:hover {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .control-sidbar-icon {
+            margin-right: 4%;
+        }
     </style>
 </head>

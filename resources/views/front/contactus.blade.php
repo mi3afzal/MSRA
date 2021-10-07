@@ -7,9 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="borderbox">
-                    <h3>Contact Us</h3>
-
-
+                    <h3 class="text-uppercase">Contact Us</h3>
                 </div>
             </div>
         </div>

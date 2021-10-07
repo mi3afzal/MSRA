@@ -24,7 +24,7 @@
             <div class="icon">
                 <i class="fas fa-map-marked-alt"></i>
             </div>
-            <a href="javascript:void(0);" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.city.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -38,7 +38,7 @@
             <div class="icon">
                 <i class="fas fa-directions"></i>
             </div>
-            <a href="javascript:void(0);" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.suburb.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -98,7 +98,35 @@
             <div class="icon">
                 <i class="nav-icon fas fa-newspaper"></i>
             </div>
-            <a href="{{ route('admin.jobapplication.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.newsletter.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-indigo">
+            <div class="inner">
+                <h3><?php echo $newsletters; ?></h3>
+                <p>Testimonials</p>
+            </div>
+            <div class="icon">
+                <i class="nav-icon fas fa-newspaper"></i>
+            </div>
+            <a href="javascript:void(0);" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-dark">
+            <div class="inner">
+                <h3><?php echo $buysells; ?></h3>
+                <p>Buy / Sells</p>
+            </div>
+            <div class="icon">
+                <i class="nav-icon far fa-handshake"></i>
+            </div>
+            <a href="{{ route('admin.buysell.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     @endif

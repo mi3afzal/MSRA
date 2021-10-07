@@ -1,4 +1,4 @@
-<div class="sidebar-job">
+<div class="sidebar-css">
     <h4>Filter
         <a href="{{ route('front.job.clearsearch') }}">
             <span style="padding-left:55%; text-decoration:none;">Clear</span>

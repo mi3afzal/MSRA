@@ -14,7 +14,15 @@ class Job extends Model
 
     protected $table = 'jobs';
 
-    protected $fillable = ['user_id', 'created_at', 'updated_at'];
+    const EXCERPT_LENGTH = 250;
+
+    protected $fillable = ['description', 'user_id', 'created_at', 'updated_at'];
+
+    public function excerpt()
+    {
+        return Str::limit($this->description, env('EXCERPT_LENGTH', 250));
+        // return Str::limit($this->description, BuySell::EXCERPT_LENGTH);
+    }
 
     public function setTitleAttribute($value)
     {

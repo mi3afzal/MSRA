@@ -13,7 +13,7 @@
             </a>
         </li>
         @if (Gate::allows('isAdmin'))
-        <li class="nav-header">FRONT PAGES</li>
+        <li class="nav-header">FRONTEND SETTINGS</li>
 
         <li class="nav-item">
             <a href="{{ route('admin.sociallink.edit') }}" class="nav-link <?php if (url()->current() == route('admin.sociallink.edit')) {
@@ -50,7 +50,8 @@
 
         @endif
 
-        <li class="nav-header">BACKEND MODULES</li>
+        <!--         
+        <li class="nav-header">EXPENSIONS</li>
 
         <li class="nav-item">
             <a href="{{ route('admin.state.list') }}" class="nav-link <?php if ((url()->current() == route('admin.state.create')) || url()->current() == route('admin.state.list')) {
@@ -62,6 +63,33 @@
                 </p>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.city.list') }}" class="nav-link <?php if ((url()->current() == route('admin.city.create')) || url()->current() == route('admin.city.list')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-compass"></i>
+                <p>
+                    Cities
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.suburb.list') }}" class="nav-link <?php if ((url()->current() == route('admin.suburb.create')) || url()->current() == route('admin.suburb.list')) {
+                                                                            echo 'active';
+                                                                        } ?>">
+                <i class="nav-icon fas fa-street-view"></i>
+                <p>
+                    Suburbs
+                </p>
+            </a>
+        </li> -->
+
+
+        <li class="nav-header">BACKEND MODULES</li>
+
+
 
         @if (Gate::allows('isJobseeker'))
         <li class="nav-item">
@@ -269,6 +297,40 @@
 
         @if (Gate::allows('isAdmin'))
         <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
+                                                                echo 'active';
+                                                            } ?>">
+                <i class="nav-icon far fa-handshake"></i>
+                <p>
+                    Buy / Sell
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.buysell.create') }}" class="nav-link <?php if (url()->current() == route('admin.buysell.create')) {
+                                                                                        echo 'active';
+                                                                                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.buysell.list') }}" class="nav-link <?php if (url()->current() == route('admin.buysell.list')) {
+                                                                                    echo 'active';
+                                                                                } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @endif
+
+        @if (Gate::allows('isAdmin'))
+        <li class="nav-item">
             <a href="{{ route('admin.contact.list') }}" class="nav-link <?php if (url()->current() == route('admin.contact.list')) {
                                                                             echo 'active';
                                                                         } ?>">
@@ -296,6 +358,37 @@
 
         @if (Gate::allows('isJobseeker'))
         <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.recommendation.create')) || url()->current() == route('admin.recommendation.list')) {
+                                                                echo 'active';
+                                                            } ?>">
+                <i class="nav-icon fab fa-angellist"></i>
+                <p>
+                    Recommendation
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.recommendation.create') }}" class="nav-link <?php if (url()->current() == route('admin.recommendation.create')) {
+                                                                                                echo 'active';
+                                                                                            } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.recommendation.list') }}" class="nav-link <?php if (url()->current() == route('admin.recommendation.list')) {
+                                                                                            echo 'active';
+                                                                                        } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('admin.jobapplication.myapplications') }}" class="nav-link <?php if (url()->current() == route('admin.jobapplication.list')) {
                                                                                                 echo 'active';
                                                                                             } ?>">
@@ -305,6 +398,8 @@
                 </p>
             </a>
         </li>
+
+
         @endif
 
         @if (Gate::allows('isAdmin'))

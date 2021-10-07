@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="borderbox">
-                    <h3>General Practice</h3>
+                    <h3 class="text-uppercase">General Practice</h3>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
 
                                 </ul>
                                 <p>
-                                    {!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                    {!! $job->excerpt() !!}
                                     <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
