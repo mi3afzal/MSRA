@@ -15,6 +15,7 @@ A medical staff recruitment website build in Laravel 8
 9. Specialty [Create, Delete (Softdelete), Enable, Disable]
 10. Contact Leads [Delete, Enable, Disable]
 11. Job Applications [Delete (Softdelete), Enable, Disable, Show]
+12. Buy / Sell (Property) [Delete (Softdelete), Enable, Disable]
 
 ## Current Backend Options / Modules For Job Seekers
 
@@ -58,6 +59,7 @@ A medical staff recruitment website build in Laravel 8
 7. Register
 8. Job Seeker Registration
 9. Job Archive
+10. Buy / Sell
 
 ## Current Registration Modules
 
@@ -74,6 +76,14 @@ Application currently has three registrations :
 ## JOBS PAGE
 
 ![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/jobs-page.png)
+
+## BUY / SELL PAGE 1
+
+![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/buy-sell-page.png)
+
+## BUY / SELL PAGE 2
+
+![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/buy-sell-page-2.png)
 
 ## JOBS PAGE [QUICK APPLICATION]
 
