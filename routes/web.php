@@ -170,6 +170,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Profession Module
     Route::get('/profession', [App\Http\Controllers\Admin\ProfessionController::class, 'create'])->name('admin.profession.create');
     Route::post('/profession-store', [App\Http\Controllers\Admin\ProfessionController::class, 'store'])->name('admin.profession.store');
+    Route::get('/profession-edit/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'edit'])->name('admin.profession.edit');
+    Route::put('/profession/update/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'update'])->name('admin.profession.update');
     Route::get('/profession/list', [App\Http\Controllers\Admin\ProfessionController::class, 'lists'])->name('admin.profession.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/profession/enable/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'enable'])->name('admin.profession.enable');
@@ -190,6 +192,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Speciality  Module
     Route::get('/specialty', [App\Http\Controllers\Admin\SpecialtyController::class, 'create'])->name('admin.specialty.create');
     Route::post('/specialty-store', [App\Http\Controllers\Admin\SpecialtyController::class, 'store'])->name('admin.specialty.store');
+    Route::get('/specialty-edit/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'edit'])->name('admin.specialty.edit');
+    Route::put('/specialty/update/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'update'])->name('admin.specialty.update');
     Route::get('/specialty/list', [App\Http\Controllers\Admin\SpecialtyController::class, 'lists'])->name('admin.specialty.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/specialty/enable/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'enable'])->name('admin.specialty.enable');
@@ -231,6 +235,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Job Type Module
     Route::get('/jobtype', [App\Http\Controllers\Admin\JobTypeController::class, 'create'])->name('admin.jobtype.create');
     Route::post('/jobtype-store', [App\Http\Controllers\Admin\JobTypeController::class, 'store'])->name('admin.jobtype.store');
+    Route::get('/jobtype-edit/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'edit'])->name('admin.jobtype.edit');
+    Route::put('/jobtype/update/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'update'])->name('admin.jobtype.update');
     Route::get('/jobtype/list', [App\Http\Controllers\Admin\JobTypeController::class, 'lists'])->name('admin.jobtype.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/jobtype/enable/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'enable'])->name('admin.jobtype.enable');
@@ -250,6 +256,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Job Category Module
     Route::get('/jobcategory', [App\Http\Controllers\Admin\JobCategoryController::class, 'create'])->name('admin.jobcategory.create');
     Route::post('/jobcategory-store', [App\Http\Controllers\Admin\JobCategoryController::class, 'store'])->name('admin.jobcategory.store');
+    Route::get('/jobcategory-edit/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'edit'])->name('admin.jobcategory.edit');
+    Route::put('/jobcategory/update/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'update'])->name('admin.jobcategory.update');
     Route::get('/jobcategory/list', [App\Http\Controllers\Admin\JobCategoryController::class, 'lists'])->name('admin.jobcategory.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/jobcategory/enable/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'enable'])->name('admin.jobcategory.enable');
@@ -269,6 +277,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // States Module
     Route::get('/state', [App\Http\Controllers\Admin\StateController::class, 'create'])->name('admin.state.create');
     Route::post('/state-store', [App\Http\Controllers\Admin\StateController::class, 'store'])->name('admin.state.store');
+    Route::get('/state-edit/{id}', [App\Http\Controllers\Admin\StateController::class, 'edit'])->name('admin.state.edit');
+    Route::put('/state/update/{id}', [App\Http\Controllers\Admin\StateController::class, 'update'])->name('admin.state.update');
     Route::get('/state/list', [App\Http\Controllers\Admin\StateController::class, 'lists'])->name('admin.state.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/state/enable/{id}', [App\Http\Controllers\Admin\StateController::class, 'enable'])->name('admin.state.enable');
@@ -288,6 +298,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Cities Module
     Route::get('/city', [App\Http\Controllers\Admin\CityController::class, 'create'])->name('admin.city.create');
     Route::post('/city-store', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('admin.city.store');
+    Route::get('/city-edit/{id}', [App\Http\Controllers\Admin\CityController::class, 'edit'])->name('admin.city.edit');
+    Route::put('/city/update/{id}', [App\Http\Controllers\Admin\CityController::class, 'update'])->name('admin.city.update');
     Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'list'])->name('admin.city.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/city/enable/{id}', [App\Http\Controllers\Admin\CityController::class, 'enable'])->name('admin.city.enable');
@@ -307,6 +319,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Suburbs Module
     Route::get('/suburb', [App\Http\Controllers\Admin\SuburbController::class, 'create'])->name('admin.suburb.create');
     Route::post('/suburb-store', [App\Http\Controllers\Admin\SuburbController::class, 'store'])->name('admin.suburb.store');
+    Route::get('/suburb-edit/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'edit'])->name('admin.suburb.edit');
+    Route::put('/suburb/update/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'update'])->name('admin.suburb.update');
     Route::get('/suburb/list', [App\Http\Controllers\Admin\SuburbController::class, 'list'])->name('admin.suburb.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/suburb/enable/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'enable'])->name('admin.suburb.enable');
@@ -364,6 +378,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Buy / Sell Module
     Route::get('/buysell', [App\Http\Controllers\Admin\BuySellController::class, 'create'])->name('admin.buysell.create');
     Route::post('/buysell-store', [App\Http\Controllers\Admin\BuySellController::class, 'store'])->name('admin.buysell.store');
+    Route::get('/buysell-edit/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'edit'])->name('admin.buysell.edit');
+    Route::put('/buysell/update/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'update'])->name('admin.buysell.update');
     Route::get('/buysell/list', [App\Http\Controllers\Admin\BuySellController::class, 'list'])->name('admin.buysell.list')->withoutMiddleware([isAdmin::class]);
     Route::get('/buysell-details/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'show'])->name('admin.buysell.show');
 
@@ -413,6 +429,10 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Ajax Route
     Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);
     Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);
+
+    // Ajax Route For Edit
+    Route::post('editgetcities', [App\Http\Controllers\Admin\StateController::class, 'editgetcities'])->name('editgetcities')->withoutMiddleware([isAdmin::class]);
+    Route::post('editgetasuburbs', [App\Http\Controllers\Admin\StateController::class, 'editgetasuburbs'])->name('editgetasuburbs')->withoutMiddleware([isAdmin::class]);
 
     Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);
 

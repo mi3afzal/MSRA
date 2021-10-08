@@ -111,8 +111,14 @@ class SpecialtyController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.specialty.edit', $specialtydata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($specialtydata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($specialtydata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -158,6 +164,48 @@ class SpecialtyController extends Controller
         return redirect()->route('admin.specialty.list')->with('success', 'Specialty added successfully.');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Specialty  $specialty
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Specialty $specialty, $id)
+    {
+        $count = Specialty::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = Specialty::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "specialty";
+            $module = "specialty";
+            return view('admin.specialty.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Specialty  $specialty
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Specialty $specialty, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'specialty' => 'required|max:40|unique:specialties,specialty,' . $specialty->specialty,
+            ]
+        );
+
+        // Update data
+        $specialty = Specialty::find($id);
+        $specialty->specialty = $request->input("specialty");
+        $specialty->save();
+
+        return redirect()->route('admin.specialty.list')->with('success', 'Details Updated.');
+    }
 
     /**
      * Enable the specified specialty in storage.

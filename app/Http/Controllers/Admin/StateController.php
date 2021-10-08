@@ -51,6 +51,27 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function editgetcities()
+    {
+        $cities_count = City::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["city_id"]])->count();
+        if ($cities_count > 0) {
+            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["city_id"]])->get()->toArray();
+
+            if ((isset($_POST["label"])) && ($_POST["label"] == 1)) {
+                return view('ajax.editlabelstatecities', compact('cities'));
+            } else {
+                return view('ajax.statecities', compact('cities'));
+            }
+        } else {
+            return view('ajax.defaultstatecities');
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getasuburbs()
     {
         $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
@@ -58,6 +79,25 @@ class StateController extends Controller
             $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
             if (isset($_POST["label"]) && ($_POST["label"] == 1)) {
                 return view('ajax.labelsuburb', compact('suburbs'));
+            } else {
+                return view('ajax.suburb', compact('suburbs'));
+            }
+        } else {
+            return view('ajax.defaultsuburb');
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editgetasuburbs()
+    {
+        $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["suburb_id"]])->count();
+        if ($suburb_count > 0) {
+            $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["suburb_id"]])->get()->toArray();
+            if (isset($_POST["label"]) && ($_POST["label"] == 1)) {
+                return view('ajax.editlabelsuburb', compact('suburbs'));
             } else {
                 return view('ajax.suburb', compact('suburbs'));
             }
@@ -165,8 +205,14 @@ class StateController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.state.edit', $statedata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($statedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($statedata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -181,6 +227,48 @@ class StateController extends Controller
             ->make(true);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\State  $state
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(State $state, $id)
+    {
+        $count = State::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = State::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "state";
+            $module = "state";
+            return view('admin.state.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\State  $state
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, State $state, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|max:40|unique:states,name,' . $state->name,
+            ]
+        );
+
+        // Update data
+        $state = State::findOrFail($id);
+        $state->name = $request->input("name");
+        $state->save();
+
+        return redirect()->route('admin.state.list')->with('success', 'Details Updated.');
+    }
 
     /**
      * Enable the specified state in storage.

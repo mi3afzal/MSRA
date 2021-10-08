@@ -87,6 +87,12 @@ class JobTypeController extends Controller
                     </div>
                 ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.jobtype.edit', $jobtypedata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 $activelink = '
                         <div class="btn-group">
                             <a href="' . route('admin.jobtype.enable', $jobtypedata->id) . '" class="btn btn-sm btn-warning" title="Enable"><i class="fas fa-lock"></i></a>
@@ -99,7 +105,7 @@ class JobTypeController extends Controller
                     ';
 
                 if (Gate::allows('isAdmin')) {
-                    $final = ($jobtypedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($jobtypedata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -155,6 +161,49 @@ class JobTypeController extends Controller
         $jobtype->save();
 
         return redirect()->route('admin.jobtype.list')->with('success', 'Job Type added successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\JobType  $jobtype
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(JobType $jobtype, $id)
+    {
+        $count = JobType::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = JobType::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "jobtype";
+            $module = "Jobtype";
+            return view('admin.jobtype.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\JobType  $jobtype
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, JobType $jobtype, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'jobtype' => 'required|max:30|unique:job_types,jobtype,' . $jobtype->jobtype,
+            ]
+        );
+
+        // Update data
+        $jobType = JobType::find($id);
+        $jobType->jobtype = $request->input("jobtype");
+        $jobType->save();
+
+        return redirect()->route('admin.jobtype.list')->with('success', 'Details Updated.');
     }
 
 

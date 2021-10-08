@@ -18,36 +18,36 @@ trait BuySellMediaTrait
     // associated images
     public function associatedImages()
     {
-        return $this->hasMany('App\Models\BuySellMedia', 'buysell_id')->where('type', '1')->where("status", "1");
+        return $this->hasMany('App\Models\BuySellMedia', 'buysell_id')->where(['type' => '1', "status" => "1"])->orderBy('order', 'asc');
     }
 
     // One logo
     public function associatedLogoFile()
     {
-        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where('type', '2')->where("status", "1");
+        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where(['type' => '2', "status" => "1"]);
     }
 
     // One favicon
     public function associatedFaviconFile()
     {
-        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where('type', '3')->where("status", "1");
+        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where(['type' => '3', "status" => "1"]);
     }
 
     // One banner
     public function associatedBannerFile()
     {
-        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where('type', '4')->where("status", "1");
+        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where(['type' => '4', "status" => "1"]);
     }
 
     public function associatedDocument()
     {
-        return $this->hasMany('App\Models\BuySellMedia', 'buysell_id')->where('type', '5')->where("status", "1");
+        return $this->hasMany('App\Models\BuySellMedia', 'buysell_id')->where(['type' => '5', "status" => "1"]);
     }
 
     // One main Image
     public function associatedMainImage()
     {
-        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where('type', '6')->where("status", "1");
+        return $this->hasOne('App\Models\BuySellMedia', 'buysell_id')->where(['type' => '6', "status" => "1"]);
     }
 
     public function associatedState()
@@ -63,5 +63,10 @@ trait BuySellMediaTrait
     public function associatedSuburb()
     {
         return $this->belongsTo('App\Models\Suburb', 'suburb_id')->select("id", "suburb", "lat", "lng");
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id')->select("id", "name", "email", "role");
     }
 }

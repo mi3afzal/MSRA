@@ -99,8 +99,14 @@ class ProfessionController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.profession.edit', $professiondata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($professiondata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($professiondata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -154,6 +160,49 @@ class ProfessionController extends Controller
         $profession->save();
 
         return redirect()->route('admin.profession.list')->with('success', 'Profession added successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Profession  $profession
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Profession $profession, $id)
+    {
+        $count = Profession::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = Profession::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "profession";
+            $module = "profession";
+            return view('admin.profession.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Profession  $profession
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Profession $profession, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'profession' => 'required|max:40|unique:professions,profession,' . $profession->profession,
+            ]
+        );
+
+        // Update data
+        $jobCategory = Profession::findOrFail($id);
+        $jobCategory->profession = $request->input("profession");
+        $jobCategory->save();
+
+        return redirect()->route('admin.profession.list')->with('success', 'Details Updated.');
     }
 
     /**

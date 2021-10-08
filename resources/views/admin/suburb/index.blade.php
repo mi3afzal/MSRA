@@ -7,13 +7,11 @@
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">
-                <a href="{{ route('admin.city.create') }}" class="btn btn-primary">
-                    <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
-                    Add State
-                </a>
-            </h3> -->
             <div class="card-tools">
+                <a href="{{ route('admin.suburb.list') }}" class="btn btn-primary">
+                    <i class="fas fa-recycle"></i>&nbsp;
+                    Clear search
+                </a>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -23,20 +21,39 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-lg-12 text-muted">
-                    <div class="col-lg-4">
-                        <h3>FILTERS</h3>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="row col-md-12">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Suburb Name </label>
                         <input type="text" name="name" id="name" placeholder="Suburb Name" class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>SSC Code </label>
+                        <input type="text" name="ssc_code" id="ssc_code" placeholder="SSC Code" class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Post Code </label>
+                        <input type="text" name="postcode" id="postcode" placeholder="Post Code" class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" name="state" id="state" placeholder="State" class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Local Goverment Area</label>
+                        <input type="text" name="local_goverment_area" id="local_goverment_area" placeholder="Local Goverment Area" class="form-control" autocomplete="off" />
                     </div>
                 </div>
 
@@ -52,6 +69,23 @@
                 </div>
             </div>
 
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <b>Listing</b>
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         </div>
 
         <div class="card-body">
@@ -89,6 +123,10 @@
             data: function(d) {
                 d.status = $('#status').val();
                 d.name = $('#name').val();
+                d.state = $('#state').val();
+                d.postcode = $('#postcode').val();
+                d.ssc_code = $('#ssc_code').val();
+                d.local_goverment_area = $('#local_goverment_area').val();
             }
         },
 
@@ -158,6 +196,22 @@
         e.preventDefault();
     });
     $('#name').on('keyup', function(e) {
+        oTable.draw();
+        e.preventDefault();
+    });
+    $('#postcode').on('keyup', function(e) {
+        oTable.draw();
+        e.preventDefault();
+    });
+    $('#ssc_code').on('keyup', function(e) {
+        oTable.draw();
+        e.preventDefault();
+    });
+    $('#state').on('keyup', function(e) {
+        oTable.draw();
+        e.preventDefault();
+    });
+    $('#local_goverment_area').on('keyup', function(e) {
         oTable.draw();
         e.preventDefault();
     });

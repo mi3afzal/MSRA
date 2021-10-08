@@ -9,8 +9,8 @@
         <div class="card-header">
             <h3 class="card-title">
                 <a href="{{ route('admin.jobapplication.list') }}" class="btn btn-primary">
-                    <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
-                    Job Applications
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;
+                    Listing
                 </a>
             </h3>
 
@@ -76,8 +76,8 @@
         <div class="card-header">
             <h3 class="card-title">
                 <a href="{{ route('admin.jobapplication.list') }}" class="btn btn-primary">
-                    <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
-                    Job Applications
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;
+                    Listing
                 </a>
             </h3>
 

@@ -61,6 +61,29 @@ class SuburbController extends Controller
                         $q->where('suburbs.suburb', 'like', "%{$request->get('name')}%");
                     });
                 }
+                if ($request->has('postcode') && $request->get('postcode') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('suburbs.postcode', '=', $request->get('postcode'));
+                    });
+                }
+
+                if ($request->has('ssc_code') && $request->get('ssc_code') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('suburbs.ssc_code', '=', $request->get('ssc_code'));
+                    });
+                }
+
+                if ($request->has('state') && $request->get('state') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('suburbs.state', 'like', "%{$request->get('state')}%");
+                    });
+                }
+
+                if ($request->has('local_goverment_area') && $request->get('local_goverment_area') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('suburbs.local_goverment_area', 'like', "%{$request->get('local_goverment_area')}%");
+                    });
+                }
             })
             ->addColumn('ssc_code', function ($suburbdata) {
                 return $name = ucwords($suburbdata->ssc_code);
@@ -111,8 +134,14 @@ class SuburbController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.suburb.edit', $suburbdata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($suburbdata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($suburbdata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -125,6 +154,53 @@ class SuburbController extends Controller
                 return $final;
             })
             ->make(true);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Suburb  $suburb
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Suburb $suburb, $id)
+    {
+        $count = Suburb::where("id", $id)->count();
+        if ($count > 0) {
+            $listings = Suburb::where("id", $id)->first();
+            $title = "suburb";
+            $module = "suburb";
+            return view('admin.suburb.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Suburb  $suburb
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Suburb $suburb, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'suburb' => 'required|max:40|unique:suburbs,suburb,' . $suburb->suburb,
+                'postcode' => 'required|numeric',
+                'ssc_code' => 'required|numeric',
+            ]
+        );
+
+        // Update data
+        $suburb = Suburb::findOrFail($id);
+        $suburb->suburb = $request->input("suburb");
+        $suburb->postcode = $request->input("postcode");
+        $suburb->ssc_code = $request->input("ssc_code");
+        $suburb->save();
+
+        return redirect()->route('admin.suburb.list')->with('success', 'Details Updated.');
     }
 
 

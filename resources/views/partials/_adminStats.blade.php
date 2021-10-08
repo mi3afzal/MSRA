@@ -110,7 +110,7 @@
                 <p>Testimonials</p>
             </div>
             <div class="icon">
-                <i class="nav-icon fas fa-newspaper"></i>
+                <i class="nav-icon fas fa-quote-left"></i>
             </div>
             <a href="javascript:void(0);" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>

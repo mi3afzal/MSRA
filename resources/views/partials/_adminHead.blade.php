@@ -43,5 +43,21 @@
         .control-sidbar-icon {
             margin-right: 4%;
         }
+
+        .css-social-icon {
+            border: 1px solid gray;
+            padding: 5px;
+            border-radius: 4px;
+            background-color: rgba(100, 100, 100, 0.1);
+        }
+
+        .css-label-badge {
+            border: 1px solid gray;
+            font-weight: bold;
+            padding: 5px;
+            margin: 10px;
+            border-radius: 4px;
+            background-color: rgba(100, 100, 100, 0.1);
+        }
     </style>
 </head>

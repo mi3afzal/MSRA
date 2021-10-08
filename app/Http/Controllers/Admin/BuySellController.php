@@ -270,9 +270,14 @@ class BuySellController extends Controller
                     </div>
                 ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.buysell.edit', $buyselldata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    // $final = ($buyselldata->status == 1) ? $link . $inactivelink . $detailslink : $link . $activelink . $detailslink;
-                    $final = ($buyselldata->status == 1) ? $link . $inactivelink  : $link . $activelink;
+                    $final = ($buyselldata->status == 1) ? $editlink . $link . $inactivelink . $detailslink : $editlink . $link . $activelink . $detailslink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -317,6 +322,147 @@ class BuySellController extends Controller
         return redirect()->route('admin.buysell.list')->with('warning', 'Buysell service disabled.');
     }
 
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\BuySell  $buySell
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, BuySell $buySell, $id)
+    {
+        $title = "Buy / Sell Details";
+        $module = "buysell";
+        $bstype = $this->bstype;
+        $property_type = $this->property_type;
+        $promotional_flag = $this->promotional_flag;
+        $buysell = BuySell::with("associatedImages", "associatedState", "associatedCity", "associatedSuburb", "createdBy")->orderBy("order", "asc")->findOrFail($id);
+        return view('admin.buysell.show', compact('title', 'module', 'buysell', "bstype", "property_type", "promotional_flag"));
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\BuySell $buySell
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(BuySell $buySell, $id)
+    {
+        $count = BuySell::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $states = State::where("status", "1")->get();
+            $cities = City::where("status", "1")->get();
+            $suburbs = Suburb::where("status", "1")->get();
+            $listings = BuySell::where("id", $id)->with("associatedImages")->orderBy('created_at', 'desc')->first();
+            $title = "buysell";
+            $module = "buysell";
+            return view('admin.buysell.edit', compact('states', 'cities', 'suburbs', 'listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\BuySell $buySell
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, BuySell $buySell, $id)
+    {
+        if ($request->file('images')) {
+            if (count($request->file('images')) > 3) {
+                return redirect()->route('admin.buysell.create')->with('error', 'Maximum 3 images allowed.');
+            }
+        }
+
+        // BuySellMedia
+        $this->validate(
+            $request,
+            [
+                'type' => 'required',
+                'property_type' => 'required',
+                'promotional_flag' => 'required',
+                'state' => 'required',
+                'city' => 'required',
+                'suburb' => 'required',
+                'price' => 'required',
+                // 'order' => 'unique:buy_sells,order,' . $buySell->order,
+                'title' => 'required|max:250',
+                'number' => 'required',
+                'email' => 'required|max:250',
+                'description' => 'required|max:600',
+            ]
+        );
+
+        // Insert brand data
+        $buySell = BuySell::findOrFail($id);
+        $buySell->user_id = Auth::user()->id;
+        $buySell->type = $request->input('type');
+        $buySell->property_type = $request->input('property_type');
+        $buySell->promotional_flag = $request->input('promotional_flag');
+        $buySell->state_id = $request->input('state');
+        $buySell->city_id = $request->input('city');
+        $buySell->suburb_id = $request->input('suburb');
+        $buySell->price = $request->input('price');
+        $buySell->title = $request->input('title');
+        $buySell->description = $request->input('description');
+        $buySell->number = $request->input('number');
+        $buySell->email = $request->input('email');
+        $buySell->rating = $request->input('rating');
+        $buySell->order = $request->input('order');
+        $buySell->save();
+
+
+
+        if (!empty($request->file('images'))) {
+            $buySellMediaCount = BuySellMedia::where("buysell_id", $id)->count();
+            if ($buySellMediaCount > 0) {
+                // If Has Image Then Replace.
+                $buySellMedia = BuySellMedia::where("buysell_id", $id)->get();
+                foreach ($buySellMedia as $key => $val) {
+                    $buySellMedia = BuySellMedia::where("buysell_id", $val->buysell_id)->first();
+                    $buySellMedia->delete();
+                }
+            }
+
+            foreach ($request->file('images') as $key => $value) {
+                $nam = ($request->input('state')) . "_" . ($request->input('city'));
+                $name = $key . $buySell->id . '_' . $nam . '_image_' . time() . '.' . $value->getClientOriginalExtension();
+                $destinationPath = public_path('/images/buysell');
+                $value->move($destinationPath, $name);
+
+                // Insert Image into Buy media.
+                $buySellMedia = new BuySellMedia;
+                $buySellMedia->file = (isset($name)) ? $name : "default.png";
+                $buySellMedia->type = "1";
+                $buySellMedia->user_id = Auth::user()->id;
+                $buySellMedia->buysell_id = $buySell->id;
+                $buySellMedia->save();
+
+                $str = "BYSLMD";
+                $ubid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $buySellMedia->id;
+
+                $buySellMedia->unique_code = $ubid;
+                $buySellMedia->save();
+            }
+        } else {
+            // If Not Then Reorder
+            $buySellMedia = BuySellMedia::where("buysell_id", $id)->get();
+            foreach ($buySellMedia as $key => $val) {
+                $buySellMedia = BuySellMedia::where("id", $val->id)->first();
+                $buySellMedia->order = $request->input($val->id . "_order_image");
+                $buySellMedia->save();
+            }
+        }
+
+
+        return redirect()->route('admin.buysell.list')->with('success', 'Property added successfully.');
+    }
+
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
@@ -332,39 +478,5 @@ class BuySellController extends Controller
 
         // Shows the remaining list of buySell.
         return redirect()->route('admin.buysell.list')->with('error', 'Buysell service removed successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BuySell $buySell)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BuySell $buySell)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BuySell $buySell)
-    {
-        //
     }
 }

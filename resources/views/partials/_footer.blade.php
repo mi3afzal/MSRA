@@ -45,10 +45,10 @@
                 <h3>Contact Us</h3>
                 <ul class="contactdetails">
                     <li>
-                        <a href="javascript:void(0);"><i class="fas fa-phone-alt"></i> {!! $settings->whatsapp !!}</a>
+                        <a href="tel:<?php echo $settings->whatsapp; ?>" target="_blank"><i class="fas fa-phone-alt"></i> {!! $settings->whatsapp !!}</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);"><i class="fas fa-envelope"></i>{!! $settings->web !!}</a>
+                        <a href="mailto:<?php echo $settings->web; ?>" target="_blank"><i class="fas fa-envelope"></i>{!! $settings->web !!}</a>
                     </li>
                 </ul>
             </div>
@@ -95,7 +95,7 @@
 
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p>Copyright @ <?php echo date("Y"); ?> | <a href="javascript:void(0);">{!! $settings->link !!}</a></p>
+                    <p>Copyright @ <?php echo date("Y"); ?> | <a href="{{ route('home') }}" target="_blank">{!! $settings->link !!}</a></p>
                 </div>
 
             </div>

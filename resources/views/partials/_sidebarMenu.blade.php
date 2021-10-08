@@ -297,7 +297,7 @@
 
         @if (Gate::allows('isAdmin'))
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.specialty.create')) || url()->current() == route('admin.specialty.list')) {
+            <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.buysell.create')) || url()->current() == route('admin.buysell.list')) {
                                                                 echo 'active';
                                                             } ?>">
                 <i class="nav-icon far fa-handshake"></i>

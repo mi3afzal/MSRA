@@ -62,6 +62,18 @@ class CityController extends Controller
                         $q->where('cities.name', 'like', "%{$request->get('name')}%");
                     });
                 }
+
+                if ($request->has('state_code') && $request->get('state_code') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('cities.state_code', 'like', "%{$request->get('state_code')}%");
+                    });
+                }
+
+                if ($request->has('postcode') && $request->get('postcode') != '') {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('cities.postcode', '=', $request->get('postcode'));
+                    });
+                }
             })
             ->addColumn('name', function ($citydata) {
                 return $name = ucwords($citydata->name);
@@ -96,9 +108,14 @@ class CityController extends Controller
                             <a href="' . route('admin.city.disable', $citydata->id) . '" class="btn btn-sm btn-success" title="Disable"><i class="fas fa-lock-open"></i></a>
                         </div>
                     ';
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.city.edit', $citydata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
 
                 if (Gate::allows('isAdmin')) {
-                    $final = ($citydata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($citydata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -111,6 +128,51 @@ class CityController extends Controller
                 return $final;
             })
             ->make(true);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\City  $city
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(City $city, $id)
+    {
+        $count = City::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = City::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "city";
+            $module = "city";
+            return view('admin.city.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\City  $city
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, City $city, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|max:40|unique:cities,name,' . $city->name,
+                'postcode' => 'required|numeric',
+            ]
+        );
+
+        // Update data
+        $state = City::findOrFail($id);
+        $state->name = $request->input("name");
+        $state->postcode = $request->input("postcode");
+        $state->save();
+
+        return redirect()->route('admin.city.list')->with('success', 'Details Updated.');
     }
 
 

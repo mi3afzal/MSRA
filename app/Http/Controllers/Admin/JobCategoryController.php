@@ -100,8 +100,14 @@ class JobCategoryController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.jobcategory.edit', $jobcategorydata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($jobcategorydata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($jobcategorydata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -155,6 +161,49 @@ class JobCategoryController extends Controller
         $jobcategory->save();
 
         return redirect()->route('admin.jobcategory.list')->with('success', 'Job Category added successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\JobCategory  $jobcategory
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(JobCategory $jobcategory, $id)
+    {
+        $count = JobCategory::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = JobCategory::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "jobcategory";
+            $module = "jobcategory";
+            return view('admin.jobcategory.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\JobCategory  $jobcategory
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, JobCategory $jobcategory, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|max:40|unique:job_categories,name,' . $jobcategory->name,
+            ]
+        );
+
+        // Update data
+        $jobCategory = JobCategory::find($id);
+        $jobCategory->name = $request->input("name");
+        $jobCategory->save();
+
+        return redirect()->route('admin.jobcategory.list')->with('success', 'Details Updated.');
     }
 
     /**

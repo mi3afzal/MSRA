@@ -31,7 +31,7 @@
                     <div class="col-md-12">
 
                         <div class="form-group">
-                            <label for="facebook">Facebook</label>
+                            <label for="facebook" class="css-social-icon"><i class="fab fa-facebook-square fa-lg"></i>&nbsp;&nbsp;&nbsp;Facebook</label>
                             <input type="text" name="facebook" id="facebook" class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" value="{{ old('facebook', $listings->facebook) }}" placeholder="Facebook" autocomplete="off" />
                             @if($errors->has('facebook'))
                             <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="twitter">Twitter</label>
+                            <label for="twitter" class="css-social-icon"><i class="fab fa-twitter-square fa-lg"></i>&nbsp;&nbsp;&nbsp;Twitter</label>
                             <input type="text" name="twitter" value="{{ old('twitter', $listings->twitter) }}" id="twitter" class="form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" placeholder="Twitter" autocomplete="off" />
                             @if($errors->has('twitter'))
                             <div class="invalid-feedback">
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="linkedin">LinkedIn</label>
+                            <label for="linkedin" class="css-social-icon"><i class="fab fa-linkedin fa-lg"></i>&nbsp;&nbsp;&nbsp;LinkedIn</label>
                             <input type="text" name="linkedin" value="{{ old('linkedin', $listings->linkedin) }}" id="linkedin" class="form-control {{ $errors->has('linkedin') ? 'is-invalid' : '' }}" placeholder="LinkedIn" autocomplete="off" />
                             @if($errors->has('linkedin'))
                             <div class="invalid-feedback">
@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="instagram">Instagram</label>
+                            <label for="instagram" class="css-social-icon"><i class="fab fa-instagram-square fa-lg"></i>&nbsp;&nbsp;&nbsp;Instagram</label>
                             <input type="text" name="instagram" value="{{ old('instagram', $listings->instagram) }}" id="instagram" class="form-control {{ $errors->has('instagram') ? 'is-invalid' : '' }}" placeholder="Instagram" autocomplete="off" />
                             @if($errors->has('instagram'))
                             <div class="invalid-feedback">
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="google">Google</label>
+                            <label for="google" class="css-social-icon"><i class="fab fa-google fa-lg"></i>&nbsp;&nbsp;&nbsp;Google</label>
                             <input type="text" name="google" value="{{ old('google', $listings->google) }}" id="google" class="form-control {{ $errors->has('google') ? 'is-invalid' : '' }}" placeholder="Google" autocomplete="off" />
                             @if($errors->has('google'))
                             <div class="invalid-feedback">
@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="google_play">Google Play</label>
+                            <label for="google_play" class="css-social-icon"><i class="fab fa-google-play fa-lg"></i>&nbsp;&nbsp;&nbsp;Google Play</label>
                             <input type="text" name="google_play" value="{{ old('google_play', $listings->google_play) }}" id="google_play" class="form-control {{ $errors->has('google_play') ? 'is-invalid' : '' }}" placeholder="Google Play" autocomplete="off" />
                             @if($errors->has('google_play'))
                             <div class="invalid-feedback">
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="apple_store">Apple Store</label>
+                            <label for="apple_store" class="css-social-icon"><i class="fab fa-apple fa-lg"></i>&nbsp;&nbsp;&nbsp;Apple Store</label>
                             <input type="text" name="apple_store" value="{{ old('apple_store', $listings->apple_store) }}" id="apple_store" class="form-control {{ $errors->has('apple_store') ? 'is-invalid' : '' }}" placeholder="Apple Store" autocomplete="off" />
                             @if($errors->has('apple_store'))
                             <div class="invalid-feedback">
