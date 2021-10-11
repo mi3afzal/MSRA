@@ -102,9 +102,9 @@ $promotional_flag = Config::get('constants.promotional_flag');
                         </div>
                     </div>
 
-                    <input type="hidden" name="state" id="state" value="<?php echo $listings->state_id; ?>" />
-                    <input type="hidden" name="city" id="city" value="<?php echo $listings->city_id; ?>" />
-                    <input type="hidden" name="suburb" id="suburb" value="<?php echo $listings->suburb_id; ?>" />
+                    <input type="hidden" name="state_id" id="state_id" value="<?php echo $listings->state_id; ?>" />
+                    <input type="hidden" name="city_id" id="city_id" value="<?php echo $listings->city_id; ?>" />
+                    <input type="hidden" name="suburb_id" id="suburb_id" value="<?php echo $listings->suburb_id; ?>" />
 
                     <div id="city_div" class="col-md-4">
                         <div class="form-group">

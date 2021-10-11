@@ -373,6 +373,9 @@ class BuySellController extends Controller
      */
     public function update(Request $request, BuySell $buySell, $id)
     {
+        // echo "<pre>";
+        // print_r($request->all());
+        // die();
         if ($request->file('images')) {
             if (count($request->file('images')) > 3) {
                 return redirect()->route('admin.buysell.create')->with('error', 'Maximum 3 images allowed.');
@@ -386,9 +389,9 @@ class BuySellController extends Controller
                 'type' => 'required',
                 'property_type' => 'required',
                 'promotional_flag' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'suburb' => 'required',
+                // 'state' => 'required',
+                // 'city' => 'required',
+                // 'suburb' => 'required',
                 'price' => 'required',
                 // 'order' => 'unique:buy_sells,order,' . $buySell->order,
                 'title' => 'required|max:250',
@@ -398,15 +401,19 @@ class BuySellController extends Controller
             ]
         );
 
+        $state = (!empty($request->input('state'))) ? $request->input('state') : $request->input('state_id');
+        $city = (!empty($request->input('city'))) ? $request->input('city') : $request->input('city_id');
+        $suburb = (!empty($request->input('suburb'))) ? $request->input('suburb') : $request->input('suburb_id');
+
         // Insert brand data
         $buySell = BuySell::findOrFail($id);
         $buySell->user_id = Auth::user()->id;
         $buySell->type = $request->input('type');
         $buySell->property_type = $request->input('property_type');
         $buySell->promotional_flag = $request->input('promotional_flag');
-        $buySell->state_id = $request->input('state');
-        $buySell->city_id = $request->input('city');
-        $buySell->suburb_id = $request->input('suburb');
+        $buySell->state_id = $state;
+        $buySell->city_id = $city;
+        $buySell->suburb_id = $suburb;
         $buySell->price = $request->input('price');
         $buySell->title = $request->input('title');
         $buySell->description = $request->input('description');
@@ -460,7 +467,7 @@ class BuySellController extends Controller
         }
 
 
-        return redirect()->route('admin.buysell.list')->with('success', 'Property added successfully.');
+        return redirect()->route('admin.buysell.list')->with('success', 'Property updated successfully.');
     }
 
     /**
