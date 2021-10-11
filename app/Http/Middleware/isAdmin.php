@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
+use App\Events\LoginHistory;
+use App\Listeners\storeUserLoginHistory;
 
 class isAdmin
 {

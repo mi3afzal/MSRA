@@ -222,28 +222,28 @@ class BuySellController extends Controller
                 }
             })
             ->addColumn('title', function ($buyselldata) {
-                return $title = ucwords($buyselldata->title);
+                return $title = (isset($buyselldata->title)) ? ucwords($buyselldata->title) : "";
             })
             ->addColumn('price', function ($buyselldata) {
-                return $price = ucwords($buyselldata->price);
+                return $price = (isset($buyselldata->price)) ? ucwords($buyselldata->price) : "";
             })
             ->addColumn('number', function ($buyselldata) {
-                return $number = ucwords($buyselldata->number);
+                return $number = (isset($buyselldata->number)) ? ucwords($buyselldata->number) : "";
             })
             ->addColumn('email', function ($buyselldata) {
-                return $email = ucwords($buyselldata->email);
+                return $email = (isset($buyselldata->email)) ? ucwords($buyselldata->email) : "";
             })
             ->addColumn('rating', function ($buyselldata) {
-                return $rating = ucwords($buyselldata->rating);
+                return $rating = (isset($buyselldata->rating)) ? ucwords($buyselldata->rating) : "";
             })
             ->addColumn('order', function ($buyselldata) {
-                return $order = ucwords($buyselldata->order);
+                return $order = (isset($buyselldata->order)) ? ucwords($buyselldata->order) : "";
             })
             ->addColumn('created_at', function ($buyselldata) {
-                return $status = date("F j, Y, g:i a", strtotime($buyselldata->created_at));
+                return $created_at = (isset($buyselldata->created_at)) ? date("F j, Y, g:i a", strtotime($buyselldata->created_at)) : "";
             })
             ->addColumn('status', function ($buyselldata) {
-                return $status = ($buyselldata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($buyselldata->status) && ($buyselldata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($buyselldata) {
 

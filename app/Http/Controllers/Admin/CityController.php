@@ -76,19 +76,19 @@ class CityController extends Controller
                 }
             })
             ->addColumn('name', function ($citydata) {
-                return $name = ucwords($citydata->name);
+                return $name = (isset($citydata->name)) ? ucwords($citydata->name) : "";
             })
             ->addColumn('postcode', function ($citydata) {
-                return $name = ucwords($citydata->postcode);
+                return $postcode = (isset($citydata->postcode)) ? ucwords($citydata->postcode) : "";
             })
             ->addColumn('state_code', function ($citydata) {
-                return $name = ucwords($citydata->state_code);
+                return $state_code = (isset($citydata->state_code)) ? ucwords($citydata->state_code) : "";
             })
             ->addColumn('created_at', function ($citydata) {
-                return $status = date("F j, Y, g:i a", strtotime($citydata->created_at));
+                return $created_at = (isset($citydata->created_at)) ? date("F j, Y, g:i a", strtotime($citydata->created_at)) : "";
             })
             ->addColumn('status', function ($citydata) {
-                return $status = ($citydata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($citydata->status) && ($citydata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($citydata) {
 

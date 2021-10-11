@@ -71,13 +71,13 @@ class JobTypeController extends Controller
                 }
             })
             ->addColumn('jobtype', function ($jobtypedata) {
-                return $jobtype = ucwords($jobtypedata->jobtype);
+                return $jobtype = (isset($jobtypedata->jobtype)) ? ucwords($jobtypedata->jobtype) : "";
             })
             ->addColumn('created_at', function ($jobtypedata) {
-                return $status = date("F j, Y, g:i a", strtotime($jobtypedata->created_at));
+                return $created_at = (isset($jobtypedata->created_at)) ? date("F j, Y, g:i a", strtotime($jobtypedata->created_at)) : "";
             })
             ->addColumn('status', function ($jobtypedata) {
-                return $status = ($jobtypedata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($jobtypedata->status) && ($jobtypedata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($jobtypedata) {
 

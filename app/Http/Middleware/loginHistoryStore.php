@@ -8,7 +8,7 @@ use Auth;
 use App\Events\LoginHistory;
 use App\Listeners\storeUserLoginHistory;
 
-class IsJobSeeker
+class loginHistoryStore
 {
     /**
      * Handle an incoming request.
@@ -20,12 +20,10 @@ class IsJobSeeker
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        if ($user) {
-            if ($user->role == 2) {
-                return $next($request);
-            }
-            return redirect("/")->with("info", "This module is only available for job seeker.");
+        if (isset($user) && !empty($user->id)) {
+            event(new LoginHistory($user));
         }
-        return redirect("/")->with("info", "This module is only available for job seeker.");
+
+        return $next($request);
     }
 }

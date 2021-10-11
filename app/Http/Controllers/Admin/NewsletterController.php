@@ -73,13 +73,13 @@ class NewsletterController extends Controller
                 }
             })
             ->addColumn('email', function ($newslettersdata) {
-                return $email = ($newslettersdata->email);
+                return $email = (isset($newslettersdata->email)) ? ucwords($newslettersdata->email) : "";
             })
             ->addColumn('created_at', function ($newslettersdata) {
-                return $created_at = date("F j, Y, g:i a", strtotime($newslettersdata->created_at));
+                return $created_at = (isset($newslettersdata->created_at)) ? date("F j, Y, g:i a", strtotime($newslettersdata->created_at)) : "";
             })
             ->addColumn('status', function ($newslettersdata) {
-                return $status = ($newslettersdata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($newslettersdata->status) && ($newslettersdata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($newslettersdata) {
 

@@ -72,13 +72,13 @@ class ProfessionController extends Controller
                 }
             })
             ->addColumn('profession', function ($professiondata) {
-                return $profession = ucwords($professiondata->profession);
+                return $profession = (isset($professiondata->profession)) ? ucwords($professiondata->profession) : "";
             })
             ->addColumn('created_at', function ($professiondata) {
-                return $status = date("F j, Y, g:i a", strtotime($professiondata->created_at));
+                return $created_at = (isset($professiondata->created_at)) ? date("F j, Y, g:i a", strtotime($professiondata->created_at)) : "";
             })
             ->addColumn('status', function ($professiondata) {
-                return $status = ($professiondata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($professiondata->status) && ($professiondata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($professiondata) {
 

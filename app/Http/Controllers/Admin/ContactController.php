@@ -68,25 +68,25 @@ class ContactController extends Controller
                 }
             })
             ->addColumn('name', function ($contactdata) {
-                return $jobtype = ucwords($contactdata->name);
+                return $name = (isset($contactdata->name)) ? ucwords($contactdata->name) : "";
             })
             ->addColumn('email', function ($contactdata) {
-                return $email = ($contactdata->email);
+                return $email = (isset($contactdata->email)) ? ucwords($contactdata->email) : "";
             })
             ->addColumn('subject', function ($contactdata) {
-                return $subject = ($contactdata->subject);
+                return $subject = (isset($contactdata->subject)) ? ucwords($contactdata->subject) : "";
             })
             ->addColumn('number', function ($contactdata) {
-                return $number = ($contactdata->number);
+                return $number = (isset($contactdata->number)) ? ucwords($contactdata->number) : "";
             })
             ->addColumn('message', function ($contactdata) {
-                return $message = ($contactdata->message);
+                return $message = (isset($contactdata->message)) ? ucwords($contactdata->message) : "";
             })
             ->addColumn('created_at', function ($contactdata) {
-                return $status = date("F j, Y, g:i a", strtotime($contactdata->created_at));
+                return $created_at = (isset($contactdata->created_at)) ? date("F j, Y, g:i a", strtotime($contactdata->created_at)) : "";
             })
             ->addColumn('status', function ($contactdata) {
-                return $status = ($contactdata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($contactdata->status) && ($contactdata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($contactdata) {
 

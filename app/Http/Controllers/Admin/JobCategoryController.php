@@ -72,13 +72,13 @@ class JobCategoryController extends Controller
                 }
             })
             ->addColumn('name', function ($jobcategorydata) {
-                return $name = ucwords($jobcategorydata->name);
+                return $name = (isset($jobcategorydata->name)) ? ucwords($jobcategorydata->name) : "";
             })
             ->addColumn('created_at', function ($jobcategorydata) {
-                return $status = date("F j, Y, g:i a", strtotime($jobcategorydata->created_at));
+                return $created_at = (isset($jobcategorydata->created_at)) ? date("F j, Y, g:i a", strtotime($jobcategorydata->created_at)) : "";
             })
             ->addColumn('status', function ($jobcategorydata) {
-                return $status = ($jobcategorydata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($jobcategorydata->status) && ($jobcategorydata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($jobcategorydata) {
 

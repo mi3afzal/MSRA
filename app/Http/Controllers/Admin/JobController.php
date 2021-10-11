@@ -112,28 +112,28 @@ class JobController extends Controller
                 }
             })
             ->addColumn('jobtype', function ($jobdata) {
-                return $jobtype = ucwords($jobdata->associatedJobtype->jobtype);
+                return $jobtype = (isset($jobdata->associatedJobtype->jobtype)) ? ucwords($jobdata->associatedJobtype->jobtype) : "";
             })
             ->addColumn('jobcategory', function ($jobdata) {
-                return $jobcategory = ucwords($jobdata->jobcategory->name);
+                return $jobcategory = (isset($jobdata->jobcategory->name)) ? ucwords($jobdata->jobcategory->name) : "";
             })
             ->addColumn('medicalcenter', function ($jobdata) {
-                return $medicalcenter = ucwords($jobdata->medicalcenter->name);
+                return $medicalcenter = (isset($jobdata->medicalcenter->name)) ? ucwords($jobdata->medicalcenter->name) : "";
             })
             ->addColumn('profession', function ($jobdata) {
-                return $profession = ucwords($jobdata->associatedProfession->profession);
+                return $profession = (isset($jobdata->associatedProfession->profession)) ? ucwords($jobdata->associatedProfession->profession) : "";
             })
             ->addColumn('speciality', function ($jobdata) {
-                return $speciality = ucwords($jobdata->associatedSpeciality->specialty);
+                return $speciality = (isset($jobdata->associatedSpeciality->specialty)) ? ucwords($jobdata->associatedSpeciality->specialty) : "";
             })
             ->addColumn('state', function ($jobdata) {
-                return $state = ucwords($jobdata->associatedState->name);
+                return $state = (isset($jobdata->associatedState->name)) ? ucwords($jobdata->associatedState->name) : "";
             })
             ->addColumn('created_at', function ($jobdata) {
-                return $created_at = date("F j, Y, g:i a", strtotime($jobdata->created_at));
+                return $created_at = (isset($jobdata->created_at)) ? date("F j, Y, g:i a", strtotime($jobdata->created_at)) : "";
             })
             ->addColumn('status', function ($jobdata) {
-                return $status = ($jobdata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($jobdata->status) && ($jobdata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($jobdata) {
 

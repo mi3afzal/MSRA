@@ -86,34 +86,34 @@ class SuburbController extends Controller
                 }
             })
             ->addColumn('ssc_code', function ($suburbdata) {
-                return $name = ucwords($suburbdata->ssc_code);
+                return $ssc_code = (isset($suburbdata->ssc_code)) ? ucwords($suburbdata->ssc_code) : "";
             })
             ->addColumn('suburb', function ($suburbdata) {
-                return $name = ucwords($suburbdata->suburb);
+                return $suburb = (isset($suburbdata->suburb)) ? ucwords($suburbdata->suburb) : "";
             })
             ->addColumn('urban_area', function ($suburbdata) {
-                return $name = ucwords($suburbdata->urban_area);
+                return $urban_area = (isset($suburbdata->urban_area)) ? ucwords($suburbdata->urban_area) : "";
             })
             ->addColumn('postcode', function ($suburbdata) {
-                return $name = ucwords($suburbdata->postcode);
+                return $postcode = (isset($suburbdata->postcode)) ? ucwords($suburbdata->postcode) : "";
             })
             ->addColumn('state', function ($suburbdata) {
-                return $name = ucwords($suburbdata->state);
+                return $state = (isset($suburbdata->state)) ? ucwords($suburbdata->state) : "";
             })
             ->addColumn('state_name', function ($suburbdata) {
-                return $name = ucwords($suburbdata->state_name);
+                return $state_name = (isset($suburbdata->state_name)) ? ucwords($suburbdata->state_name) : "";
             })
             ->addColumn('type', function ($suburbdata) {
-                return $name = ucwords($suburbdata->type);
+                return $type = (isset($suburbdata->type)) ? ucwords($suburbdata->type) : "";
             })
             ->addColumn('local_goverment_area', function ($suburbdata) {
-                return $name = ucwords($suburbdata->local_goverment_area);
+                return $local_goverment_area = (isset($suburbdata->local_goverment_area)) ? ucwords($suburbdata->local_goverment_area) : "";
             })
             ->addColumn('statistic_area', function ($suburbdata) {
-                return $name = ucwords($suburbdata->statistic_area);
+                return $statistic_area = (isset($suburbdata->statistic_area)) ? ucwords($suburbdata->statistic_area) : "";
             })
             ->addColumn('status', function ($suburbdata) {
-                return $status = ($suburbdata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($suburbdata->status) && ($suburbdata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($suburbdata) {
 

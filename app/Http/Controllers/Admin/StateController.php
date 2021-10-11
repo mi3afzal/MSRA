@@ -22,7 +22,7 @@ class StateController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except(['index', 'register_getcities', 'register_getasuburbs']);
     }
 
     /**
@@ -178,13 +178,13 @@ class StateController extends Controller
                 }
             })
             ->addColumn('name', function ($namedata) {
-                return $name = ucwords($namedata->name);
+                return $name = (isset($namedata->name)) ? ucwords($namedata->name) : "";
             })
             ->addColumn('created_at', function ($statedata) {
-                return $status = date("F j, Y, g:i a", strtotime($statedata->created_at));
+                return $created_at = (isset($statedata->created_at)) ? date("F j, Y, g:i a", strtotime($statedata->created_at)) : "";
             })
             ->addColumn('status', function ($statedata) {
-                return $status = ($statedata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($statedata->status) && ($statedata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($statedata) {
 

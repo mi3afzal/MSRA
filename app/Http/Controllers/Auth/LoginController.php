@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Events\LoginHistory;
+use App\Listeners\storeUserLoginHistory;
+use Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -33,7 +37,7 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->middleware('guest')->except('logout');
     }

@@ -84,13 +84,13 @@ class SpecialtyController extends Controller
                 }
             })
             ->addColumn('specialty', function ($specialtydata) {
-                return $specialty = ucwords($specialtydata->specialty);
+                return $specialty = (isset($specialtydata->specialty)) ? ucwords($specialtydata->specialty) : "";
             })
             ->addColumn('created_at', function ($specialtydata) {
-                return $status = date("F j, Y, g:i a", strtotime($specialtydata->created_at));
+                return $created_at = (isset($specialtydata->created_at)) ? date("F j, Y, g:i a", strtotime($specialtydata->created_at)) : "";
             })
             ->addColumn('status', function ($specialtydata) {
-                return $status = ($specialtydata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($specialtydata->status) && ($specialtydata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($specialtydata) {
 

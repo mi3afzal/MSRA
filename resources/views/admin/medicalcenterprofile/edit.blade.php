@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('admin.medicalcenterprofile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('medicalcenterprofile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
     {{ method_field('PUT') }}
     @csrf
     <section class="content">

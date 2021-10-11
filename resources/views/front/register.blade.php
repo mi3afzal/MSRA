@@ -41,6 +41,8 @@
                         <label for="gender-male" style="margin-right:20px;">MALE</label>
                         <input type="radio" class="{{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender-female" value="2 {{ old('2') }}" placeholder="{{ __('Gender') }}" name="gender" style="height: 25px; margin-right:10px;" />
                         <label for="gender-female" style="margin-right:20px;">FEMALE</label>
+                        <input type="radio" class="{{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender-other" value="3 {{ old('3') }}" placeholder="{{ __('Gender') }}" name="gender" style="height: 25px; margin-right:10px;" />
+                        <label for="gender-other" style="margin-right:20px;">OTHER</label>
 
                         @if($errors->has('gender'))
                         <div class="invalid-feedback">

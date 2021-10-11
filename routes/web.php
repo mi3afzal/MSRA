@@ -79,7 +79,7 @@ Route::get(
     'login',
     [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']
 )->name('login');
-Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->middleware("loginhistorystore");
 
 // Registeration route
 Route::get(
@@ -149,7 +149,7 @@ Route::post(
 //     })->withoutMiddleware([EnsureTokenIsValid::class]);
 // });
 // Admin route for dashboard
-Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
+Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard')->middleware("loginhistorystore");;
 
 
 

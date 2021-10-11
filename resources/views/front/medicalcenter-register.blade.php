@@ -189,6 +189,8 @@
 
             $('#state').on('change', function() {
                 var state_id = this.value;
+                // alert(state_id);
+                // return false;
                 getcities(state_id);
                 getasuburbs(state_id);
             });

@@ -26,7 +26,7 @@
                     <div class="col-md-12">
 
                         <div class="form-group">
-                            <label for="main_logo">MAIN LOGO</label>
+                            <label for="main_logo" class="css-social-icon">MAIN LOGO</label>
                             <input type="file" name="main_logo" id="main_logo" class="form-control" />
                             <br />
                             @if(isset($listings->main_logo))
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone">PHONE</label>
+                            <label for="phone" class="css-social-icon">PHONE</label>
                             <input type="text" name="phone" value="{{ old('phone', $listings->phone) }}" id="phone" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" autocomplete="off" />
                             @if($errors->has('phone'))
                             <div class="invalid-feedback">
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="email">E-MAIL</label>
+                            <label for="email" class="css-social-icon">E-MAIL</label>
                             <input type="text" name="email" value="{{ old('email', $listings->email) }}" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" autocomplete="off" />
                             @if($errors->has('email'))
                             <div class="invalid-feedback">
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="web">WEB</label>
+                            <label for="web" class="css-social-icon">WEB</label>
                             <input type="text" name="web" value="{{ old('web', $listings->web) }}" id="web" class="form-control {{ $errors->has('web') ? 'is-invalid' : '' }}" placeholder="Web" autocomplete="off" />
                             @if($errors->has('web'))
                             <div class="invalid-feedback">
@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="fax">FAX</label>
+                            <label for="fax" class="css-social-icon">FAX</label>
                             <input type="text" name="fax" value="{{ old('fax', $listings->fax) }}" id="fax" class="form-control {{ $errors->has('fax') ? 'is-invalid' : '' }}" placeholder="Fax" autocomplete="off" />
                             @if($errors->has('fax'))
                             <div class="invalid-feedback">
@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="whatsapp">WHATSAPP NUMBER</label>
+                            <label for="whatsapp" class="css-social-icon">WHATSAPP NUMBER</label>
                             <input type="text" name="whatsapp" value="{{ old('whatsapp', $listings->whatsapp) }}" id="whatsapp" class="form-control {{ $errors->has('whatsapp') ? 'is-invalid' : '' }}" placeholder="WhatsApp" autocomplete="off" />
                             @if($errors->has('whatsapp'))
                             <div class="invalid-feedback">
@@ -91,7 +91,7 @@
 
 
                         <div class="form-group">
-                            <label for="link">WEB LINK</label>
+                            <label for="link" class="css-social-icon">WEB LINK</label>
                             <input type="text" name="link" value="{{ old('link', $listings->link) }}" id="link" class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" placeholder="Link" autocomplete="off" />
                             @if($errors->has('link'))
                             <div class="invalid-feedback">
