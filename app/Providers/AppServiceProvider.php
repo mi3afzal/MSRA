@@ -34,5 +34,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('title', function ($text, $titlelength = 100) {
             return "<?php echo Str::limit($text, $titlelength); ?>";
         });
+
+        Blade::directive('pr', function ($text) {
+            return "<?php echo '<pre>'; print_r($text); echo '</pre>'; die; ?>";
+        });
     }
 }
