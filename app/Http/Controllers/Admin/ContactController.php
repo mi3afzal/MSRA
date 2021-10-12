@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Gate;
 class ContactController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -40,6 +40,7 @@ class ContactController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -122,22 +123,10 @@ class ContactController extends Controller
             ->make(true);
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contact $contact)
-    {
-        //
-    }
-
-
     /**
      * Enable the specified contact in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
@@ -153,6 +142,7 @@ class ContactController extends Controller
     /**
      * Disable the specified contact in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
@@ -168,6 +158,7 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param $id
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */

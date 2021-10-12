@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Gate;
 class JobController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -31,19 +31,10 @@ class JobController extends Controller
         $this->middleware('auth')->except('index');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Display a listing of the resource.
-     *
+     * @return "Returns a view contain the list of Jobs created at the backend."
      * @return \Illuminate\Http\Response
      */
     public function lists()
@@ -62,7 +53,9 @@ class JobController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param "status, jobtype, jobcategory, medicalcenter, profession, speciality and state for ajax filter for datatables"
+     * @param  \Illuminate\Http\Request  $request
+     * @return "Returns Json response for listing Jobs created at frontend in the backpanel."
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -178,6 +171,7 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @return "Return a form for job creation."
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -258,7 +252,7 @@ class JobController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * @param $id
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
@@ -272,7 +266,7 @@ class JobController extends Controller
 
     /**
      * Enable the specified job in storage.
-     *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
@@ -287,7 +281,7 @@ class JobController extends Controller
 
     /**
      * Disable the specified job in storage.
-     *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
@@ -302,7 +296,7 @@ class JobController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * @param $id
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */

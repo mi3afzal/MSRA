@@ -31,17 +31,6 @@ class JobSeekerRegistrationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -126,50 +115,5 @@ class JobSeekerRegistrationController extends Controller
         }
 
         return redirect('login');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\JobSeekerRegistration  $jobSeekerRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function show(JobSeekerRegistration $jobSeekerRegistration)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JobSeekerRegistration  $jobSeekerRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JobSeekerRegistration $jobSeekerRegistration)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobSeekerRegistration  $jobSeekerRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobSeekerRegistration $jobSeekerRegistration)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\JobSeekerRegistration  $jobSeekerRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(JobSeekerRegistration $jobSeekerRegistration)
-    {
-        //
     }
 }

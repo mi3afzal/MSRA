@@ -20,8 +20,9 @@ use App\Models\Settings;
 class BuySellController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
+     * Apply default authentication middleware for backend routes.
+     * Set global constant and global array available for all the methods of current controller.
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function __construct(Request $request)
@@ -33,7 +34,7 @@ class BuySellController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -58,71 +59,5 @@ class BuySellController extends Controller
         } else {
             abort(404, 'No record found');
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BuySell $buySell)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BuySell $buySell)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BuySell $buySell)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\BuySell  $buySell
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(BuySell $buySell)
-    {
-        //
     }
 }

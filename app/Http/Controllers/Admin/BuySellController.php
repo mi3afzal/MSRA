@@ -24,8 +24,11 @@ use Illuminate\Support\Facades\Gate;
 class BuySellController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
+     * Apply default authentication middleware for backend routes.
+     * Set the global constants and global arrays available for all methods in the controller.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\BuySell  $buySell
      * @return void
      */
     public function __construct(Request $request, BuySell $buySell)
@@ -38,7 +41,7 @@ class BuySellController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  \App\Models\BuySell  $buySell
      * @return \Illuminate\Http\Response
      */
     public function list(Request $request, BuySell $buySell)
@@ -83,6 +86,7 @@ class BuySellController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \App\Models\BuySell  $buySell
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -168,7 +172,7 @@ class BuySellController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \App\Models\BuySell  $buySell
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request, BuySell $buySell)
@@ -295,6 +299,7 @@ class BuySellController extends Controller
     /**
      * Enable the specified buySell in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\BuySell  $buySell
      * @return \Illuminate\Http\Response
@@ -309,7 +314,8 @@ class BuySellController extends Controller
 
     /**
      * Disable the specified buySell in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\BuySell $buySell
      * @return \Illuminate\Http\Response
@@ -326,7 +332,8 @@ class BuySellController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * 
+     * @param $id
      * @param  \App\Models\BuySell  $buySell
      * @return \Illuminate\Http\Response
      */
@@ -345,6 +352,7 @@ class BuySellController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $id
      * @param  \App\Models\BuySell $buySell
      * @return \Illuminate\Http\Response
      */
@@ -367,15 +375,13 @@ class BuySellController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\BuySell $buySell
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, BuySell $buySell, $id)
     {
-        // echo "<pre>";
-        // print_r($request->all());
-        // die();
         if ($request->file('images')) {
             if (count($request->file('images')) > 3) {
                 return redirect()->route('admin.buysell.create')->with('error', 'Maximum 3 images allowed.');
@@ -472,7 +478,7 @@ class BuySellController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * @param $id
      * @param  \App\Models\BuySell $buySell
      * @return \Illuminate\Http\Response
      */

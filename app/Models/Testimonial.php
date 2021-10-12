@@ -17,6 +17,11 @@ class Testimonial extends Model
 
     protected $fillable = ['slug', 'user_id', 'created_at', 'updated_at', 'deleted_at'];
 
+    /**
+     * Mutator function for creating slug from title.
+     * 
+     * @return "returns slug for given title."
+     */
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
@@ -24,11 +29,21 @@ class Testimonial extends Model
         $this->attributes['slug'] = strtolower($slug) . "-" . time();
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function userdetails()
     {
         return $this->belongsTo('App\Models\User', 'user_id')->select("id", "name", "email");
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function usermoredetails()
     {
         return $this->belongsTo('App\Models\JobSeekerRegistration', 'user_id');

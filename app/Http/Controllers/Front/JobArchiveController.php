@@ -36,30 +36,13 @@ class JobArchiveController extends Controller
         return view('front.jobarchive', compact("jobtypes", "jobarchives", "settings", "professions", "specialties", "sociallinks", "states"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
-     *
+     * 
+     * @param $slug
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobArchive  $jobArchive
      * @return \Illuminate\Http\Response
      */
@@ -77,39 +60,5 @@ class JobArchiveController extends Controller
         $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
         $jobdetail = JobArchive::orderBy("id", "desc")->where("slug", $slug)->with("associatedJobtype", "associatedProfession", "associatedSeniority", "associatedSpeciality", "associatedState", "associatedCity", "associatedCountry")->first();
         return view('front.jobarchivedetail', compact("jobdetail", "jobtypes", "states", "specialties", "professions", "settings", "sociallinks"));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JobArchive  $jobArchive
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JobArchive $jobArchive)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobArchive  $jobArchive
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobArchive $jobArchive)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\JobArchive  $jobArchive
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(JobArchive $jobArchive)
-    {
-        //
     }
 }

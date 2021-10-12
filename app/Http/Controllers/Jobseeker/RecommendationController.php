@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Gate;
 class RecommendationController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -40,6 +40,7 @@ class RecommendationController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -154,6 +155,7 @@ class RecommendationController extends Controller
     /**
      * Enable the specified profession in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
@@ -169,6 +171,7 @@ class RecommendationController extends Controller
     /**
      * Disable the specified recommendation in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
@@ -184,6 +187,7 @@ class RecommendationController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */

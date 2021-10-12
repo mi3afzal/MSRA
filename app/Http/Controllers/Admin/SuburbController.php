@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Gate;
 class SuburbController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -41,6 +41,7 @@ class SuburbController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -159,6 +160,7 @@ class SuburbController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $id
      * @param  \App\Models\Suburb  $suburb
      * @return \Illuminate\Http\Response
      */
@@ -178,6 +180,7 @@ class SuburbController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Suburb  $suburb
      * @return \Illuminate\Http\Response
@@ -207,6 +210,7 @@ class SuburbController extends Controller
     /**
      * Enable the specified suburb in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Suburb  $suburb
      * @return \Illuminate\Http\Response
@@ -222,6 +226,7 @@ class SuburbController extends Controller
     /**
      * Disable the specified Suburb in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Suburb  $suburb
      * @return \Illuminate\Http\Response

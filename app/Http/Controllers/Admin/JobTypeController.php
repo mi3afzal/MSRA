@@ -14,23 +14,13 @@ use Illuminate\Support\Facades\Gate;
 class JobTypeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -48,7 +38,7 @@ class JobTypeController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -140,8 +130,6 @@ class JobTypeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $this->validate(
             $request,
             [
@@ -165,7 +153,8 @@ class JobTypeController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * 
+     * @param $id
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */
@@ -185,6 +174,7 @@ class JobTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
@@ -210,7 +200,8 @@ class JobTypeController extends Controller
 
     /**
      * Enable the specified jobtype in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
@@ -225,7 +216,8 @@ class JobTypeController extends Controller
 
     /**
      * Disable the specified jobtype in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
@@ -240,7 +232,8 @@ class JobTypeController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * 
+     * @param $id
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Gate;
 class SpecialtyController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -38,16 +38,6 @@ class SpecialtyController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -62,6 +52,7 @@ class SpecialtyController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -167,6 +158,7 @@ class SpecialtyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $id
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
@@ -185,7 +177,8 @@ class SpecialtyController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
@@ -209,7 +202,8 @@ class SpecialtyController extends Controller
 
     /**
      * Enable the specified specialty in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
@@ -224,7 +218,8 @@ class SpecialtyController extends Controller
 
     /**
      * Disable the specified specialty in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
@@ -240,6 +235,7 @@ class SpecialtyController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */

@@ -18,6 +18,7 @@ class NewsletterController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \App\Models\Newsletter  $newsletter
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */

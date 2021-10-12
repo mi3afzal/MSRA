@@ -20,7 +20,7 @@ use Session;
 class MedicalCenterRegistrationController extends Controller
 {
     /**
-     * Create a new controller instance.
+     *  Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -48,6 +48,7 @@ class MedicalCenterRegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\MedicalCenterRegistration  $medicalcenterregistration
      * @return \Illuminate\Http\Response

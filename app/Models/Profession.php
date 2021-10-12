@@ -22,6 +22,11 @@ class Profession extends Model
      */
     // protected $dates = ['deleted_at'];
 
+    /**
+     * Accessor function 
+     * 
+     * @return "returns applied ucwords function text"
+     */
     public function getProfessionAttribute($value)
     {
         return ucwords($value);

@@ -15,22 +15,13 @@ use App\Http\Middleware\IsJobSeeker;
 class TestimonialController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware(['auth', "jobseeker"]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
     }
 
     /**
@@ -61,6 +52,7 @@ class TestimonialController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -135,6 +127,8 @@ class TestimonialController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
      */
@@ -184,6 +178,7 @@ class TestimonialController extends Controller
     /**
      * Enable the specified testimonial in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
@@ -199,6 +194,7 @@ class TestimonialController extends Controller
     /**
      * Disable the specified testimonial in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
@@ -214,6 +210,7 @@ class TestimonialController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
      */

@@ -23,17 +23,33 @@ class BuySell extends Model
 
     protected $fillable = ['description', 'user_id', 'created_at', 'updated_at'];
 
+    /**
+     * Function for return excerpt of given text.
+     * 
+     * @return "returns excerpt for given text"
+     */
     public function excerpt()
     {
         return Str::limit($this->description, env('EXCERPT_LENGTH', 250));
         // return Str::limit($this->description, BuySell::EXCERPT_LENGTH);
     }
 
+    /**
+     * Function for return base_url buysell image.
+     * 
+     * @return "returns excerpt for given text"
+     */
     public function imageurl()
     {
         return url('/images/buysell/') . "/";
     }
 
+
+    /**
+     * Mutator function for creating slug from title.
+     * 
+     * @return "returns slug for given title."
+     */
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;

@@ -25,7 +25,7 @@ use App\Http\Controllers\Controller;
 class NewsletterController extends Controller
 {
     /**
-     * Create a new controller instance.
+     *  Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -50,6 +50,7 @@ class NewsletterController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -119,6 +120,7 @@ class NewsletterController extends Controller
     /**
      * Enable the specified newsletter in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Newsletter  $newsletter
      * @return \Illuminate\Http\Response
@@ -134,6 +136,7 @@ class NewsletterController extends Controller
     /**
      * Disable the specified newsletter in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Newsletter  $newsletter
      * @return \Illuminate\Http\Response
@@ -149,6 +152,7 @@ class NewsletterController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\Newsletter  $newsletter
      * @return \Illuminate\Http\Response
      */

@@ -23,19 +23,10 @@ use Illuminate\Support\Facades\Gate;
 
 class JobApplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Quickly Apply.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */
@@ -81,7 +72,8 @@ class JobApplicationController extends Controller
 
     /**
      * Job Application Module.
-     *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */
@@ -154,50 +146,5 @@ class JobApplicationController extends Controller
         $jobApplication->save();
 
         return redirect()->route('jobdetails', [$request->input("slug")])->with('success', 'Application sent successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function show(JobApplication $jobApplication)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JobApplication $jobApplication)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobApplication $jobApplication)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(JobApplication $jobApplication)
-    {
-        //
     }
 }

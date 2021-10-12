@@ -15,23 +15,13 @@ class JobCategoryController extends Controller
 {
 
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes..
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -49,7 +39,7 @@ class JobCategoryController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -166,6 +156,7 @@ class JobCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $id
      * @param  \App\Models\JobCategory  $jobcategory
      * @return \Illuminate\Http\Response
      */
@@ -185,6 +176,7 @@ class JobCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobCategory  $jobcategory
      * @return \Illuminate\Http\Response
@@ -209,6 +201,7 @@ class JobCategoryController extends Controller
     /**
      * Enable the specified jobcategory in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobCategory  $jobtype
      * @return \Illuminate\Http\Response
@@ -224,6 +217,7 @@ class JobCategoryController extends Controller
     /**
      * Disable the specified jobcategory in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobCategory  $jobcategory
      * @return \Illuminate\Http\Response
@@ -239,6 +233,7 @@ class JobCategoryController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\JobCategory  $jobcategory
      * @return \Illuminate\Http\Response
      */

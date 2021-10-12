@@ -24,23 +24,13 @@ use Illuminate\Support\Facades\Gate;
 class JobApplicationController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -66,6 +56,7 @@ class JobApplicationController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -161,6 +152,7 @@ class JobApplicationController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $id
      * @param  \App\Models\JobApplication  $jobApplication
      * @return \Illuminate\Http\Response
      */
@@ -192,21 +184,11 @@ class JobApplicationController extends Controller
         return view('admin.jobapplications.myapplications', compact("title", "module", "myapplications"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobApplication $jobApplication)
-    {
-        //
-    }
 
     /**
      * Enable the specified JobApplication in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
@@ -222,6 +204,7 @@ class JobApplicationController extends Controller
     /**
      * Disable the specified jobapplication in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
@@ -237,6 +220,7 @@ class JobApplicationController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */

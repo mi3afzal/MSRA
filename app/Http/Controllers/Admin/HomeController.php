@@ -24,7 +24,7 @@ use App\Models\Newsletter;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */

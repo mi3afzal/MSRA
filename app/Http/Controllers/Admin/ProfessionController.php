@@ -15,23 +15,13 @@ class ProfessionController extends Controller
 {
 
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -49,7 +39,7 @@ class ProfessionController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -164,7 +154,7 @@ class ProfessionController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * @param $id
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */
@@ -184,6 +174,7 @@ class ProfessionController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
@@ -208,6 +199,7 @@ class ProfessionController extends Controller
     /**
      * Enable the specified profession in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
@@ -222,7 +214,8 @@ class ProfessionController extends Controller
 
     /**
      * Disable the specified profession in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
@@ -237,7 +230,8 @@ class ProfessionController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * 
+     * @param $id
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */

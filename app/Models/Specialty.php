@@ -22,6 +22,11 @@ class Specialty extends Model
      */
     // protected $dates = ['deleted_at'];
 
+    /**
+     * Accessor function 
+     * 
+     * @return "returns applied ucwords function text"
+     */
     public function getSpecialtyAttribute($value)
     {
         return ucwords($value);

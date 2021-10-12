@@ -17,7 +17,7 @@ class CityController extends Controller
 {
 
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class CityController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -132,7 +132,7 @@ class CityController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * @param $id
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
@@ -150,8 +150,9 @@ class CityController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource (city) in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
@@ -177,8 +178,9 @@ class CityController extends Controller
 
 
     /**
-     * Enable the specified city in storage.
+     * Enable the specified resource(city) in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
@@ -192,8 +194,9 @@ class CityController extends Controller
     }
 
     /**
-     * Disable the specified city in storage.
+     * Disable the specified resource (city) in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
@@ -208,7 +211,8 @@ class CityController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * 
+     * @param $id
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */

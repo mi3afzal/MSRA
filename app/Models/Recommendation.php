@@ -16,6 +16,11 @@ class Recommendation extends Model
 
     protected $fillable = ['user_id', 'created_at', 'updated_at'];
 
+    /**
+     * Mutator function for creating slug from title.
+     * 
+     * @return "returns slug for given title."
+     */
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
