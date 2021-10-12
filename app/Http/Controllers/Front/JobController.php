@@ -150,6 +150,16 @@ class JobController extends Controller
             )
                 ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
                 ->get();
+        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::where(
+                [
+                    "status" => "1",
+                    "state" => $sstate,
+                    "suburb" => $ssuburb
+                ]
+            )
+                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->get();
         } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
                 [
