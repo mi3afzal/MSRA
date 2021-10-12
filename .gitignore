@@ -20,3 +20,5 @@ yarn-error.log
 *.git
 *.phpdoc
 phpDocumentor.phar
+*.env
+.env.dev.env
