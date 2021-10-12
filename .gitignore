@@ -18,6 +18,7 @@ yarn-error.log
 *.rar
 /docs
 *.git
+.phpdoc
 *.phpdoc
 phpDocumentor.phar
 *.env
