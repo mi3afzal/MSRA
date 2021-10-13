@@ -20,21 +20,41 @@ class State extends Model
      */
     // protected $dates = ['deleted_at'];
 
+    /**
+     * Accessor function 
+     * 
+     * @return "returns applied ucwords function text"
+     */
     public function getNameAttribute($value)
     {
         return ucwords($value);
     }
 
+    /**
+     * Accessor function 
+     * 
+     * @return "returns applied strtoupper function text"
+     */
     public function getIso2Attribute($value)
     {
         return strtoupper($value);
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function cities()
     {
         return $this->hasMany('App\Models\City', 'state_id');
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function suburbs()
     {
         return $this->hasMany('App\Models\Suburb', 'state_id');

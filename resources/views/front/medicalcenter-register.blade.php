@@ -9,9 +9,9 @@
 </div>
 @endif
 
-<body class="hold-transition register-page">
-    <div class="register-box pt-3 pb-3" style="width:30%; margin:2% 0 0 2%;">
-        <div class="card card-outline card-primary">
+<body class="hold-transition register-page p-1">
+    <div class="register-box  pt-3 pb-3 mt-5 mb-2">
+        <div class="card card-outline card-primary mt-5 mb-2">
             <div class="card-header text-center text-muted">
                 <a href="javascript:void(0);" class="h1"><b>MSRA</b></a>
             </div>
@@ -165,7 +165,7 @@
 
                     <div class="row">
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                     </div>
                 </form>
@@ -189,6 +189,8 @@
 
             $('#state').on('change', function() {
                 var state_id = this.value;
+                // alert(state_id);
+                // return false;
                 getcities(state_id);
                 getasuburbs(state_id);
             });

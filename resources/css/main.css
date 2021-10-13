@@ -516,6 +516,7 @@
 
 .innerbanner {
   padding: 100px 0;
+  background-size: cover !important;
 }
 
 .innerbanner h3 {
@@ -534,6 +535,312 @@
   bottom: -15px;
 }
 
+/*About Us*/
+.aboutcontent {
+  background: #F6F6F6;
+  padding: 90px 0;
+  text-align: center;
+}
+
+.aboutcontent .whitebox {
+  background: #fff;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  padding: 50px;
+}
+
+.aboutcontent .whitebox h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #3c3c3c;
+  font-weight: 700;
+}
+
+.aboutcontent .whitebox p {
+  color: #828282;
+}
+
+.aboutcontent .whitebox ul {
+  padding: 0;
+  margin: 30px 0 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.aboutcontent .whitebox ul li {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 25%;
+          flex: 0 0 25%;
+}
+
+.aboutcontent .whitebox ul li strong {
+  display: block;
+  font-size: 30px;
+  color: #3c3c3c;
+}
+
+.aboutcontent .whitebox ul li span {
+  color: #828282;
+}
+
+.ourmission {
+  overflow: hidden;
+}
+
+.ourmission .darkside {
+  background: #2C2C2C;
+  height: 100%;
+  padding: 150px;
+  margin: -15px 0;
+}
+
+.ourmission .darkside h4 {
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.ourmission .darkside p {
+  color: #AFB3B4;
+  line-height: 30px;
+  margin-bottom: 50px;
+}
+
+.ourmission .carousel {
+  padding: 100px;
+}
+
+.ourmission .carousel-indicators {
+  bottom: 60px;
+}
+
+.ourmission .carousel-indicators li {
+  width: 142px;
+  height: 100px;
+  text-indent: 0000;
+  -webkit-box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.13);
+          box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.13);
+  margin: 0 8px;
+}
+
+.ourmission .carousel-indicators li img {
+  height: 100px;
+  width: 100%;
+}
+
+.ourmission h2 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/*About Us*/
+/*Contact Us*/
+.contactsection {
+  background: #F6F6F6;
+  padding: 80px 0;
+}
+
+.contactsection h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 15px;
+}
+
+.contactsection p {
+  font-size: 17px;
+  margin-bottom: 40px;
+  color: #535353;
+}
+
+.contactsection .btn-6 {
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  border: 2px solid transparent;
+  display: inline-block;
+  padding: 11px 35px;
+  position: relative;
+  z-index: 1;
+  -webkit-transition: all .7s ease;
+  transition: all .7s ease;
+  background: #06396c;
+  border-radius: 3px;
+}
+
+.contactsection .btn-6:hover {
+  color: #06396c;
+  border: 2px solid #06396c;
+  background: transparent;
+}
+
+.contactsection .media .fa-w-16 {
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  background: #fff;
+  line-height: 55px;
+  padding: 15px;
+  margin-right: 20px;
+  font-size: 20px;
+  color: #000;
+  border-radius: 3px;
+}
+
+.contactsection .media h5 {
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-size: 15px;
+  font-style: normal;
+  margin: 5px 0 5px;
+  color: #fff;
+}
+
+.contactsection .media p {
+  margin-bottom: 0;
+  color: #fff;
+  font-size: 14px;
+}
+
+.contactsection .media p a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.contactsection .media {
+  margin-bottom: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.contactsection .form-group {
+  margin-bottom: 30px;
+}
+
+.contactsection textarea {
+  min-height: 220px !important;
+}
+
+.contactsection .contact-info {
+  padding: 30px;
+  background: url(./images/contactbg.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  border-radius: 5px;
+  margin-left: 50px;
+}
+
+.contactsection .form-control {
+  padding: 10px 17px;
+  color: #495057 !important;
+  width: 100%;
+  min-height: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 3px;
+  background: #fff;
+  border: 1px solid #dbdbdb;
+}
+
+.lookingformore {
+  background: #00ADEF;
+  padding: 70px 0;
+}
+
+.lookingformore h2 {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.lookingformore h2 i {
+  display: block;
+}
+
+.lookingformore a.btn1 {
+  padding: 15px 25px;
+  background: #000;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.lookingformore a.btn1.btn-sec {
+  border: 2px solid #fff;
+  background: transparent;
+}
+
+.lookingformore a.btn1 strong {
+  display: block;
+}
+
+.lookingformore a.btn1 .fa {
+  font-size: 60px;
+  margin-right: 15px;
+}
+
+.propertygallary {
+  background: #F6F6F6;
+  padding: 80px 0;
+}
+
+.propertygallary h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 15px;
+}
+
+.propertygallary .innerbox {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px 30px 0px 30px;
+}
+
+.propertygallary a.gallaryimg {
+  display: block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.propertygallary a.gallaryimg img {
+  width: 100%;
+}
+
+.propertygallary a.gallaryimg span {
+  position: absolute;
+  text-transform: uppercase;
+  color: #fff;
+  background: #00ADEF;
+  padding: 8px 15px;
+  left: 0;
+  bottom: 15px;
+  border-radius: 0px 10px 10px 00px;
+}
+
+.propertygallary p {
+  font-size: 17px;
+  margin-bottom: 40px;
+  color: #535353;
+}
+
+/*Contact Us*/
 .latestjob {
   padding: 100px 0;
   background: #ebf5f5;
@@ -853,7 +1160,7 @@
   border-bottom: 2px solid #06396c;
 }
 
-.latestjob .sidebar-job {
+.latestjob .sidebar-css {
   background: #fff;
   border-radius: 5px;
   -webkit-box-shadow: 0px 5px 25.65px 1.35px rgba(10, 74, 125, 0.11);
@@ -862,38 +1169,38 @@
   min-height: 600px;
 }
 
-.latestjob .sidebar-job h4 {
+.latestjob .sidebar-css h4 {
   margin: 0;
   font-size: 18px;
   margin-bottom: 15px;
   font-weight: 700;
 }
 
-.latestjob .sidebar-job h2 {
+.latestjob .sidebar-css h2 {
   margin-bottom: 0;
 }
 
-.latestjob .sidebar-job .accordion-body {
+.latestjob .sidebar-css .accordion-body {
   padding: 10px 15px;
   border-top: 1px solid #ddd;
 }
 
-.latestjob .sidebar-job ul.innnerlist {
+.latestjob .sidebar-css ul.innnerlist {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.latestjob .sidebar-job ul.innnerlist li {
+.latestjob .sidebar-css ul.innnerlist li {
   margin: 10px 0px;
 }
 
-.latestjob .sidebar-job ul.innnerlist li a {
+.latestjob .sidebar-css ul.innnerlist li a {
   text-decoration: none;
   color: #222221;
 }
 
-.latestjob .sidebar-job .accordion-button {
+.latestjob .sidebar-css .accordion-button {
   padding: 10px 12px;
   background: transparent;
   outline: none;
@@ -903,11 +1210,11 @@
   font-weight: 500;
 }
 
-.latestjob .sidebar-job .accordion-item {
+.latestjob .sidebar-css .accordion-item {
   margin-bottom: 7px;
 }
 
-.latestjob .sidebar-job .accordion-button:not(.collapsed)::after {
+.latestjob .sidebar-css .accordion-button:not(.collapsed)::after {
   content: '-';
   font-size: 49px;
   font-weight: 500;
@@ -923,7 +1230,7 @@
   border-radius: 2px;
 }
 
-.latestjob .sidebar-job .accordion-button::after {
+.latestjob .sidebar-css .accordion-button::after {
   content: '+';
   font-size: 30px;
   font-weight: 500;
@@ -1091,304 +1398,103 @@
   width: 60px;
 }
 
-/*About Us*/
-.aboutcontent {
-    background: #F6F6F6;
-    padding: 90px 0;
-    text-align: center
+.buysale .card.innercard {
+  padding: 25px;
 }
 
-.aboutcontent .whitebox {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-    padding: 50px;
+.buysale .card.innercard.new .carousel:before {
+  position: absolute;
+  content: '';
+  background: url(./images/newtag.png) top center no-repeat;
+  background-size: 100% 100%;
+  left: -8px;
+  top: 15px;
+  width: 88px;
+  height: 44px;
+  z-index: 9;
 }
 
-.aboutcontent .whitebox h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: #3c3c3c;
-    font-weight: 700;
+.buysale .card.innercard a.cards-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3c3c3c;
+  text-decoration: none;
+  overflow: hidden;
 }
 
-.aboutcontent .whitebox p {
-    color: #828282
+.buysale .card.innercard .pricebx {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fa7374;
+  text-decoration: none;
 }
 
-.aboutcontent .whitebox ul {
-    padding: 0;
-    margin: 30px 0 0;
-    list-style: none;
-    display: flex
+.buysale .card.innercard .card-body {
+  position: relative;
+  padding-top: 80px !important;
 }
 
-.aboutcontent .whitebox ul li {
-    flex: 0 0 25%;
+.buysale .card.innercard .card-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.aboutcontent .whitebox ul li strong {
-    display: block;
-    font-size: 30px;
-    color: #3c3c3c;
+.buysale .card.innercard .card-body ul li {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 33%;
+          flex: 0 0 33%;
+  padding: 0 5px;
 }
 
-.aboutcontent .whitebox ul li span {
-    color: #828282;
+.buysale .card.innercard .card-body ul li a.btncom {
+  border: 1px solid #06396c;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  padding: 8px 10px;
+  font-weight: 500;
 }
 
-.ourmission {
-    overflow: hidden;
+.buysale .card.innercard .card-body ul li a.btncom.btn1 {
+  color: #fa7374;
+  border: 1px solid #fa7374;
 }
 
-.ourmission .darkside {
-    background: #2C2C2C;
-    height: 100%;
-    padding: 150px;
-    margin: -15px 0;
+.buysale .card.innercard .card-body ul li a.btncom.btn2 {
+  color: #5cdc95;
+  border: 1px solid #5cdc95;
 }
 
-.ourmission .darkside h4 {
-    color: #fff;
-    font-weight: 600;
-    font-size: 18px;
-    margin-bottom: 15px;
+.buysale .card.innercard .card-body ul li a.btncom.btn3 {
+  color: #06396c;
+  border: 1px solid #06396c;
 }
 
-.ourmission .darkside p {
-    color: #AFB3B4;
-    line-height: 30px;
-    margin-bottom: 50px;
+.buysale .card.innercard h4.locationtag {
+  font-size: 21px;
+  width: 308px;
+  text-align: center;
+  padding: 15px 0;
+  background: #06396c;
+  color: #fff;
+  margin: 0;
+  float: right;
+  border-radius: 0 0 10px 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-
-.ourmission .carousel {
-    padding: 100px;
-}
-
-.ourmission .carousel-indicators {
-    bottom: 60px;
-}
-
-.ourmission .carousel-indicators li {
-    width: 142px;
-    height: 100px;
-    text-indent: 0000;
-    box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.13);
-    margin: 0 8px;
-}
-
-.ourmission .carousel-indicators li img {
-    height: 100px;
-    width: 100%;
-}
-
-.ourmission h2 {
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 25px;
-}
-
-/*About Us*/
-
-
-/*Contact Us*/
-.contactsection {
-    background: #F6F6F6;
-    padding: 80px 0;
-}
-
-.contactsection h2 {
-    font-size: 32px;
-    font-weight: 600;
-    margin: 0 0 15px;
-}
-
-.contactsection p {
-    font-size: 17px;
-    margin-bottom: 40px;
-    color: #535353;
-}
-
-.contactsection .btn-6 {
-    color: #fff;
-    text-align: center;
-    font-weight: 600;
-    font-size: 16px;
-    border: 2px solid transparent;
-    display: inline-block;
-    padding: 11px 35px;
-    position: relative;
-    z-index: 1;
-    transition: all .7s ease;
-    background: #06396c;
-    border-radius: 3px;
-}
-
-.contactsection .btn-6:hover {
-    color: #06396c;
-    border: 2px solid #06396c;
-    background: transparent;
-}
-
-.contactsection .media .fa-w-16 {
-    width: 55px;
-    height: 55px;
-    text-align: center;
-    background: #fff;
-    line-height: 55px;
-    padding: 15px;
-    margin-right: 20px;
-    font-size: 20px;
-    color: #000;
-    border-radius: 3px;
-}
-
-.contactsection .media h5 {
-    letter-spacing: 1px;
-    font-weight: 500;
-    font-size: 15px;
-    font-style: normal;
-    margin: 5px 0 5px;
-    color: #fff;
-}
-
-.contactsection .media p {
-    margin-bottom: 0;
-    color: #fff;
-    font-size: 14px;
-}
-
-.contactsection .media p a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.contactsection .media {
-    margin-bottom: 25px;
-    display: flex;
-}
-
-.contactsection .form-group {
-    margin-bottom: 30px;
-}
-
-.contactsection textarea {
-    min-height: 220px !important;
-}
-
-.contactsection .contact-info {
-    padding: 30px;
-    background: url(./images/contactbg.png);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    border-radius: 5px;
-    margin-left: 50px;
-}
-
-.contactsection .form-control {
-    padding: 10px 17px;
-    color: #495057 !important;
-    width: 100%;
-    min-height: 50px;
-    font-size: 15px;
-    font-weight: 500;
-    border-radius: 3px;
-    background: #fff;
-    border: 1px solid #dbdbdb;
-
-}
-
-.lookingformore {
-    background: #00ADEF;
-    padding: 70px 0;
-}
-
-.lookingformore h2 {
-    color: #fff;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 0;
-}
-
-.lookingformore h2 i {
-    display: block;
-}
-
-.lookingformore a.btn1 {
-    padding: 15px 25px;
-    background: #000;
-    align-items: center;
-    display: flex;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-
-    border: 2px solid transparent;
-
-}
-
-.lookingformore a.btn1.btn-sec {
-    border: 2px solid #fff;
-    background: transparent;
-}
-
-.lookingformore a.btn1 strong {
-    display: block;
-}
-
-.lookingformore a.btn1 .fa {
-    font-size: 60px;
-    margin-right: 15px;
-}
-
-.propertygallary {
-    background: #F6F6F6;
-    padding: 80px 0;
-}
-
-.propertygallary h2 {
-    font-size: 32px;
-    font-weight: 600;
-    margin: 0 0 15px;
-}
-
-.propertygallary .innerbox {
-    background: #fff;
-    border-radius: 10px;
-    padding: 30px 30px 0px 30px;
-}
-
-.propertygallary a.gallaryimg {
-    display: block;
-    width: 100%;
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.propertygallary a.gallaryimg img {
-    width: 100%;
-}
-
-.propertygallary a.gallaryimg span {
-    position: absolute;
-    text-transform: uppercase;
-    color: #fff;
-    background: #00ADEF;
-    padding: 8px 15px;
-    left: 0;
-    bottom: 15px;
-    border-radius: 0px 10px 10px 00px;
-}
-
-.propertygallary p {
-    font-size: 17px;
-    margin-bottom: 40px;
-    color: #535353;
-}
-
-/*Contact Us*/
 
 @media (max-width: 1366px) {
   .joblocation {
@@ -1424,7 +1530,7 @@
   .latestjob {
     padding: 70px 0;
   }
-  .latestjob .sidebar-job {
+  .latestjob .sidebar-css {
     min-height: auto;
     margin-bottom: 25px;
   }
@@ -1477,39 +1583,34 @@
 }
 
 @media (max-width: 767.98px) {
-    .aboutcontent .whitebox {
-        padding: 30px 20px;
-    }
-
-    .aboutcontent .whitebox ul li strong {
-        font-size: 24px;
-    }
-
-    .aboutcontent .whitebox ul li span {
-        font-size: 14px;
-    }
-
-    .aboutcontent .whitebox ul li {
-        flex: 0 0 50%;
-    }
-
-    .aboutcontent .whitebox ul {
+  .aboutcontent .whitebox {
+    padding: 30px 20px;
+  }
+  .aboutcontent .whitebox ul li strong {
+    font-size: 24px;
+  }
+  .aboutcontent .whitebox ul li span {
+    font-size: 14px;
+  }
+  .aboutcontent .whitebox ul li {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+  }
+  .aboutcontent .whitebox ul {
+    -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    }
-
-    .ourmission .darkside {
-        padding: 20px;
-    }
-
-    .aboutcontent .whitebox h2 {
-        font-size: 25px;
-    }
-
-    .contactsection .contact-info {
-        margin-left: 0;
-        margin-top: 30px;
-    }
-    
+  }
+  .ourmission .darkside {
+    padding: 20px;
+  }
+  .aboutcontent .whitebox h2 {
+    font-size: 25px;
+  }
+  .contactsection .contact-info {
+    margin-left: 0;
+    margin-top: 30px;
+  }
   .joblocation svg {
     width: 100%;
   }

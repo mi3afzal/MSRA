@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\isAdmin::class,
         'medicalcenter' => \App\Http\Middleware\IsMedicalCenter::class,
         'jobseeker' => \App\Http\Middleware\IsJobSeeker::class,
+        'loginhistorystore' => \App\Http\Middleware\loginHistoryStore::class,
     ];
 }

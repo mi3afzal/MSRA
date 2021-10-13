@@ -7,7 +7,7 @@
                 $class = "bg-cyan";
             } elseif (session('warning')) {
                 $class = "bg-yellow";
-            } elseif (session('danger')) {
+            } elseif (session('error')) {
                 $class = "bg-red";
             } elseif (session('info')) {
                 $class = "bg-blue";
@@ -23,7 +23,7 @@
                     Warning !!
                     @elseif (session('info'))
                     Info !!
-                    @elseif (session('danger'))
+                    @elseif (session('error'))
                     Alert !!
                     @endif
                 </h4>
@@ -39,8 +39,8 @@
                     {{session('warning')}}
                     @elseif (session('info'))
                     {{session('info')}}
-                    @elseif (session('danger'))
-                    {{session('danger')}}
+                    @elseif (session('error'))
+                    {{session('error')}}
                     @endif
                 </strong>
             </div>
@@ -62,7 +62,7 @@
 <script>
     $('#exampleModal').modal('show')
 </script>
-@elseif (session('danger'))
+@elseif (session('error'))
 <script>
     $('#exampleModal').modal('show')
 </script>

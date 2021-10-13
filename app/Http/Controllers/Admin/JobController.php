@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Gate;
 class JobController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -31,38 +31,31 @@ class JobController extends Controller
         $this->middleware('auth')->except('index');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Display a listing of the resource.
-     *
+     * @return "Returns a view contain the list of Jobs created at the backend."
      * @return \Illuminate\Http\Response
      */
     public function lists()
     {
         $title = "job lists";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
         $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
         $data = Job::where("status", "1")->orderBy('created_at', 'desc')->get();
         return view('admin.job.index', compact('data', 'title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
     }
 
     /**
      * Process datatables ajax request.
-     *
+     * @param "status, jobtype, jobcategory, medicalcenter, profession, speciality and state for ajax filter for datatables"
+     * @param  \Illuminate\Http\Request  $request
+     * @return "Returns Json response for listing Jobs created at frontend in the backpanel."
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -112,28 +105,28 @@ class JobController extends Controller
                 }
             })
             ->addColumn('jobtype', function ($jobdata) {
-                return $jobtype = ucwords($jobdata->associatedJobtype->jobtype);
+                return $jobtype = (isset($jobdata->associatedJobtype->jobtype)) ? ucwords($jobdata->associatedJobtype->jobtype) : "";
             })
             ->addColumn('jobcategory', function ($jobdata) {
-                return $jobcategory = ucwords($jobdata->jobcategory->name);
+                return $jobcategory = (isset($jobdata->jobcategory->name)) ? ucwords($jobdata->jobcategory->name) : "";
             })
             ->addColumn('medicalcenter', function ($jobdata) {
-                return $medicalcenter = ucwords($jobdata->medicalcenter->name);
+                return $medicalcenter = (isset($jobdata->medicalcenter->name)) ? ucwords($jobdata->medicalcenter->name) : "";
             })
             ->addColumn('profession', function ($jobdata) {
-                return $profession = ucwords($jobdata->associatedProfession->profession);
+                return $profession = (isset($jobdata->associatedProfession->profession)) ? ucwords($jobdata->associatedProfession->profession) : "";
             })
             ->addColumn('speciality', function ($jobdata) {
-                return $speciality = ucwords($jobdata->associatedSpeciality->specialty);
+                return $speciality = (isset($jobdata->associatedSpeciality->specialty)) ? ucwords($jobdata->associatedSpeciality->specialty) : "";
             })
             ->addColumn('state', function ($jobdata) {
-                return $state = ucwords($jobdata->associatedState->name);
+                return $state = (isset($jobdata->associatedState->name)) ? ucwords($jobdata->associatedState->name) : "";
             })
             ->addColumn('created_at', function ($jobdata) {
-                return $created_at = date("F j, Y, g:i a", strtotime($jobdata->created_at));
+                return $created_at = (isset($jobdata->created_at)) ? date("F j, Y, g:i a", strtotime($jobdata->created_at)) : "";
             })
             ->addColumn('status', function ($jobdata) {
-                return $status = ($jobdata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($jobdata->status) && ($jobdata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($jobdata) {
 
@@ -160,8 +153,15 @@ class JobController extends Controller
                     </div>
                 ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.job.edit', $jobdata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($jobdata->status == 1) ? $link . $inactivelink . $detailslink : $link . $activelink . $detailslink;
+                    $final = ($jobdata->status == 1) ? $editlink . $link . $inactivelink . $detailslink : $editlink . $link . $activelink . $detailslink;
+                    // $final = ($jobdata->status == 1) ? $link . $inactivelink . $detailslink : $link . $activelink . $detailslink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -178,18 +178,19 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @return "Return a form for job creation."
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $title = "create a job";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
         $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
         // $cities = City::where("status", "1")->get();
         // $suburbs = Suburb::where("status", "1")->get();
         return view('admin.job.add', compact('title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
@@ -258,7 +259,7 @@ class JobController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * @param $id
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
@@ -270,9 +271,91 @@ class JobController extends Controller
         return view('admin.job.show', compact('title', 'module', 'job'));
     }
 
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param $id
+     * @param  \App\Models\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Job $job, $id)
+    {
+        $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($id);
+        $title = "job edit";
+        $module = "job";
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $city = City::where(["status" => "1", "id" => $listings->city])->first(["id", "name", "postcode", "state_code"]);
+        $suburb = Suburb::where(["status" => "1", "id" => $listings->suburb])->first(["id", "suburb", "postcode"]);
+        return view('admin.job.edit', compact('listings', 'title', 'module', 'jobtypes', 'jobcategories', 'medicalcenters', 'professions', 'specialities', 'states', 'city', 'suburb'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Job $job, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'job_type' => 'required',
+                'job_category' => 'required',
+                'medical_center' => 'required',
+                'profession' => 'required',
+                'speciality' => 'required',
+                'state' => 'required',
+                'city' => 'required',
+                'suburb' => 'required',
+                'rate' => 'required',
+                'work_days' => 'required',
+                'title' => 'required|max:500',
+                'from_date' => 'required',
+                'to_date' => 'required',
+                'address' => 'required|max:500',
+                'description' => 'required',
+                'practice_offer' => 'required',
+                'essential_criteria' => 'required',
+            ]
+        );
+
+        // Update data
+        $job = Job::findOrFail($id);
+        $job->job_type = $request->input('job_type');
+        $job->job_category = $request->input('job_category');
+        $job->medical_center = $request->input('medical_center');
+        $job->profession = $request->input('profession');
+        $job->speciality = $request->input('speciality');
+        $job->state = $request->input('state');
+        $job->city = $request->input('city');
+        $job->suburb = $request->input('suburb');
+        $job->rate = $request->input('rate');
+        $job->work_days = $request->input('work_days');
+        $job->title = $request->input('title');
+        $job->from_date = $request->input('from_date');
+        $job->to_date = $request->input('to_date');
+        $job->address = $request->input('address');
+        $job->description = $request->input('description');
+        $job->practice_offer = $request->input('practice_offer');
+        $job->essential_criteria = $request->input('essential_criteria');
+        $job->user_id = Auth::user()->id;
+        $job->save();
+
+        return redirect()->route('admin.job.list')->with('success', 'Details Updated.');
+    }
+
+
     /**
      * Enable the specified job in storage.
-     *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
@@ -287,7 +370,7 @@ class JobController extends Controller
 
     /**
      * Disable the specified job in storage.
-     *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
@@ -302,7 +385,7 @@ class JobController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * @param $id
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */

@@ -24,13 +24,13 @@ use Illuminate\Support\Facades\Gate;
 class JobApplicationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Apply default authentication middleware for backend routes.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth')->except('index');
     }
 
     /**
@@ -56,6 +56,7 @@ class JobApplicationController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -84,22 +85,22 @@ class JobApplicationController extends Controller
                 }
             })
             ->addColumn('jobtype', function ($jobapplicationdata) {
-                return $jobtype = ucwords($jobapplicationdata->jobtypedetails->jobtype);
+                return $jobtype = (isset($jobapplicationdata->jobtypedetails->jobtype)) ? ucwords($jobapplicationdata->jobtypedetails->jobtype) : "";
             })
             ->addColumn('email', function ($jobapplicationdata) {
-                return $email = ucwords($jobapplicationdata->email);
+                return $email = (isset($jobapplicationdata->email)) ? ucwords($jobapplicationdata->email) : "";
             })
             ->addColumn('cv', function ($jobapplicationdata) {
-                return $cv = ucwords($jobapplicationdata->cv);
+                return $cv = (isset($jobapplicationdata->cv)) ? ucwords($jobapplicationdata->cv) : "";
             })
             ->addColumn('created_at', function ($jobapplicationdata) {
-                return $created_at = date("F j, Y, g:i a", strtotime($jobapplicationdata->created_at));
+                $created_at = (isset($jobapplicationdata->created_at)) ? date("F j, Y, g:i a", strtotime($jobapplicationdata->created_at)) : "";
             })
             ->addColumn('status', function ($jobapplicationdata) {
-                return $status = ($jobapplicationdata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($jobapplicationdata->status) && ($jobapplicationdata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('quickapply', function ($jobapplicationdata) {
-                return $quickapply = ($jobapplicationdata->quickapply == 1) ? 'YES' : 'NO';
+                return $quickapply = (isset($jobapplicationdata->status) && ($jobapplicationdata->quickapply == 1)) ? 'YES' : 'NO';
             })
             ->addColumn('action', function ($jobapplicationdata) {
 
@@ -151,6 +152,7 @@ class JobApplicationController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $id
      * @param  \App\Models\JobApplication  $jobApplication
      * @return \Illuminate\Http\Response
      */
@@ -182,21 +184,11 @@ class JobApplicationController extends Controller
         return view('admin.jobapplications.myapplications', compact("title", "module", "myapplications"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobApplication $jobApplication)
-    {
-        //
-    }
 
     /**
      * Enable the specified JobApplication in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
@@ -212,6 +204,7 @@ class JobApplicationController extends Controller
     /**
      * Disable the specified jobapplication in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
@@ -227,6 +220,7 @@ class JobApplicationController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */

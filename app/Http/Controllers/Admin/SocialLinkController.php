@@ -15,24 +15,13 @@ class SocialLinkController extends Controller
 {
 
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
-    }
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -45,28 +34,6 @@ class SocialLinkController extends Controller
         $title = "add social links";
         $module = "sociallink";
         return view('admin.sociallink.add', compact('title', 'module'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SocialLink  $socialLink
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SocialLink $socialLink)
-    {
-        //
     }
 
 
@@ -92,7 +59,8 @@ class SocialLinkController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\SocialLink  $socialLink
      * @return \Illuminate\Http\Response
@@ -119,16 +87,5 @@ class SocialLinkController extends Controller
         $sociallink->save();
 
         return redirect()->route('admin.sociallink.edit')->with('success', 'Details Updated.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SocialLink  $socialLink
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SocialLink $socialLink)
-    {
-        //
     }
 }

@@ -20,13 +20,13 @@
                         <div class="col-md-9 text-right">
                             <ul class="list-unstyled">
                                 <li>
-                                    <a href="javascript:void(0);">
+                                    <a href="https://wa.me/<?php echo $settings->whatsapp; ?>" target="_blank">
                                         <img src="{{url('/images/whatsapp.png')}}" alt="Whatsapp">
                                         {!! $settings->whatsapp !!}
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);">
+                                    <a href="mailto:<?php echo $settings->email; ?>" target="_blank">
                                         <i class="fas fa-envelope"></i>
                                         {!! $settings->email !!}
                                     </a>
@@ -59,9 +59,9 @@
                                     </li>
 
                                     <li>
-                                        <a href="javascript:void(0);">Login</a>
+                                        <a href="{{ route('login') }}">Login</a>
                                         /
-                                        <a href="javascript:void(0);">Signup</a>
+                                        <a href="{{ route('jobseeker.register') }}">Signup</a>
                                     </li>
                                 </ul>
                                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">

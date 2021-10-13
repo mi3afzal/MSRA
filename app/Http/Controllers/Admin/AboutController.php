@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Gate;
 class AboutController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -46,7 +46,8 @@ class AboutController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\About  $about
      * @return \Illuminate\Http\Response
@@ -95,31 +96,9 @@ class AboutController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\About  $about
-     * @return \Illuminate\Http\Response
-     */
-    public function show(About $about)
-    {
-        //
-    }
-
-
-    /**
      * Enable the specified contact in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\About  $contact
      * @return \Illuminate\Http\Response
@@ -135,6 +114,7 @@ class AboutController extends Controller
     /**
      * Disable the specified contact in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\About  $contact
      * @return \Illuminate\Http\Response
@@ -150,6 +130,7 @@ class AboutController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param $id
      * @param  \App\Models\About  $contact
      * @return \Illuminate\Http\Response
      */

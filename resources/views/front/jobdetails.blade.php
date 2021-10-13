@@ -34,8 +34,10 @@
         [
         'professions' => $professions,
         'specialties' => $specialties,
-        'states' => $states,
         'jobtypes' => $jobtypes,
+        'states' => $states,
+        'cities' => $cities,
+        'suburbs' => $suburbs,
         ])
 
         <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
@@ -70,23 +72,26 @@
       </div>
       <div class="col-xl-9 col-lg-8">
         <div class="topheadingbar p-1">
-          <h3><a href="javascript:void(0);" onclick="applynow(<?php echo $job->id; ?>);" class="btn btn-primary ">Apply Now</a><a href="#exampleModal" onclick="practicelocation();" class="btn btn-primary ml-2 ">View Exact Practice Location</a></h3>
+          <h3><a href="javascript:void(0);" onclick="applynow(<?php echo $job->id; ?>);" class="btn btn-primary ">Apply Now</a>
+            <a href="#practicelocationModal" onclick="viewpracticelocation();" class="btn btn-primary ml-2 ">View Exact Practice Location</a>
+          </h3>
           <!-- Button trigger modal -->
-
+          <!-- https://www.google.com/maps/place/East+Albury/@-36.09041,146.93912/ -->
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="practicelocationModal" tabindex="-1" aria-labelledby="practicelocationModalLabel" aria-hidden="true">
             <div class="modal-dialog ">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h6 class="modal-title" id="exampleModalLabel">View Exact Practice Location</h6>
-                  <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                  <h6 class="modal-title" id="practicelocationModalLabel">View Exact Practice Location</h6>
+                  <button type="button" class="btnclose" onclick="closeModal();"><i class="far fa-times-circle"></i></button>
                 </div>
                 <div class="modal-body">
-                  <img src="{{url('/images/watermarked.png')}}" alt="" class="img-fluid">
+                  <img src="{{url('/images/watermarked.png')}}" alt="Image" class="img-fluid">
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" onclick="closeModal();">Close</button>
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal1">Submit</button>
+                  <button type="button" class="btn btn-primary">Submit</button>
+                  <!-- <a href="https://www.google.com/maps/place/East+Albury/@-36.09041,146.93912/" class="btn btn-primary" target="_blank">View On Map</a> -->
                 </div>
               </div>
             </div>
@@ -491,7 +496,7 @@
   }
 
   function viewpracticelocation() {
-    $('#exampleModal').modal('show');
+    $('#practicelocationModal').modal('show');
   }
 
   function submit() {
@@ -507,6 +512,7 @@
     $('#exampleModal').modal('hide');
     $('#exampleModal1').modal('hide');
     $('#quickapply').modal('hide');
+    $('#practicelocationModal').modal('hide');
   }
 </script>
 

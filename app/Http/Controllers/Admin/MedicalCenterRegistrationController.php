@@ -19,7 +19,15 @@ use Session;
 
 class MedicalCenterRegistrationController extends Controller
 {
-
+    /**
+     *  Apply default authentication middleware for backend routes.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -40,6 +48,7 @@ class MedicalCenterRegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\MedicalCenterRegistration  $medicalcenterregistration
      * @return \Illuminate\Http\Response

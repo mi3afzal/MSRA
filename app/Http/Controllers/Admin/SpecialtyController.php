@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Gate;
 class SpecialtyController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -38,16 +38,6 @@ class SpecialtyController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -62,6 +52,7 @@ class SpecialtyController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -84,13 +75,13 @@ class SpecialtyController extends Controller
                 }
             })
             ->addColumn('specialty', function ($specialtydata) {
-                return $specialty = ucwords($specialtydata->specialty);
+                return $specialty = (isset($specialtydata->specialty)) ? ucwords($specialtydata->specialty) : "";
             })
             ->addColumn('created_at', function ($specialtydata) {
-                return $status = date("F j, Y, g:i a", strtotime($specialtydata->created_at));
+                return $created_at = (isset($specialtydata->created_at)) ? date("F j, Y, g:i a", strtotime($specialtydata->created_at)) : "";
             })
             ->addColumn('status', function ($specialtydata) {
-                return $status = ($specialtydata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($specialtydata->status) && ($specialtydata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($specialtydata) {
 
@@ -111,8 +102,14 @@ class SpecialtyController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.specialty.edit', $specialtydata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($specialtydata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($specialtydata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -158,10 +155,55 @@ class SpecialtyController extends Controller
         return redirect()->route('admin.specialty.list')->with('success', 'Specialty added successfully.');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param $id
+     * @param  \App\Models\Specialty  $specialty
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Specialty $specialty, $id)
+    {
+        $count = Specialty::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = Specialty::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "specialty";
+            $module = "specialty";
+            return view('admin.specialty.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * 
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Specialty  $specialty
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Specialty $specialty, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'specialty' => 'required|max:40|unique:specialties,specialty,' . $specialty->specialty,
+            ]
+        );
+
+        // Update data
+        $specialty = Specialty::find($id);
+        $specialty->specialty = $request->input("specialty");
+        $specialty->save();
+
+        return redirect()->route('admin.specialty.list')->with('success', 'Details Updated.');
+    }
 
     /**
      * Enable the specified specialty in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
@@ -176,7 +218,8 @@ class SpecialtyController extends Controller
 
     /**
      * Disable the specified specialty in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
@@ -192,6 +235,7 @@ class SpecialtyController extends Controller
     /**
      * Remove the specified resource from storage ( Soft Delete ).
      *
+     * @param $id
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */

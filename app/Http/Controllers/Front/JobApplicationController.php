@@ -23,19 +23,10 @@ use Illuminate\Support\Facades\Gate;
 
 class JobApplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Quickly Apply.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */
@@ -81,7 +72,8 @@ class JobApplicationController extends Controller
 
     /**
      * Job Application Module.
-     *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */
@@ -89,14 +81,14 @@ class JobApplicationController extends Controller
     {
         $title = "job application form";
         $module = "jobapplication";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
-        $cities = City::where("status", "1")->get();
-        $suburbs = Suburb::where("status", "1")->get();
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name"]);
+        $medicalcenters = User::where(["status" => "1", "role" => 3])->get(["id", "name", "email"]);
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
         return view('admin.jobapplications.apply', compact("jobtypes", "title", "module", "jobcategories", "medicalcenters", "professions", "specialities", "states", "cities", "suburbs"));
     }
 
@@ -154,50 +146,5 @@ class JobApplicationController extends Controller
         $jobApplication->save();
 
         return redirect()->route('jobdetails', [$request->input("slug")])->with('success', 'Application sent successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function show(JobApplication $jobApplication)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JobApplication $jobApplication)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobApplication $jobApplication)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\JobApplication  $jobApplication
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(JobApplication $jobApplication)
-    {
-        //
     }
 }

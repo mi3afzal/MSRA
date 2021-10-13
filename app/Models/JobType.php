@@ -22,6 +22,12 @@ class JobType extends Model
      */
     // protected $dates = ['deleted_at'];
 
+
+    /**
+     * Accessor function 
+     * 
+     * @return "returns applied ucwords function text"
+     */
     public function getJobypeAttribute($value)
     {
         return ucwords($value);

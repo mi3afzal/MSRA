@@ -10,12 +10,17 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <a href="{{ route('admin.profession.list') }}" class="btn btn-primary">
-                        <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
+                        <i class="fas fa-arrow-circle-left"></i>&nbsp;
                         Professions
                     </a>
                 </h3>
 
                 <div class="card-tools">
+                    <a href="{{ route('admin.profession.create') }}" class="btn btn-primary">
+                        <i class="fas fa-sync"></i>&nbsp;&nbsp;
+                        Reset
+                    </a>
+                    &nbsp;&nbsp;
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>

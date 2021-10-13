@@ -7,13 +7,14 @@
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">
-                <a href="{{ route('admin.state.create') }}" class="btn btn-primary">
-                    <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
-                    Add State
-                </a>
-            </h3> -->
+            <h3 class="card-title">
+                &nbsp;
+            </h3>
             <div class="card-tools">
+                <a href="{{ route('admin.state.list') }}" class="btn btn-primary">
+                    <i class="fas fa-recycle"></i>&nbsp;
+                    Clear search
+                </a>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -23,15 +24,6 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-lg-12 text-muted">
-                    <div class="col-lg-4">
-                        <h3>FILTERS</h3>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="row col-md-12">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -52,6 +44,23 @@
                 </div>
             </div>
 
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                &nbsp;
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         </div>
 
         <div class="card-body">

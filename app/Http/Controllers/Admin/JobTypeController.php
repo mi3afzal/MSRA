@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Gate;
 class JobTypeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -28,27 +28,17 @@ class JobTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function lists()
     {
         $title = "jobtype ( services ) lists";
         $module = "jobtype";
-        $data = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
         return view('admin.jobtype.index', compact('data', 'title', 'module'));
     }
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -71,19 +61,25 @@ class JobTypeController extends Controller
                 }
             })
             ->addColumn('jobtype', function ($jobtypedata) {
-                return $jobtype = ucwords($jobtypedata->jobtype);
+                return $jobtype = (isset($jobtypedata->jobtype)) ? ucwords($jobtypedata->jobtype) : "";
             })
             ->addColumn('created_at', function ($jobtypedata) {
-                return $status = date("F j, Y, g:i a", strtotime($jobtypedata->created_at));
+                return $created_at = (isset($jobtypedata->created_at)) ? date("F j, Y, g:i a", strtotime($jobtypedata->created_at)) : "";
             })
             ->addColumn('status', function ($jobtypedata) {
-                return $status = ($jobtypedata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($jobtypedata->status) && ($jobtypedata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($jobtypedata) {
 
                 $link = '
                     <div class="btn-group">
                         <a href="' . route('jobtype.delete', $jobtypedata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the jobtype?\');" ><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                ';
+
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.jobtype.edit', $jobtypedata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
                     </div>
                 ';
 
@@ -99,7 +95,7 @@ class JobTypeController extends Controller
                     ';
 
                 if (Gate::allows('isAdmin')) {
-                    $final = ($jobtypedata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($jobtypedata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -134,8 +130,6 @@ class JobTypeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $this->validate(
             $request,
             [
@@ -157,11 +151,57 @@ class JobTypeController extends Controller
         return redirect()->route('admin.jobtype.list')->with('success', 'Job Type added successfully.');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     * 
+     * @param $id
+     * @param  \App\Models\JobType  $jobtype
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(JobType $jobtype, $id)
+    {
+        $count = JobType::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = JobType::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "jobtype";
+            $module = "Jobtype";
+            return view('admin.jobtype.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\JobType  $jobtype
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, JobType $jobtype, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'jobtype' => 'required|max:30|unique:job_types,jobtype,' . $jobtype->jobtype,
+            ]
+        );
+
+        // Update data
+        $jobType = JobType::find($id);
+        $jobType->jobtype = $request->input("jobtype");
+        $jobType->save();
+
+        return redirect()->route('admin.jobtype.list')->with('success', 'Details Updated.');
+    }
+
 
 
     /**
      * Enable the specified jobtype in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
@@ -176,7 +216,8 @@ class JobTypeController extends Controller
 
     /**
      * Disable the specified jobtype in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
@@ -191,7 +232,8 @@ class JobTypeController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * 
+     * @param $id
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */

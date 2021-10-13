@@ -2,20 +2,13 @@
 
 @section('content')
 
-<?php
-// echo "<pre>";
-// print_r($job);
-// die('view');
-
-?>
-
 <section class="content">
     <div class="card ">
         <div class="card-header">
             <h3 class="card-title">
                 <a href="{{ route('admin.job.list') }}" class="btn btn-primary">
-                    <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
-                    Job
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;
+                    Listing
                 </a>
             </h3>
 
