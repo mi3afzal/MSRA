@@ -13,6 +13,7 @@ class Job extends Model
     use SoftDeletes;
 
     protected $table = 'jobs';
+    protected $guarded = [];
 
     const EXCERPT_LENGTH = 250;
 
@@ -119,7 +120,7 @@ class Job extends Model
      */
     public function associatedCity()
     {
-        return $this->belongsTo('App\Models\City', 'city')->select("id", "name", "latitude", "longitude")->select("id", "name", "latitude", "longitude");
+        return $this->belongsTo('App\Models\City', 'city')->select("id", "name", "latitude", "longitude");
     }
 
     /**

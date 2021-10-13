@@ -41,12 +41,12 @@ class JobController extends Controller
     {
         $title = "job lists";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
         $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
         $data = Job::where("status", "1")->orderBy('created_at', 'desc')->get();
         return view('admin.job.index', compact('data', 'title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
     }
@@ -153,8 +153,15 @@ class JobController extends Controller
                     </div>
                 ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.job.edit', $jobdata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($jobdata->status == 1) ? $link . $inactivelink . $detailslink : $link . $activelink . $detailslink;
+                    $final = ($jobdata->status == 1) ? $editlink . $link . $inactivelink . $detailslink : $editlink . $link . $activelink . $detailslink;
+                    // $final = ($jobdata->status == 1) ? $link . $inactivelink . $detailslink : $link . $activelink . $detailslink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -178,12 +185,12 @@ class JobController extends Controller
     {
         $title = "create a job";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
         $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
         // $cities = City::where("status", "1")->get();
         // $suburbs = Suburb::where("status", "1")->get();
         return view('admin.job.add', compact('title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
@@ -263,6 +270,88 @@ class JobController extends Controller
         $job = Job::with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->findOrFail($id);
         return view('admin.job.show', compact('title', 'module', 'job'));
     }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param $id
+     * @param  \App\Models\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Job $job, $id)
+    {
+        $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($id);
+        $title = "job edit";
+        $module = "job";
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $city = City::where(["status" => "1", "id" => $listings->city])->first(["id", "name", "postcode", "state_code"]);
+        $suburb = Suburb::where(["status" => "1", "id" => $listings->suburb])->first(["id", "suburb", "postcode"]);
+        return view('admin.job.edit', compact('listings', 'title', 'module', 'jobtypes', 'jobcategories', 'medicalcenters', 'professions', 'specialities', 'states', 'city', 'suburb'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Job $job, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'job_type' => 'required',
+                'job_category' => 'required',
+                'medical_center' => 'required',
+                'profession' => 'required',
+                'speciality' => 'required',
+                'state' => 'required',
+                'city' => 'required',
+                'suburb' => 'required',
+                'rate' => 'required',
+                'work_days' => 'required',
+                'title' => 'required|max:500',
+                'from_date' => 'required',
+                'to_date' => 'required',
+                'address' => 'required|max:500',
+                'description' => 'required',
+                'practice_offer' => 'required',
+                'essential_criteria' => 'required',
+            ]
+        );
+
+        // Update data
+        $job = Job::findOrFail($id);
+        $job->job_type = $request->input('job_type');
+        $job->job_category = $request->input('job_category');
+        $job->medical_center = $request->input('medical_center');
+        $job->profession = $request->input('profession');
+        $job->speciality = $request->input('speciality');
+        $job->state = $request->input('state');
+        $job->city = $request->input('city');
+        $job->suburb = $request->input('suburb');
+        $job->rate = $request->input('rate');
+        $job->work_days = $request->input('work_days');
+        $job->title = $request->input('title');
+        $job->from_date = $request->input('from_date');
+        $job->to_date = $request->input('to_date');
+        $job->address = $request->input('address');
+        $job->description = $request->input('description');
+        $job->practice_offer = $request->input('practice_offer');
+        $job->essential_criteria = $request->input('essential_criteria');
+        $job->user_id = Auth::user()->id;
+        $job->save();
+
+        return redirect()->route('admin.job.list')->with('success', 'Details Updated.');
+    }
+
 
     /**
      * Enable the specified job in storage.

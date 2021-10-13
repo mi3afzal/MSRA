@@ -81,14 +81,14 @@ class JobApplicationController extends Controller
     {
         $title = "job application form";
         $module = "jobapplication";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
-        $cities = City::where("status", "1")->get();
-        $suburbs = Suburb::where("status", "1")->get();
+        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name"]);
+        $medicalcenters = User::where(["status" => "1", "role" => 3])->get(["id", "name", "email"]);
+        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
         return view('admin.jobapplications.apply', compact("jobtypes", "title", "module", "jobcategories", "medicalcenters", "professions", "specialities", "states", "cities", "suburbs"));
     }
 

@@ -214,6 +214,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Job Module
     Route::get('/job', [App\Http\Controllers\Admin\JobController::class, 'create'])->name('admin.job.create');
     Route::post('/job-store', [App\Http\Controllers\Admin\JobController::class, 'store'])->name('admin.job.store');
+    Route::get('/job-edit/{id}', [App\Http\Controllers\Admin\JobController::class, 'edit'])->name('admin.job.edit');
+    Route::put('/job/update/{id}', [App\Http\Controllers\Admin\JobController::class, 'update'])->name('admin.job.update');
     Route::get('/job/list', [App\Http\Controllers\Admin\JobController::class, 'lists'])->name('admin.job.list')->withoutMiddleware([isAdmin::class]);
     Route::get('/job-details/{id}', [App\Http\Controllers\Admin\JobController::class, 'show'])->name('admin.job.show');
 

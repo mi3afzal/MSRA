@@ -24,8 +24,8 @@ class ContactController extends Controller
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
         $sociallinks = SocialLink::where("status", "1")->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
         return view('front.contactus', compact("sociallinks", "settings", "professions", "jobtypes"));
     }
 

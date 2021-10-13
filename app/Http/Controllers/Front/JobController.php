@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use QueryHelper;
 
 class JobController extends Controller
 {
@@ -24,15 +26,16 @@ class JobController extends Controller
      */
     public function index()
     {
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
         $sociallinks = SocialLink::where("status", "1")->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $states = State::where("status", "1")->get();
-        $cities = City::where("status", "1")->select(["id", "name", "postcode"])->get();
-        $suburbs = Suburb::where("status", "1")->select(["id", "suburb", "postcode"])->get();
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
-        $jobs = Job::where("status", "1")->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->get();
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
+        $jobs = Job::where("status", "1")->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->get();
+        // QueryHelper::logquery($jobs);
         return view('front.jobs', compact("jobtypes", "sociallinks", "professions", "specialties", "states", "cities", "suburbs", "jobs", "settings"));
     }
 
@@ -81,13 +84,13 @@ class JobController extends Controller
         // print_r($data);
         // die;
 
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
         $sociallinks = SocialLink::where("status", "1")->first();
-        $states = State::where("status", "1")->get();
-        $cities = City::where("status", "1")->select(["id", "name", "postcode"])->get();
-        $suburbs = Suburb::where("status", "1")->select(["id", "suburb", "postcode"])->get();
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
 
         $sjobtype = $request->session()->get('jobtype');
         $sstate = $request->session()->get('states');
@@ -106,7 +109,7 @@ class JobController extends Controller
                     "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && !empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -117,7 +120,7 @@ class JobController extends Controller
                     "city" => $scity
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && !empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -128,7 +131,7 @@ class JobController extends Controller
                     "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && !empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -138,7 +141,7 @@ class JobController extends Controller
                     "city" => $scity,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -148,7 +151,7 @@ class JobController extends Controller
                     "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -158,7 +161,7 @@ class JobController extends Controller
                     "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -167,7 +170,7 @@ class JobController extends Controller
                     "city" => $scity,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -176,7 +179,7 @@ class JobController extends Controller
                     "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -186,7 +189,7 @@ class JobController extends Controller
                     "state" => $sstate
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -195,7 +198,7 @@ class JobController extends Controller
                     "state" => $sstate
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && !empty($sspecialty)) {
             $jobs = Job::where(
@@ -207,7 +210,7 @@ class JobController extends Controller
                     "speciality" => $sspecialty,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -217,7 +220,7 @@ class JobController extends Controller
                     "state" => $sstate,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -228,7 +231,7 @@ class JobController extends Controller
                     "profession" => $sprofession,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -238,7 +241,7 @@ class JobController extends Controller
                     "profession" => $sprofession,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -248,7 +251,7 @@ class JobController extends Controller
                     "profession" => $sprofession,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && !empty($sspecialty)) {
             $jobs = Job::where(
@@ -259,7 +262,7 @@ class JobController extends Controller
                     "speciality" => $sspecialty,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
             $jobs = Job::where(
@@ -269,7 +272,7 @@ class JobController extends Controller
                     "speciality" => $sspecialty,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
             $jobs = Job::where(
@@ -279,7 +282,7 @@ class JobController extends Controller
                     "speciality" => $sspecialty,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
             $jobs = Job::where(
@@ -288,7 +291,7 @@ class JobController extends Controller
                     "profession" => $sprofession,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
             $jobs = Job::where(
@@ -297,7 +300,7 @@ class JobController extends Controller
                     "speciality" => $sspecialty,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } else {
             $jobs = Job::where(
@@ -306,14 +309,9 @@ class JobController extends Controller
                     "job_type" => $request->session()->get('jobtype')
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         }
-
-        // echo "<pre>";
-        // print_r($jobs);
-        // echo "</pre>";
-        // die;
 
         $settings = Settings::orderBy("created_at", "desc")->first();
         return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "cities", "suburbs", "jobs", "jobtypes", "settings"));

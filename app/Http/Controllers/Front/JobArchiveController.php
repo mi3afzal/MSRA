@@ -24,14 +24,14 @@ class JobArchiveController extends Controller
     {
         $jobArchive = new JobArchive;
         $jobArchive->setConnection('mysql2');
-        $jobarchives = JobArchive::orderBy("id", "desc")->with("associatedJobtype", "associatedProfession", "associatedSeniority", "associatedSpeciality", "associatedState", "associatedCity", "associatedCountry")->paginate(10);
+        $jobarchives = JobArchive::orderBy("id", "desc")->with("associatedJobtype:id,type,parent_id,interested", "associatedProfession:id,name", "associatedSeniority:id,name", "associatedSpeciality:id,name", "associatedState:id,name,short_code,status", "associatedCity:id,name,short_code,latitude,longitude", "associatedCountry:id,name,iso_code_2,status")->paginate(10);
         $jobarchivecount = JobArchive::orderBy("id", "desc")->count();
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
         $sociallinks = SocialLink::where("status", "1")->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $states = State::where("status", "1")->get();
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
 
         return view('front.jobarchive', compact("jobtypes", "jobarchives", "settings", "professions", "specialties", "sociallinks", "states"));
     }

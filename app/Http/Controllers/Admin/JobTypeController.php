@@ -32,7 +32,7 @@ class JobTypeController extends Controller
     {
         $title = "jobtype ( services ) lists";
         $module = "jobtype";
-        $data = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
         return view('admin.jobtype.index', compact('data', 'title', 'module'));
     }
 

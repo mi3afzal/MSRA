@@ -58,9 +58,9 @@ class BuySellController extends Controller
         if ($count > 0) {
             $buysellrecords = BuySell::where("status", "1")->with("associatedImages")->orderBy('order', 'asc')->get();
             $users = User::where(["status" => "1"])->orderBy('created_at', 'desc')->get();
-            $states = State::where("status", "1")->get();
-            $cities = City::where("status", "1")->get();
-            $suburbs = Suburb::where("status", "1")->get();
+            $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+            $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
+            $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
             return view('admin.buysell.index', compact("title", "module", "users", "states", "cities", "suburbs", "buysellrecords", "promotional_flag", "property_type"));
         } else {
             abort(404, 'No record found');
@@ -74,12 +74,12 @@ class BuySellController extends Controller
      */
     public function create()
     {
-        $buyselldata = BuySell::select('buy_sells.id', 'buy_sells.unique_code', 'buy_sells.user_id', 'buy_sells.type', 'buy_sells.property_type', 'buy_sells.promotional_flag', 'buy_sells.state_id', 'buy_sells.city_id', 'buy_sells.suburb_id', 'buy_sells.price', 'buy_sells.title', 'buy_sells.slug', 'buy_sells.description', 'buy_sells.number', 'buy_sells.email', 'buy_sells.rating', 'buy_sells.order', 'buy_sells.status', 'buy_sells.created_at', 'buy_sells.updated_at')->with("associatedImages")->get();
+        // $buyselldata = BuySell::select('buy_sells.id', 'buy_sells.unique_code', 'buy_sells.user_id', 'buy_sells.type', 'buy_sells.property_type', 'buy_sells.promotional_flag', 'buy_sells.state_id', 'buy_sells.city_id', 'buy_sells.suburb_id', 'buy_sells.price', 'buy_sells.title', 'buy_sells.slug', 'buy_sells.description', 'buy_sells.number', 'buy_sells.email', 'buy_sells.rating', 'buy_sells.order', 'buy_sells.status', 'buy_sells.created_at', 'buy_sells.updated_at')->with("associatedImages:id,buysell_id,type,file,order,status")->get();
 
-        $title = "buysell";
+        $title = "buysell create";
         $description = "buysell";
         $module = "buysell";
-        $states = State::where("status", "1")->get();
+        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
         return view('admin.buysell.add', compact("title", "description", "states", "module"));
     }
 
@@ -344,7 +344,7 @@ class BuySellController extends Controller
         $bstype = $this->bstype;
         $property_type = $this->property_type;
         $promotional_flag = $this->promotional_flag;
-        $buysell = BuySell::with("associatedImages", "associatedState", "associatedCity", "associatedSuburb", "createdBy")->orderBy("order", "asc")->findOrFail($id);
+        $buysell = BuySell::with("associatedImages:id,buysell_id,file,type,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng", "createdBy:id,name,email,role")->orderBy("order", "asc")->findOrFail($id);
         return view('admin.buysell.show', compact('title', 'module', 'buysell', "bstype", "property_type", "promotional_flag"));
     }
 
@@ -360,10 +360,10 @@ class BuySellController extends Controller
     {
         $count = BuySell::where("id", $id)->orderBy('created_at', 'desc')->count();
         if ($count > 0) {
-            $states = State::where("status", "1")->get();
-            $cities = City::where("status", "1")->get();
-            $suburbs = Suburb::where("status", "1")->get();
-            $listings = BuySell::where("id", $id)->with("associatedImages")->orderBy('created_at', 'desc')->first();
+            $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+            $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
+            $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+            $listings = BuySell::where("id", $id)->with("associatedImages:id,buysell_id,file,type,order,status")->orderBy('created_at', 'desc')->first();
             $title = "buysell";
             $module = "buysell";
             return view('admin.buysell.edit', compact('states', 'cities', 'suburbs', 'listings', 'title', 'module'));
