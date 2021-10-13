@@ -101,6 +101,13 @@
     </a>
 </p>
 
+{{-- Medical Center Registration --}}
+<p class="my-0">
+    <a href="{{ route('medicalcenter.register') }}">
+        {{ __("Medical Center's Registration") }}
+    </a>
+</p>
+
 <?php /* ?>
 {{-- Register link --}}
 @if($register_url)

@@ -39,6 +39,7 @@ class JobSeekerRegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\JobSeekerRegistration  $jobSeekerRegistration
      * @return \Illuminate\Http\Response

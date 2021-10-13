@@ -20,7 +20,7 @@ use Session;
 class MedicalCenterRegistrationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the registration form for medical center.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,16 +28,6 @@ class MedicalCenterRegistrationController extends Controller
     {
         $states = State::where("status", "1")->get();
         return view('front.medicalcenter-register', compact("states"));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -54,7 +44,7 @@ class MedicalCenterRegistrationController extends Controller
         if ($request->isMethod('post')) {
             $this->validate($request, [
                 'fullname' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email:rfc,dns|max:50|unique:users,email',
                 'mobile' => 'required|min:6|max:20',
                 'postcode' => 'required',
                 'file' => 'mimes:pdf,docx,doc',
@@ -120,29 +110,5 @@ class MedicalCenterRegistrationController extends Controller
         }
 
         return redirect('login');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MedicalCenterRegistration  $medicalCenterRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function show(MedicalCenterRegistration $medicalCenterRegistration)
-    {
-        //
-    }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\MedicalCenterRegistration  $medicalCenterRegistration
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MedicalCenterRegistration $medicalCenterRegistration)
-    {
-        //
     }
 }

@@ -1,4 +1,6 @@
-<div class="sidebar-job">
+<!-- select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" integrity="sha256-AFAYEOkzB6iIKnTYZOdUf9FFje6lOTYdwRJKwTN5mks=" crossorigin="anonymous"></script>
+<div class="sidebar-css">
     <h4>Filter
         <a href="{{ route('front.job.clearsearch') }}">
             <span style="padding-left:55%; text-decoration:none;">Clear</span>
@@ -52,6 +54,7 @@
                 </div>
             </div>
 
+            @if(isset($specialties))
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -61,42 +64,80 @@
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <ul class="innnerlist">
-                            @if(isset($specialties))
+
                             @foreach($specialties as $specialty)
                             <li>
                                 <a href="javascript:void(0);" class="js-filter" filter-name="specialty" filter-val="{{ $specialty->id }}">{{ $specialty->specialty }}</a>
                             </li>
                             @endforeach
-                            @endif
+
                         </ul>
                     </div>
                 </div>
             </div>
+            @endif
 
+
+            @if(isset($states))
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Locations
+                        States
                     </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <ul class="innnerlist">
-                            @if(isset($states))
+
                             @foreach($states as $state)
                             <li>
                                 <a href="javascript:void(0);" class="js-filter" filter-name="state" filter-val="{{ $state->id }}">{{ $state->name }}</a>
                             </li>
                             @endforeach
-                            @endif
+
                         </ul>
                     </div>
                 </div>
             </div>
+            @endif
+
+            @if(isset($cities))
+            <div class="input-group mb-3">
+                <select name="city" id="city" filter-name="city" class="js-filter select2 form-control {{ $errors->has('city') ? 'is-invalid' : '' }}">
+                    <option value="">Select City</option>
+                    @foreach($cities as $city)
+                    <option value="{{ $city->id }}" {{ (old("city") == $city->id ? "selected":"") }}>{{ ucwords($city->name) }}</option>
+                    @endforeach
+                </select>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-map-marked-alt"></span>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+
+
+            @if(isset($suburbs))
+            <div class="input-group mb-3">
+                <select name="suburb" id="suburb" filter-name="suburb" class="js-filter select2 form-control {{ $errors->has('suburb') ? 'is-invalid' : '' }}">
+                    <option value="">Select Suburb</option>
+                    @foreach($suburbs as $suburb)
+                    <option value="{{ $suburb->id }}" {{ (old("suburb") == $suburb->id ? "selected":"") }}>{{ ucwords($suburb->suburb) }}</option>
+                    @endforeach
+                </select>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-directions"></span>
+                    </div>
+                </div>
+            </div>
         </div>
+        @endif
 
         <input type="hidden" name="suburb" id="filter-suburb" val="" />
-        <input type="hidden" name="cities" id="filter-cities" val="" />
+        <input type="hidden" name="cities" id="filter-city" val="" />
         <input type="hidden" name="profession" id="filter-profession" val="" />
         <input type="hidden" name="specialty" id="filter-specialty" val="" />
         <input type="hidden" name="states" id="filter-state" val="" />
@@ -105,8 +146,25 @@
     </form>
 </div>
 <script>
+    $(function() {
+        $('.select2').select2();
+    });
+
     $(document).ready(function() {
+
+        // Filter for city & suburb
+        $(".js-filter").change(function() {
+            if (($(this).attr("filter-name") == "city")) {
+                $("#filter-city").val($(this).val());
+            } else if (($(this).attr("filter-name") == "suburb")) {
+                $("#filter-suburb").val($(this).val());
+            }
+            document.getElementById("job-filter-form").submit();
+        });
+
+        // Filter for profession, speciality, state & jobtype.
         $(".js-filter").click(function() {
+
             if ($(this).attr("filter-name") == "profession") {
                 $("#filter-profession").val($(this).attr("filter-val"));
             } else if ($(this).attr("filter-name") == "specialty") {

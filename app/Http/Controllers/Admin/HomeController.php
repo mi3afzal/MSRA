@@ -11,17 +11,20 @@ use App\Models\City;
 use App\Models\Suburb;
 use App\Models\Job;
 use App\Models\JobType;
+use App\Models\BuySell;
+use App\Models\BuySellMedia;
 use App\Models\Profession;
 use App\Models\Specialty;
 use App\Models\User;
 use App\Models\JobCategory;
 use App\Models\Contact;
 use App\Models\JobApplication;
+use App\Models\Newsletter;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -47,16 +50,18 @@ class HomeController extends Controller
         $jobs = Job::where(["status" => "1"])->count();
         $contacts = Contact::where(["status" => "1"])->count();
         $jobapplications = JobApplication::where(["status" => "1"])->count();
+        $newsletters = Newsletter::where(["status" => "1"])->count();
+        $buysells = BuySell::where(["status" => "1"])->count();
         $user = Auth::user();
 
         if ($user->role == 1) {
             $title = "dashboard";
             $module = "dashboard";
-            return view('admin.home', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts", "jobapplications"));
+            return view('admin.home', compact("buysells", "cities", "states", "suburbs", "newsletters", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts", "jobapplications"));
         } else {
             $title = "dashboard";
             $module = "jobseeker dashboard";
-            return view('admin.jobseeker', compact("cities", "states", "suburbs", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts"));
+            return view('admin.jobseeker', compact("buysells", "cities", "states", "suburbs", "newsletters", "jobtypes", "title", "module", "professions", "specialty", "jobcategories", "jobs", "contacts"));
         }
     }
 }

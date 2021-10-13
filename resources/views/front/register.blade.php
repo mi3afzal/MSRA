@@ -9,9 +9,9 @@
 </div>
 @endif
 
-<body class="hold-transition register-page">
-    <div class="register-box pt-3 pb-3" style="width:30%; margin:2% 0 0 2%;">
-        <div class="card card-outline card-primary">
+<body class="hold-transition register-page p-1">
+    <div class="register-box pt-3 pb-3 mt-5 mb-2">
+        <div class="card card-outline card-primary mt-5 mb-2">
             <div class="card-header text-center text-muted">
                 <a href="javascript:void(0);" class="h1"><b>MSRA</b></a>
             </div>
@@ -41,6 +41,8 @@
                         <label for="gender-male" style="margin-right:20px;">MALE</label>
                         <input type="radio" class="{{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender-female" value="2 {{ old('2') }}" placeholder="{{ __('Gender') }}" name="gender" style="height: 25px; margin-right:10px;" />
                         <label for="gender-female" style="margin-right:20px;">FEMALE</label>
+                        <input type="radio" class="{{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender-other" value="3 {{ old('3') }}" placeholder="{{ __('Gender') }}" name="gender" style="height: 25px; margin-right:10px;" />
+                        <label for="gender-other" style="margin-right:20px;">OTHER</label>
 
                         @if($errors->has('gender'))
                         <div class="invalid-feedback">
@@ -172,7 +174,7 @@
 
                     <div class="row">
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                     </div>
                 </form>

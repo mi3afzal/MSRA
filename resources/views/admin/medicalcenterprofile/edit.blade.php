@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('admin.medicalcenterprofile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('medicalcenterprofile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
     {{ method_field('PUT') }}
     @csrf
     <section class="content">
@@ -170,7 +170,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary"><i class="far fa-hand-point-up"></i>&nbsp;&nbsp;Update</button>
                         </div>
                     </div>
 

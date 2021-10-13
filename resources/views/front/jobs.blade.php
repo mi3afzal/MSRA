@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="borderbox">
-                    <h3>General Practice</h3>
+                    <h3 class="text-uppercase">General Practice</h3>
                 </div>
             </div>
         </div>
@@ -32,8 +32,10 @@
                 [
                 'professions' => $professions,
                 'specialties' => $specialties,
-                'states' => $states,
                 'jobtypes' => $jobtypes,
+                'states' => $states,
+                'cities' => $cities,
+                'suburbs' => $suburbs,
                 ])
 
                 <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
@@ -89,7 +91,7 @@
                             @if($job->job_type == 1)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <strong>{{ date('d M, Y', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
                                 <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
@@ -111,7 +113,7 @@
 
                                 </ul>
                                 <p>
-                                    {!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                    {!! $job->excerpt() !!}
                                     <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
@@ -133,7 +135,7 @@
                             @if($job->job_type == 2)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <strong>{{ date('d M, Y', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
                                 <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>

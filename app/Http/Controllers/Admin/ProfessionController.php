@@ -15,23 +15,13 @@ class ProfessionController extends Controller
 {
 
     /**
-     * Create a new controller instance.
+     * Apply default authentication middleware for backend routes.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -49,7 +39,7 @@ class ProfessionController extends Controller
 
     /**
      * Process datatables ajax request.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function datatable(Request $request)
@@ -72,13 +62,13 @@ class ProfessionController extends Controller
                 }
             })
             ->addColumn('profession', function ($professiondata) {
-                return $profession = ucwords($professiondata->profession);
+                return $profession = (isset($professiondata->profession)) ? ucwords($professiondata->profession) : "";
             })
             ->addColumn('created_at', function ($professiondata) {
-                return $status = date("F j, Y, g:i a", strtotime($professiondata->created_at));
+                return $created_at = (isset($professiondata->created_at)) ? date("F j, Y, g:i a", strtotime($professiondata->created_at)) : "";
             })
             ->addColumn('status', function ($professiondata) {
-                return $status = ($professiondata->status == 1) ? 'Enabled' : 'Disabled';
+                return $status = (isset($professiondata->status) && ($professiondata->status == 1)) ? 'Enabled' : 'Disabled';
             })
             ->addColumn('action', function ($professiondata) {
 
@@ -99,8 +89,14 @@ class ProfessionController extends Controller
                         </div>
                     ';
 
+                $editlink = '
+                    <div class="btn-group">
+                        <a href="' . route('admin.profession.edit', $professiondata->id) . '" class="btn btn-sm  mt-1 mb-1 bg-pink" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                ';
+
                 if (Gate::allows('isAdmin')) {
-                    $final = ($professiondata->status == 1) ? $link . $inactivelink : $link . $activelink;
+                    $final = ($professiondata->status == 1) ? $editlink . $link . $inactivelink : $editlink . $link . $activelink;
                 } else {
                     $final = '
                         <span class="bg-warning p-1">
@@ -157,8 +153,53 @@ class ProfessionController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     * @param $id
+     * @param  \App\Models\Profession  $profession
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Profession $profession, $id)
+    {
+        $count = Profession::where("id", $id)->orderBy('created_at', 'desc')->count();
+        if ($count > 0) {
+            $listings = Profession::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $title = "profession";
+            $module = "profession";
+            return view('admin.profession.edit', compact('listings', 'title', 'module'));
+        } else {
+            abort(404, 'No record found');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Profession  $profession
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Profession $profession, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'profession' => 'required|max:40|unique:professions,profession,' . $profession->profession,
+            ]
+        );
+
+        // Update data
+        $jobCategory = Profession::findOrFail($id);
+        $jobCategory->profession = $request->input("profession");
+        $jobCategory->save();
+
+        return redirect()->route('admin.profession.list')->with('success', 'Details Updated.');
+    }
+
+    /**
      * Enable the specified profession in storage.
      *
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
@@ -173,7 +214,8 @@ class ProfessionController extends Controller
 
     /**
      * Disable the specified profession in storage.
-     *
+     * 
+     * @param $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
@@ -188,7 +230,8 @@ class ProfessionController extends Controller
 
     /**
      * Remove the specified resource from storage ( Soft Delete ).
-     *
+     * 
+     * @param $id
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */

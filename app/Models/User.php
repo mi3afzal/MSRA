@@ -59,41 +59,81 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function jobseekerregistration()
     {
         return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function jobtype()
     {
         return $this->hasMany(JobType::class);
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function jobcategory()
     {
         return $this->hasMany(JobCategory::class);
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function profession()
     {
         return $this->hasMany(Profession::class);
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function specialty()
     {
         return $this->hasMany(Specialty::class);
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function job()
     {
         return $this->hasMany(Job::class);
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function profile()
     {
         return $this->hasOne('App\Models\MedicalCenterRegistration', 'user_id');
     }
 
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
     public function jobseekerprofile()
     {
         return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');

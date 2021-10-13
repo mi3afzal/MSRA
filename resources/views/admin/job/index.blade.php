@@ -12,15 +12,16 @@
             <h3 class="card-title">
                 @if (( Auth::user()->role == "1"))
                 <a href="{{ route('admin.job.create') }}" class="btn btn-primary">
-                    <i class="right fas fa-angle-left fa-lg"></i>&nbsp;
-                    Create Job
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;
+                    Create Record
                 </a>
                 @endif
             </h3>
             <div class="card-tools">
                 <a href="{{ route('admin.job.list') }}" class="btn btn-primary">
-                    Clear Search
+                    <i class="fas fa-recycle"></i>&nbsp; Clear Search&nbsp;
                 </a>
+                &nbsp;
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -125,6 +126,25 @@
             </div>
 
         </div>
+
+
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <b>Listing</b>
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
 
         <div class="card-body">
 

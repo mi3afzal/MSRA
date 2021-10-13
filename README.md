@@ -7,51 +7,23 @@ A medical staff recruitment website build in Laravel 8
 1. Social Links [Update ]
 2. About Us [Update ]
 3. Settings [ Update ]
-4. States [Delete, Enable, Disable]
-5. JobTypes [Create, Delete (Softdelete), Enable, Disable]
-6. Job Category [Create, Delete (Softdelete), Enable, Disable]
-7. Jobs [Create, View, Delete (Softdelete), Enable, Disable]
-8. Professions [Create, Delete (Softdelete), Enable, Disable]
-9. Specialty [Create, Delete (Softdelete), Enable, Disable]
+4. States [Edit, Update, Delete, Enable, Disable]
+5. JobTypes [Create, Delete (Softdelete), Enable, Disable, Edit, Update]
+6. Job Category [Create, Delete (Softdelete), Enable, Disable, Edit, Update]
+7. Jobs [Create, View, Delete (Softdelete), Enable, Disable, Edit, Update]
+8. Professions [Create, Delete (Softdelete), Enable, Disable, Edit, Update]
+9. Specialty [Create, Delete (Softdelete), Enable, Disable, Edit, Update]
 10. Contact Leads [Delete, Enable, Disable]
 11. Job Applications [Delete (Softdelete), Enable, Disable, Show]
+12. Buy / Sell (Property) [Create, View, Delete (Softdelete), Enable, Disable, Edit, Update]
+13. Cities [Edit, Update, Delete, Enable, Disable]
+14. Suburbs [Edit, Update, Delete, Enable, Disable]
 
 ## Current Backend Options / Modules For Job Seekers
 
 1. Dashboard
 2. States [View Only]
 3. Testimonials [Create, Delete (Softdelete), Enable, Disable, View, Show]
-4. JobTypes [View Only]
-5. Job Category [View Only]
-6. Jobs [View Only]
-7. Professions [View Only]
-8. Specialty [View Only]
-
-## Current Backend Options / Modules For Medical Center
-
-1. Dashboard
-2. States [View Only]
-3. JobTypes [View Only]
-4. Job Category [View Only]
-5. Jobs [View Only]
-6. Professions [View Only]
-7. Specialty [View Only]
-
-## Current Backend Options / Modules For Doctor
-
-1. Dashboard
-2. States [View Only]
-3. JobTypes [View Only]
-4. Job Category [View Only]
-5. Jobs [View Only]
-6. Professions [View Only]
-7. Specialty [View Only]
-
-## Current Backend Options / Modules For Job Seekers
-
-1. Dashboard
-2. States [View Only]
-3. Testimonials [Create, Delete (Softdelete), Enable, Disable, View]
 4. JobTypes [View Only]
 5. Job Category [View Only]
 6. Jobs [View Only]
@@ -88,6 +60,8 @@ A medical staff recruitment website build in Laravel 8
 6. Login
 7. Register
 8. Job Seeker Registration
+9. Job Archive
+10. Buy / Sell
 
 ## Current Registration Modules
 
@@ -104,6 +78,14 @@ Application currently has three registrations :
 ## JOBS PAGE
 
 ![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/jobs-page.png)
+
+## BUY / SELL PAGE 1
+
+![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/buy-sell-page.png)
+
+## BUY / SELL PAGE 2
+
+![Jobs Page](https://github.com/aadhar-appinop/MSRA/blob/dev/buy-sell-page-2.png)
 
 ## JOBS PAGE [QUICK APPLICATION]
 
@@ -139,4 +121,4 @@ Application currently has three registrations :
 
 ## E-R Model
 
-![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/main/e-r-model-30-09-2021.png)
+![E-R Modal](https://github.com/aadhar-appinop/MSRA/blob/dev/e-r-model-12-10-2021.png)

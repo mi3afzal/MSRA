@@ -31,10 +31,14 @@ Route::get('/about-us', [App\Http\Controllers\Front\AboutController::class, 'ind
 Route::get('/contact-us', [App\Http\Controllers\Front\ContactController::class, 'index'])->name('contactus');
 Route::post('/contact-us', [App\Http\Controllers\Front\ContactController::class, 'store'])->name('contactus.send');
 
+Route::post('/newsletter', [App\Http\Controllers\Front\NewsletterController::class, 'store'])->name('newsletter');
+
 // Route::get('/jobdetails', [App\Http\Controllers\Front\JobDetailController::class, 'index'])->name('jobdetails');
 
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
 
+
+Route::get('/buy-sale', [App\Http\Controllers\Front\BuySellController::class, 'index'])->name('buysale');
 
 // Job Application Module
 Route::post('/job/quickapply', [App\Http\Controllers\Front\JobApplicationController::class, 'quickapply'])->name('quickapply');
@@ -75,7 +79,7 @@ Route::get(
     'login',
     [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']
 )->name('login');
-Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->middleware("loginhistorystore");
 
 // Registeration route
 Route::get(
@@ -145,7 +149,7 @@ Route::post(
 //     })->withoutMiddleware([EnsureTokenIsValid::class]);
 // });
 // Admin route for dashboard
-Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard');
+Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard')->middleware("loginhistorystore");;
 
 
 
@@ -166,6 +170,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Profession Module
     Route::get('/profession', [App\Http\Controllers\Admin\ProfessionController::class, 'create'])->name('admin.profession.create');
     Route::post('/profession-store', [App\Http\Controllers\Admin\ProfessionController::class, 'store'])->name('admin.profession.store');
+    Route::get('/profession-edit/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'edit'])->name('admin.profession.edit');
+    Route::put('/profession/update/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'update'])->name('admin.profession.update');
     Route::get('/profession/list', [App\Http\Controllers\Admin\ProfessionController::class, 'lists'])->name('admin.profession.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/profession/enable/{id}', [App\Http\Controllers\Admin\ProfessionController::class, 'enable'])->name('admin.profession.enable');
@@ -186,6 +192,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Speciality  Module
     Route::get('/specialty', [App\Http\Controllers\Admin\SpecialtyController::class, 'create'])->name('admin.specialty.create');
     Route::post('/specialty-store', [App\Http\Controllers\Admin\SpecialtyController::class, 'store'])->name('admin.specialty.store');
+    Route::get('/specialty-edit/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'edit'])->name('admin.specialty.edit');
+    Route::put('/specialty/update/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'update'])->name('admin.specialty.update');
     Route::get('/specialty/list', [App\Http\Controllers\Admin\SpecialtyController::class, 'lists'])->name('admin.specialty.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/specialty/enable/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'enable'])->name('admin.specialty.enable');
@@ -206,6 +214,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Job Module
     Route::get('/job', [App\Http\Controllers\Admin\JobController::class, 'create'])->name('admin.job.create');
     Route::post('/job-store', [App\Http\Controllers\Admin\JobController::class, 'store'])->name('admin.job.store');
+    Route::get('/job-edit/{id}', [App\Http\Controllers\Admin\JobController::class, 'edit'])->name('admin.job.edit');
+    Route::put('/job/update/{id}', [App\Http\Controllers\Admin\JobController::class, 'update'])->name('admin.job.update');
     Route::get('/job/list', [App\Http\Controllers\Admin\JobController::class, 'lists'])->name('admin.job.list')->withoutMiddleware([isAdmin::class]);
     Route::get('/job-details/{id}', [App\Http\Controllers\Admin\JobController::class, 'show'])->name('admin.job.show');
 
@@ -227,6 +237,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Job Type Module
     Route::get('/jobtype', [App\Http\Controllers\Admin\JobTypeController::class, 'create'])->name('admin.jobtype.create');
     Route::post('/jobtype-store', [App\Http\Controllers\Admin\JobTypeController::class, 'store'])->name('admin.jobtype.store');
+    Route::get('/jobtype-edit/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'edit'])->name('admin.jobtype.edit');
+    Route::put('/jobtype/update/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'update'])->name('admin.jobtype.update');
     Route::get('/jobtype/list', [App\Http\Controllers\Admin\JobTypeController::class, 'lists'])->name('admin.jobtype.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/jobtype/enable/{id}', [App\Http\Controllers\Admin\JobTypeController::class, 'enable'])->name('admin.jobtype.enable');
@@ -246,6 +258,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Job Category Module
     Route::get('/jobcategory', [App\Http\Controllers\Admin\JobCategoryController::class, 'create'])->name('admin.jobcategory.create');
     Route::post('/jobcategory-store', [App\Http\Controllers\Admin\JobCategoryController::class, 'store'])->name('admin.jobcategory.store');
+    Route::get('/jobcategory-edit/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'edit'])->name('admin.jobcategory.edit');
+    Route::put('/jobcategory/update/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'update'])->name('admin.jobcategory.update');
     Route::get('/jobcategory/list', [App\Http\Controllers\Admin\JobCategoryController::class, 'lists'])->name('admin.jobcategory.list')->withoutMiddleware([isAdmin::class]);
 
     Route::get('/jobcategory/enable/{id}', [App\Http\Controllers\Admin\JobCategoryController::class, 'enable'])->name('admin.jobcategory.enable');
@@ -265,6 +279,8 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // States Module
     Route::get('/state', [App\Http\Controllers\Admin\StateController::class, 'create'])->name('admin.state.create');
     Route::post('/state-store', [App\Http\Controllers\Admin\StateController::class, 'store'])->name('admin.state.store');
+    Route::get('/state-edit/{id}', [App\Http\Controllers\Admin\StateController::class, 'edit'])->name('admin.state.edit');
+    Route::put('/state/update/{id}', [App\Http\Controllers\Admin\StateController::class, 'update'])->name('admin.state.update');
     Route::get('/state/list', [App\Http\Controllers\Admin\StateController::class, 'lists'])->name('admin.state.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/state/enable/{id}', [App\Http\Controllers\Admin\StateController::class, 'enable'])->name('admin.state.enable');
@@ -284,7 +300,9 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Cities Module
     Route::get('/city', [App\Http\Controllers\Admin\CityController::class, 'create'])->name('admin.city.create');
     Route::post('/city-store', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('admin.city.store');
-    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'lists'])->name('admin.city.list')->withoutMiddleware([isAdmin::class]);;
+    Route::get('/city-edit/{id}', [App\Http\Controllers\Admin\CityController::class, 'edit'])->name('admin.city.edit');
+    Route::put('/city/update/{id}', [App\Http\Controllers\Admin\CityController::class, 'update'])->name('admin.city.update');
+    Route::get('/city/list', [App\Http\Controllers\Admin\CityController::class, 'list'])->name('admin.city.list')->withoutMiddleware([isAdmin::class]);;
 
     Route::get('/city/enable/{id}', [App\Http\Controllers\Admin\CityController::class, 'enable'])->name('admin.city.enable');
     Route::get('/city/disable/{id}', [App\Http\Controllers\Admin\CityController::class, 'disable'])->name('admin.city.disable');
@@ -298,6 +316,27 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
         '/city/delete/{id}',
         [App\Http\Controllers\Admin\CityController::class, 'destroy']
     )->name('city.delete');
+
+
+    // Suburbs Module
+    Route::get('/suburb', [App\Http\Controllers\Admin\SuburbController::class, 'create'])->name('admin.suburb.create');
+    Route::post('/suburb-store', [App\Http\Controllers\Admin\SuburbController::class, 'store'])->name('admin.suburb.store');
+    Route::get('/suburb-edit/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'edit'])->name('admin.suburb.edit');
+    Route::put('/suburb/update/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'update'])->name('admin.suburb.update');
+    Route::get('/suburb/list', [App\Http\Controllers\Admin\SuburbController::class, 'list'])->name('admin.suburb.list')->withoutMiddleware([isAdmin::class]);;
+
+    Route::get('/suburb/enable/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'enable'])->name('admin.suburb.enable');
+    Route::get('/suburb/disable/{id}', [App\Http\Controllers\Admin\SuburbController::class, 'disable'])->name('admin.suburb.disable');
+
+    Route::get(
+        '/suburb/datatable',
+        [App\Http\Controllers\Admin\SuburbController::class, 'datatable']
+    )->name('suburb.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/suburb/delete/{id}',
+        [App\Http\Controllers\Admin\SuburbController::class, 'destroy']
+    )->name('suburb.delete');
 
 
     // Contact Us Module
@@ -338,9 +377,51 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     )->name('jobapplication.delete');
 
 
+    // Buy / Sell Module
+    Route::get('/buysell', [App\Http\Controllers\Admin\BuySellController::class, 'create'])->name('admin.buysell.create');
+    Route::post('/buysell-store', [App\Http\Controllers\Admin\BuySellController::class, 'store'])->name('admin.buysell.store');
+    Route::get('/buysell-edit/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'edit'])->name('admin.buysell.edit');
+    Route::put('/buysell/update/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'update'])->name('admin.buysell.update');
+    Route::get('/buysell/list', [App\Http\Controllers\Admin\BuySellController::class, 'list'])->name('admin.buysell.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/buysell-details/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'show'])->name('admin.buysell.show');
+
+    Route::get('/buysell/enable/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'enable'])->name('admin.buysell.enable');
+    Route::get('/buysell/disable/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'disable'])->name('admin.buysell.disable');
+
+    Route::get(
+        '/buysell/datatable',
+        [App\Http\Controllers\Admin\BuySellController::class, 'datatable']
+    )->name('buysell.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/buysell/delete/{id}',
+        [App\Http\Controllers\Admin\BuySellController::class, 'destroy']
+    )->name('buysell.delete');
+
+
+    // Newsletter Module
+    Route::get('/newsletter/list', [App\Http\Controllers\Admin\NewsletterController::class, 'lists'])->name('admin.newsletter.list');
+    Route::get('/newsletter/enable/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'enable'])->name('admin.newsletter.enable');
+    Route::get('/newsletter/disable/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'disable'])->name('admin.newsletter.disable');
+
+    Route::get(
+        '/newsletter/datatable',
+        [App\Http\Controllers\Admin\NewsletterController::class, 'datatable']
+    )->name('newsletter.datatables');
+
+    Route::get(
+        '/newsletter/delete/{id}',
+        [App\Http\Controllers\Admin\NewsletterController::class, 'destroy']
+    )->name('newsletter.delete');
+
+
     // About Us Page
     Route::get('/about', [App\Http\Controllers\Admin\AboutController::class, 'edit'])->name('admin.about.edit');
     Route::put('/about/update/{id}', [App\Http\Controllers\Admin\AboutController::class, 'update'])->name('admin.about.update');
+
+    // Buy & Sale Page
+    Route::get('/buysale', [App\Http\Controllers\Admin\BuySellController::class, 'edit'])->name('admin.buysale.edit');
+    Route::put('/buysale/update/{id}', [App\Http\Controllers\Admin\BuySellController::class, 'update'])->name('admin.buysale.update');
 
     // Settings Front Pages
     Route::get('/setting', [App\Http\Controllers\Admin\SettingsController::class, 'edit'])->name('admin.setting.edit');
@@ -350,6 +431,10 @@ Route::prefix('admin')->middleware([isAdmin::class])->group(function () {
     // Ajax Route
     Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);
     Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);
+
+    // Ajax Route For Edit
+    Route::post('editgetcities', [App\Http\Controllers\Admin\StateController::class, 'editgetcities'])->name('editgetcities')->withoutMiddleware([isAdmin::class]);
+    Route::post('editgetasuburbs', [App\Http\Controllers\Admin\StateController::class, 'editgetasuburbs'])->name('editgetasuburbs')->withoutMiddleware([isAdmin::class]);
 
     Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);
 
@@ -385,6 +470,26 @@ Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () 
         '/jobseeker-testimonial/delete/{id}',
         [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
     )->name('testimonial.delete');
+
+    // Recommendation Module
+    Route::get('/recommendation', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'create'])->name('admin.recommendation.create');
+
+    Route::post('/recommendation-store', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'store'])->name('admin.recommendation.store');
+    Route::get('/recommendation/list', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'lists'])->name('admin.recommendation.list')->withoutMiddleware([isAdmin::class]);
+    Route::get('/recommendation-details/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'show'])->name('admin.recommendation.show');
+
+    Route::get('/recommendation/enable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'enable'])->name('admin.recommendation.enable');
+    Route::get('/recommendation/disable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'disable'])->name('admin.recommendation.disable');
+
+    Route::get(
+        '/recommendation/datatable',
+        [App\Http\Controllers\Jobseeker\RecommendationController::class, 'datatable']
+    )->name('recommendation.datatables')->withoutMiddleware([isAdmin::class]);
+
+    Route::get(
+        '/recommendation/delete/{id}',
+        [App\Http\Controllers\Jobseeker\RecommendationController::class, 'destroy']
+    )->name('recommendation.delete');
 
     Route::get('/my-jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'myapplications'])->name('admin.jobapplication.myapplications');
 

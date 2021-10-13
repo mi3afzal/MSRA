@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class SettingsController extends Controller
 {
     /**
-     * Create a new controller instance.
+     *  Apply default authentication middleware for backend routes.
      *
      * @return void
      */
@@ -81,30 +81,5 @@ class SettingsController extends Controller
         $setting->save();
 
         return redirect()->route('admin.setting.edit')->with('success', 'Details Updated.');
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Settings  $settings
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Settings $settings)
-    {
-        //
-    }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Settings  $settings
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Settings $settings)
-    {
-        //
     }
 }
