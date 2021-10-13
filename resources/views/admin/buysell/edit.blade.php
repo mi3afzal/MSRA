@@ -234,7 +234,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary"><i class="far fa-hand-point-up"></i>&nbsp;&nbsp;Update</button>
             </div>
 
         </div>
