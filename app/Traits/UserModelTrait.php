@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use App\Models\Job;
 use App\Models\JobType;
+use App\Models\BuySell;
+use App\Models\BuySellMedia;
 use App\Models\JobCategory;
 use App\Models\Specialty;
 use App\Models\Profession;
@@ -91,4 +93,35 @@ trait UserModelTrait
     {
         return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');
     }
+
+
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
+    public function buysell()
+    {
+        return $this->hasMany(BuySell::class);
+    }
+
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
+    public function buysellmedia()
+    {
+        return $this->hasMany(BuySellMedia::class);
+    }
+
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
+    // public function buysells()
+    // {
+    //     return $this->hasMany('App\Models\BuySell', 'user_id');
+    // }
 }

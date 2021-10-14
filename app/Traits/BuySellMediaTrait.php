@@ -14,6 +14,12 @@ use App\Models\User;
 trait BuySellMediaTrait
 {
     // associated all media
+    public function buysellmedia()
+    {
+        return $this->hasMany('App\Models\BuySellMedia', 'buysell_id')->where('status', '1');
+    }
+
+    // associated all media
     public function associatedMedia()
     {
         return $this->hasMany('App\Models\BuySellMedia', 'buysell_id')->where('status', '1');
