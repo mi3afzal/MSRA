@@ -66,7 +66,7 @@ class JobController extends Controller
 
 
     /**
-     * Search a resource in storage.
+     * Search a resource in storage (Previous approch).
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Job  $job

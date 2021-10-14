@@ -49,9 +49,13 @@ class Job extends Model
         $this->attributes['slug'] = strtolower($slug) . "-" . time();
     }
 
+    /**
+     * Search function that implement QueryFilter on Query..
+     * 
+     * @return "returns search result based according to various query filter defined."
+     */
     public static function searchResult()
     {
-
         $jobs = app(Pipeline::class)
             ->send(\App\Models\Job::query()->active()->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng"))
             ->through([
