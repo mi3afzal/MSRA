@@ -41,7 +41,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="job_type">Job Type :</label>
-                            <select name="job_type" id="job_type" class="form-control {{ $errors->has('job_type') ? 'is-invalid' : '' }}">
+                            <select name="job_type" id="job_type" class="form-control select2 {{ $errors->has('job_type') ? 'is-invalid' : '' }}">
                                 <option value="">Select Job Type</option>
                                 @foreach($jobtypes as $jobtype)
                                 <option value="{{ $jobtype->id }}" {{ (old("job_type", $listings->associatedJobtype->id) == $jobtype->id ? "selected":"") }}>{{ ucwords($jobtype->jobtype) }}</option>
@@ -58,7 +58,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="job_category">Job Category :</label>
-                            <select name="job_category" id="job_category" class="form-control {{ $errors->has('job_category') ? 'is-invalid' : '' }}">
+                            <select name="job_category" id="job_category" class="form-control select2 {{ $errors->has('job_category') ? 'is-invalid' : '' }}">
                                 <option value="">Select Job Category</option>
                                 @foreach($jobcategories as $jobcategory)
                                 <option value="{{ $jobcategory->id }}" {{ (old("job_category", $listings->jobcategory->id) == $jobcategory->id ? "selected":"") }}>{{ ucwords($jobcategory->name) }}</option>
@@ -75,7 +75,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="medical_center">Medical Centers :</label>
-                            <select name="medical_center" id="medical_center" class="form-control {{ $errors->has('medical_center') ? 'is-invalid' : '' }}">
+                            <select name="medical_center" id="medical_center" class="form-control select2 {{ $errors->has('medical_center') ? 'is-invalid' : '' }}">
                                 <option value="">Select Medical Center</option>
                                 @foreach($medicalcenters as $center)
                                 <option value="{{ $center->id }}" {{ (old("medical_center", $listings->medicalcenter->id) == $center->id ? "selected":"") }}>{{ ucwords($center->name) }}</option>
@@ -92,7 +92,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="profession">Profession :</label>
-                            <select name="profession" id="profession" class="form-control {{ $errors->has('profession') ? 'is-invalid' : '' }}">
+                            <select name="profession" id="profession" class="form-control select2 {{ $errors->has('profession') ? 'is-invalid' : '' }}">
                                 <option value="">Select Profession</option>
                                 @foreach($professions as $profession)
                                 <option value="{{ $profession->id }}" {{ (old("profession", $listings->associatedProfession->id) == $profession->id ? "selected":"") }}>{{ ucwords($profession->profession) }}</option>
@@ -109,7 +109,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="speciality">Speciality :</label>
-                            <select name="speciality" id="speciality" class="form-control {{ $errors->has('speciality') ? 'is-invalid' : '' }}">
+                            <select name="speciality" id="speciality" class="form-control select2 {{ $errors->has('speciality') ? 'is-invalid' : '' }}">
                                 <option value="">Select Speciality</option>
                                 @foreach($specialities as $speciality)
                                 <option value="{{ $speciality->id }}" {{ (old("speciality", $listings->associatedSpeciality->id) == $speciality->id ? "selected":"") }}>{{ ucwords($speciality->specialty) }}</option>
@@ -127,7 +127,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="state">States :</label>
-                            <select name="state" id="state" class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}">
+                            <select name="state" id="state" class="form-control select2 {{ $errors->has('state') ? 'is-invalid' : '' }}">
                                 <option value="">Select States</option>
                                 @foreach($states as $state)
                                 <option value="{{ $state->id }}" {{ (old("state", $listings->associatedState->id) == $state->id ? "selected":"") }}>{{ ucwords($state->name) }}</option>
@@ -144,7 +144,7 @@
                     <div id="city_div" class="col-md-4">
                         <div class="form-group">
                             <label for="city">Cities :</label>
-                            <select name="city" id="city" class="form-control">
+                            <select name="city" id="city" class="form-control select2">
                                 <option value="">Select City</option>
                                 <option value="{{ $city->id }}" {{ (old("city", $listings->city) == $city->id ? "selected":"") }}>{{ ucwords($city->name) }}</option>
                             </select>
@@ -154,7 +154,7 @@
                     <div id="suburb_div" class="col-md-4">
                         <div class="form-group">
                             <label for="suburb">Suburbs :</label>
-                            <select name="suburb" id="suburb" class="form-control">
+                            <select name="suburb" id="suburb" class="form-control select2">
                                 <option value="">Select Suburb</option>
                                 <option value="{{ $suburb->id }}" {{ (old("suburb", $listings->suburb) == $suburb->id ? "selected":"") }}>{{ ucwords($suburb->suburb) }}</option>
                             </select>
