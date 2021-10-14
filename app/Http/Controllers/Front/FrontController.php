@@ -23,11 +23,11 @@ class FrontController extends Controller
     public function index(Request $request)
     {
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
-        $states = State::where("status", "1")->orderBy('name', 'asc')->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->skip(0)->take(7)->get(["id", "unique_code", "specialty"]);
-        $sociallinks = SocialLink::where("status", "1")->first();
+        $states = State::active()->orderBy('name', 'asc')->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->skip(0)->take(7)->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
         return view('front.home', compact("jobtypes", "states", "sociallinks", "professions", "settings", "specialties"));
     }

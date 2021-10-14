@@ -22,10 +22,10 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
-        $sociallinks = SocialLink::where("status", "1")->first();
+        $sociallinks = SocialLink::active()->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
         return view('front.contactus', compact("sociallinks", "settings", "professions", "jobtypes"));
     }
 

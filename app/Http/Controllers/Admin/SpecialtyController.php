@@ -32,7 +32,7 @@ class SpecialtyController extends Controller
     {
         $title = "specialty lists";
         $module = "specialty";
-        $data = Specialty::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Specialty::active()->latest()->get();
         return view('admin.specialty.index', compact('data', 'title', 'module'));
     }
 
@@ -164,9 +164,9 @@ class SpecialtyController extends Controller
      */
     public function edit(Specialty $specialty, $id)
     {
-        $count = Specialty::where("id", $id)->orderBy('created_at', 'desc')->count();
+        $count = Specialty::where("id", $id)->latest()->count();
         if ($count > 0) {
-            $listings = Specialty::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $listings = Specialty::where("id", $id)->latest()->first();
             $title = "specialty";
             $module = "specialty";
             return view('admin.specialty.edit', compact('listings', 'title', 'module'));

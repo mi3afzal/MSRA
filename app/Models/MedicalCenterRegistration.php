@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\StatusTrait;
 
 class MedicalCenterRegistration extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use StatusTrait;
 
     protected $table = 'medical_center_registrations';
 

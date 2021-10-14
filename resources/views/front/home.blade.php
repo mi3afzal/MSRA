@@ -213,7 +213,7 @@
 
         function getcities(state_id) {
             $.ajax({
-                url: "{!! route('getcities') !!}",
+                url: "{!! route('register-getcities') !!}",
                 type: "POST",
                 data: {
                     state_id: state_id,
@@ -228,7 +228,7 @@
 
         function getasuburbs(state_id) {
             $.ajax({
-                url: "{!! route('getasuburbs') !!}",
+                url: "{!! route('register-getasuburbs') !!}",
                 type: "POST",
                 data: {
                     state_id: state_id,

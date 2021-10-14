@@ -35,7 +35,7 @@ class CityController extends Controller
     {
         $title = "cities lists";
         $module = "city";
-        $data = City::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = City::active()->latest()->get();
         return view('admin.city.index', compact('data', 'title', 'module'));
     }
 
@@ -138,9 +138,9 @@ class CityController extends Controller
      */
     public function edit(City $city, $id)
     {
-        $count = City::where("id", $id)->orderBy('created_at', 'desc')->count();
+        $count = City::where("id", $id)->latest()->count();
         if ($count > 0) {
-            $listings = City::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $listings = City::where("id", $id)->latest()->first();
             $title = "city";
             $module = "city";
             return view('admin.city.edit', compact('listings', 'title', 'module'));

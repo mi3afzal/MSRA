@@ -43,7 +43,7 @@ class NewsletterController extends Controller
     {
         $title = "job newsletter lists";
         $module = "newsletters";
-        $newsletters = Newsletter::where("status", "1")->get();
+        $newsletters = Newsletter::active()->get();
         return view('admin.newsletters.index', compact("newsletters", "title", "module"));
     }
 

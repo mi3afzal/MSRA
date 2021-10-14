@@ -26,7 +26,7 @@ class MedicalCenterRegistrationController extends Controller
      */
     public function register_form()
     {
-        $states = State::where("status", "1")->get();
+        $states = State::active()->get();
         return view('front.medicalcenter-register', compact("states"));
     }
 
