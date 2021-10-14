@@ -33,7 +33,7 @@ class JobCategoryController extends Controller
     {
         $title = "jobcategory lists";
         $module = "jobcategory";
-        $data = JobCategory::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = JobCategory::active()->latest()->get();
         return view('admin.jobcategory.index', compact('data', 'title', 'module'));
     }
 
@@ -162,9 +162,9 @@ class JobCategoryController extends Controller
      */
     public function edit(JobCategory $jobcategory, $id)
     {
-        $count = JobCategory::where("id", $id)->orderBy('created_at', 'desc')->count();
+        $count = JobCategory::where("id", $id)->latest()->count();
         if ($count > 0) {
-            $listings = JobCategory::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $listings = JobCategory::where("id", $id)->latest()->first();
             $title = "jobcategory";
             $module = "jobcategory";
             return view('admin.jobcategory.edit', compact('listings', 'title', 'module'));

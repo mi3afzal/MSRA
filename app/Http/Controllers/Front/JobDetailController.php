@@ -25,14 +25,14 @@ class JobDetailController extends Controller
      */
     public function index()
     {
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
-        $sociallinks = SocialLink::where("status", "1")->first();
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
-        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
 
         return view('front.jobdetails', compact("sociallinks", "professions", "specialties", "states", "cities", "suburbs", "jobtypes", "settings"));
     }
@@ -49,18 +49,18 @@ class JobDetailController extends Controller
     public function show(JobDetail $jobDetail, Request $request, $slug)
     {
 
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
-        $sociallinks = SocialLink::where("status", "1")->first();
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
 
-        $count = Job::where(["status" => "1", "slug" => $slug])->count();
+        $count = Job::active()->where(["slug" => $slug])->count();
         if ($count > 0) {
-            $job = Job::where(["status" => "1", "slug" => $slug])
+            $job = Job::active()->where(["slug" => $slug])
                 ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
                 ->first();
 

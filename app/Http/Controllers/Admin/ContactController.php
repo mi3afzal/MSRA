@@ -33,7 +33,7 @@ class ContactController extends Controller
     {
         $title = "contact lists";
         $module = "contact";
-        $data = Contact::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Contact::active()->latest()->get();
         return view('admin.contact.index', compact('data', 'title', 'module'));
     }
 

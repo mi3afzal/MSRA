@@ -32,7 +32,7 @@ class JobTypeController extends Controller
     {
         $title = "jobtype ( services ) lists";
         $module = "jobtype";
-        $data = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
+        $data = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
         return view('admin.jobtype.index', compact('data', 'title', 'module'));
     }
 
@@ -160,9 +160,9 @@ class JobTypeController extends Controller
      */
     public function edit(JobType $jobtype, $id)
     {
-        $count = JobType::where("id", $id)->orderBy('created_at', 'desc')->count();
+        $count = JobType::where("id", $id)->latest()->count();
         if ($count > 0) {
-            $listings = JobType::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $listings = JobType::where("id", $id)->latest()->first();
             $title = "jobtype";
             $module = "Jobtype";
             return view('admin.jobtype.edit', compact('listings', 'title', 'module'));

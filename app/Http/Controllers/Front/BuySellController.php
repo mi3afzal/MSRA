@@ -41,20 +41,20 @@ class BuySellController extends Controller
     {
         // die("Buy and sell");
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
-        $count = BuySell::orderBy('created_at', 'desc')->count();
+        $count = BuySell::latest()->count();
         if ($count > 0) {
-            // $listings = BuySell::orderBy('created_at', 'desc')->first();
-            $listings = BuySell::where("status", "1")->with("associatedImages:id,buysell_id,type,file,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->orderBy('order', 'asc')->get();
-            $sociallinks = SocialLink::where("status", "1")->first();
+            // $listings = BuySell::latest()->first();
+            $listings = BuySell::active()->with("associatedImages:id,buysell_id,type,file,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->orderBy('order', 'asc')->get();
+            $sociallinks = SocialLink::active()->first();
             $settings = Settings::orderBy("created_at", "desc")->first();
-            $totalJobSeekers = User::where(["status" => "1", "role" => 2])->orderBy('created_at', 'desc')->count();
-            $totalMedicalCenters = User::where(["status" => "1", "role" => 3])->orderBy('created_at', 'desc')->count();
-            $totalDoctors = User::where(["status" => "1", "role" => 4])->orderBy('created_at', 'desc')->count();
-            $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-            $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-            $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
-            $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-            $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
+            $totalJobSeekers = User::active()->jobseeker()->latest()->count();
+            $totalMedicalCenters = User::active()->medicalcenter()->latest()->count();
+            $totalDoctors = User::active()->doctor()->latest()->count();
+            $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+            $cities = City::active()->get(["id", "name", "postcode"]);
+            $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+            $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+            $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
             return view('front.buysell', compact("listings", "states", "cities", "suburbs", "sociallinks", "listings", "settings", "jobtypes", "professions", "totalJobSeekers", "totalMedicalCenters", "totalDoctors"));
         } else {
             abort(404, 'No record found');

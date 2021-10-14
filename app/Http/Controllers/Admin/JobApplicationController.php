@@ -42,14 +42,14 @@ class JobApplicationController extends Controller
     {
         $title = "job application lists";
         $module = "jobapplication";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
-        // $cities = City::where("status", "1")->get();
-        // $suburbs = Suburb::where("status", "1")->get();
+        $jobtypes = JobType::active()->get();
+        $jobcategories = JobCategory::active()->get();
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get();
+        $specialities = Specialty::active()->get();
+        $states = State::active()->get();
+        // $cities = City::active()->get();
+        // $suburbs = Suburb::active()->get();
         return view('admin.jobapplications.index', compact("jobtypes", "title", "module"));
     }
 

@@ -25,8 +25,8 @@ class JobSeekerRegistrationController extends Controller
      */
     public function index()
     {
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $professions = Profession::active()->orderBy('profession', 'asc')->get();
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get();
         return view('front.register', compact("professions", "specialties"));
     }
 

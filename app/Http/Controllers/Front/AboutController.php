@@ -23,16 +23,16 @@ class AboutController extends Controller
     public function index(Request $request)
     {
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
-        $count = About::orderBy('created_at', 'desc')->count();
+        $count = About::latest()->count();
         if ($count > 0) {
-            $listings = About::orderBy('created_at', 'desc')->first();
-            $sociallinks = SocialLink::where("status", "1")->first();
-            $settings = Settings::orderBy("created_at", "desc")->first();
-            $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-            $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
-            $totalJobSeekers = User::where(["status" => "1", "role" => 2])->orderBy('created_at', 'desc')->count();
-            $totalMedicalCenters = User::where(["status" => "1", "role" => 3])->orderBy('created_at', 'desc')->count();
-            $totalDoctors = User::where(["status" => "1", "role" => 4])->orderBy('created_at', 'desc')->count();
+            $listings = About::latest()->first();
+            $sociallinks = SocialLink::active()->first();
+            $settings = Settings::latest()->first();
+            $professions = Profession::active()->orderBy('profession', 'asc')->get();
+            $jobtypes = JobType::active()->latest()->get();
+            $totalJobSeekers = User::active()->jobseeker()->latest()->count();
+            $totalMedicalCenters = User::active()->medicalcenter()->latest()->count();
+            $totalDoctors = User::active()->doctor()->latest()->count();
             return view('front.aboutus', compact("sociallinks", "listings", "settings", "jobtypes", "professions", "totalJobSeekers", "totalMedicalCenters", "totalDoctors"));
         } else {
             abort(404, 'No record found');

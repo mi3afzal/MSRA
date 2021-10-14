@@ -45,7 +45,7 @@ class TestimonialController extends Controller
     {
         $title = "testimonial lists";
         $module = "testimonial";
-        $data = Testimonial::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Testimonial::active()->latest()->get();
         return view('jobseeker.testimonial.index', compact('data', 'title', 'module'));
     }
 

@@ -33,7 +33,7 @@ class RecommendationController extends Controller
     {
         $title = "recommendation lists";
         $module = "recommendation";
-        $data = Recommendation::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Recommendation::active()->latest()->get();
         return view('jobseeker.recommendation.index', compact('data', 'title', 'module'));
     }
 
@@ -114,7 +114,7 @@ class RecommendationController extends Controller
     {
         $title = "add recommendation";
         $module = "recommendation";
-        $users = User::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $users = User::active()->latest()->get();
         return view('jobseeker.recommendation.add', compact('title', 'module', 'users'));
     }
 

@@ -41,13 +41,13 @@ class JobController extends Controller
     {
         $title = "job lists";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $data = Job::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $data = Job::active()->latest()->get();
         return view('admin.job.index', compact('data', 'title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
     }
 
@@ -185,14 +185,14 @@ class JobController extends Controller
     {
         $title = "create a job";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        // $cities = City::where("status", "1")->get();
-        // $suburbs = Suburb::where("status", "1")->get();
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        // $cities = City::active()->get();
+        // $suburbs = Suburb::active()->get();
         return view('admin.job.add', compact('title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
     }
 
@@ -283,14 +283,14 @@ class JobController extends Controller
         $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($id);
         $title = "job edit";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $city = City::where(["status" => "1", "id" => $listings->city])->first(["id", "name", "postcode", "state_code"]);
-        $suburb = Suburb::where(["status" => "1", "id" => $listings->suburb])->first(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $city = City::active()->where(["id" => $listings->city])->first(["id", "name", "postcode", "state_code"]);
+        $suburb = Suburb::active()->where(["id" => $listings->suburb])->first(["id", "suburb", "postcode"]);
         return view('admin.job.edit', compact('listings', 'title', 'module', 'jobtypes', 'jobcategories', 'medicalcenters', 'professions', 'specialities', 'states', 'city', 'suburb'));
     }
 
