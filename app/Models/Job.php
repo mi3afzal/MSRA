@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\StatusTrait;
 use App\Traits\JobModelTrait;
+use Illuminate\Pipeline\Pipeline;
+use Session;
 
 class Job extends Model
 {
@@ -17,6 +19,7 @@ class Job extends Model
     use JobModelTrait;
 
     protected $table = 'jobs';
+
     protected $guarded = [];
 
     const EXCERPT_LENGTH = 250;
@@ -44,5 +47,24 @@ class Job extends Model
         $this->attributes['title'] = $value;
         $slug = Str::slug($value, '-');
         $this->attributes['slug'] = strtolower($slug) . "-" . time();
+    }
+
+    public static function searchResult()
+    {
+
+        $jobs = app(Pipeline::class)
+            ->send(\App\Models\Job::query()->active()->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng"))
+            ->through([
+                \App\QueryFilters\JobType::class,
+                \App\QueryFilters\Profession::class,
+                \App\QueryFilters\Specialty::class,
+                \App\QueryFilters\State::class,
+                \App\QueryFilters\City::class,
+                \App\QueryFilters\Suburb::class,
+            ])
+            ->thenReturn()
+            ->get();
+
+        return $jobs;
     }
 }
