@@ -12,7 +12,7 @@
 
                 <form action="{{ route('front.job.search') }}" method="GET" enctype="multipart/form-data">
                     {{ method_field('GET') }}
-                    @csrf
+
                     <input type="hidden" name="profession" id="filter-profession" val="" />
                     <input type="hidden" name="specialty" id="filter-specialty" val="" />
                     <div class="borderbox">
@@ -213,7 +213,7 @@
 
         function getcities(state_id) {
             $.ajax({
-                url: "{!! route('register-getcities') !!}",
+                url: "{!! route('getcities') !!}",
                 type: "POST",
                 data: {
                     state_id: state_id,
@@ -228,7 +228,7 @@
 
         function getasuburbs(state_id) {
             $.ajax({
-                url: "{!! route('register-getasuburbs') !!}",
+                url: "{!! route('getasuburbs') !!}",
                 type: "POST",
                 data: {
                     state_id: state_id,
