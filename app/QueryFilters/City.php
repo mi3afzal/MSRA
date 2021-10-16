@@ -14,6 +14,11 @@ class City
         }
 
         $city = (int) request()->input('cities');
+
+        if (!empty($city)) {
+            request()->session()->put('cities', $city);
+        }
+
         return $next($request)->where('city', $city);
     }
 }

@@ -14,6 +14,11 @@ class JobType
         }
 
         $jobtype = (int) request()->input('jobtype');
+
+        if (!empty($jobtype)) {
+            request()->session()->put('jobtype', $jobtype);
+        }
+
         return $next($request)->where('job_type', $jobtype);
     }
 }

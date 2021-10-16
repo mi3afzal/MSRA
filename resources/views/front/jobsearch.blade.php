@@ -163,7 +163,7 @@
 
                                 </ul>
                                 <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="javascript:void(0);">Read More</a>
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <?php
                                 $param =  $job->id . '+' . $job->slug;
@@ -206,8 +206,9 @@
                                     </li>
 
                                 </ul>
-                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="javascript:void(0);">Read More</a>
+                                <p>
+                                    @excerpt($job->description)
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
                                     <a href="javascript:void(0);" onclick="quickapply(<?php echo $job->id; ?>);" class="linkgreen">Quick Application</a>

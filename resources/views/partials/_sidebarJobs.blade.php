@@ -2,8 +2,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" integrity="sha256-AFAYEOkzB6iIKnTYZOdUf9FFje6lOTYdwRJKwTN5mks=" crossorigin="anonymous"></script>
 <div class="sidebar-css">
     <h4>Filter
-        <a href="{{ route('front.job.clearsearch') }}">
-            <span style="padding-left:55%; text-decoration:none;">Clear</span>
+        <a href="{{ route('front.job.clearsearch') }}" class="btn btn-primary offset-5">
+            Clear
         </a>
 
     </h4>

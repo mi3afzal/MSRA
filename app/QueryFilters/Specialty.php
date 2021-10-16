@@ -14,6 +14,11 @@ class Specialty
         }
 
         $specialty = (int) request()->input('specialty');
+
+        if (!empty($specialty)) {
+            request()->session()->put('specialty', $specialty);
+        }
+
         return $next($request)->where('speciality', request()->input('specialty'));
     }
 }

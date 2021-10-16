@@ -14,6 +14,11 @@ class Suburb
         }
 
         $suburb = (int) request()->input('suburb');
+
+        if (!empty($suburb)) {
+            request()->session()->put('suburb', $suburb);
+        }
+
         return $next($request)->where('suburb', request()->input('suburb'));
     }
 }

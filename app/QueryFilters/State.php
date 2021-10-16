@@ -15,6 +15,11 @@ class State
         }
 
         $state = (int) request()->input('states');
+
+        if (!empty($state)) {
+            request()->session()->put('states', $state);
+        }
+
         return $next($request)->where('state', $state);
     }
 }

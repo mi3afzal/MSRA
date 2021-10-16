@@ -105,10 +105,10 @@ class JobController extends Controller
             $request->session()->put('specialty', $specialty);
         }
 
-        $data = $request->session()->all();
-        // echo "<pre>";
-        // print_r($data);
-        // die;
+        // $data = $request->session()->all();
+        // // echo "<pre>";
+        // // print_r($data);
+        // // die;
 
         $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
         $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);

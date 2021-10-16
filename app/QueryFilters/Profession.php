@@ -14,6 +14,11 @@ class Profession
         }
 
         $profession = (int) request()->input('profession');
+
+        if (!empty($profession)) {
+            request()->session()->put('profession', $profession);
+        }
+
         return $next($request)->where('profession', $profession);
     }
 }
