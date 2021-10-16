@@ -79,7 +79,7 @@
                                     <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
-                                <a href="#" class="card-tittle">{!! $job->title !!}</a>
+                                <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
                                 <span class="jobtype">
                                     {!! $job->associatedJobtype->jobtype !!}
                                 </span>
@@ -98,7 +98,7 @@
 
                                 </ul>
                                 <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
-                                    <a href="javascript:void(0);">Read More</a>
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <?php
                                 $param =  $job->id . '+' . $job->slug;
