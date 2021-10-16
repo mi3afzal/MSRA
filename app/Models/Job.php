@@ -67,7 +67,8 @@ class Job extends Model
                 \App\QueryFilters\Suburb::class,
             ])
             ->thenReturn()
-            ->get();
+            ->simplePaginate(5);
+        // ->get();
 
         return $jobs;
     }
