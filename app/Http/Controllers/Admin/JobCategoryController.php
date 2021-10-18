@@ -74,7 +74,7 @@ class JobCategoryController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('jobcategory.delete', $jobcategorydata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the jobcategory?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('jobcategory.trash', $jobcategorydata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to trash the jobcategory?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
@@ -160,17 +160,12 @@ class JobCategoryController extends Controller
      * @param  \App\Models\JobCategory  $jobcategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(JobCategory $jobcategory, $id)
+    public function edit(JobCategory $jobcategory)
     {
-        $count = JobCategory::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = JobCategory::where("id", $id)->latest()->first();
-            $title = "jobcategory";
-            $module = "jobcategory";
-            return view('admin.jobcategory.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = JobCategory::findOrFail($jobcategory->id);
+        $title = "jobcategory";
+        $module = "jobcategory";
+        return view('admin.jobcategory.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -181,7 +176,7 @@ class JobCategoryController extends Controller
      * @param  \App\Models\JobCategory  $jobcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JobCategory $jobcategory, $id)
+    public function update(Request $request, JobCategory $jobcategory)
     {
         $this->validate(
             $request,
@@ -191,7 +186,7 @@ class JobCategoryController extends Controller
         );
 
         // Update data
-        $jobCategory = JobCategory::find($id);
+        $jobCategory = JobCategory::findOrFail($jobcategory->id);
         $jobCategory->name = $request->input("name");
         $jobCategory->save();
 

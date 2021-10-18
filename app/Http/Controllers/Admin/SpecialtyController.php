@@ -162,17 +162,12 @@ class SpecialtyController extends Controller
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
-    public function edit(Specialty $specialty, $id)
+    public function edit(Specialty $specialty)
     {
-        $count = Specialty::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = Specialty::where("id", $id)->latest()->first();
-            $title = "specialty";
-            $module = "specialty";
-            return view('admin.specialty.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = Specialty::findOrFail($specialty->id);
+        $title = "specialty";
+        $module = "specialty";
+        return view('admin.specialty.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -183,7 +178,7 @@ class SpecialtyController extends Controller
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Specialty $specialty, $id)
+    public function update(Request $request, Specialty $specialty)
     {
         $this->validate(
             $request,
@@ -193,7 +188,7 @@ class SpecialtyController extends Controller
         );
 
         // Update data
-        $specialty = Specialty::find($id);
+        $specialty = Specialty::findOrFail($specialty->id);
         $specialty->specialty = $request->input("specialty");
         $specialty->save();
 

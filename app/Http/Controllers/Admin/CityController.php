@@ -136,17 +136,12 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function edit(City $city, $id)
+    public function edit(City $city)
     {
-        $count = City::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = City::where("id", $id)->latest()->first();
-            $title = "city";
-            $module = "city";
-            return view('admin.city.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = City::findOrFail($city->id);
+        $title = "city";
+        $module = "city";
+        return view('admin.city.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -157,7 +152,7 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city, $id)
+    public function update(Request $request, City $city)
     {
         $this->validate(
             $request,
@@ -168,10 +163,10 @@ class CityController extends Controller
         );
 
         // Update data
-        $state = City::findOrFail($id);
-        $state->name = $request->input("name");
-        $state->postcode = $request->input("postcode");
-        $state->save();
+        $city = City::findOrFail($city->id);
+        $city->name = $request->input("name");
+        $city->postcode = $request->input("postcode");
+        $city->save();
 
         return redirect()->route('admin.city.list')->with('success', 'Details Updated.');
     }

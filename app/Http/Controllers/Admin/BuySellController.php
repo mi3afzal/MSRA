@@ -252,7 +252,7 @@ class BuySellController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('buysell.delete', $buyselldata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the record?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('buysell.delete', $buyselldata->id) . '" class="btn btn-sm btn-danger" title="Trash" onclick="return confirm(\'Do you really want to trash the record?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
@@ -333,17 +333,17 @@ class BuySellController extends Controller
      * Display the specified resource.
      * 
      * @param $id
-     * @param  \App\Models\BuySell  $buySell
+     * @param  \App\Models\BuySell  $buysell
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, BuySell $buySell, $id)
+    public function show(Request $request, BuySell $buysell)
     {
         $title = "Buy / Sell Details";
         $module = "buysell";
         $bstype = $this->bstype;
         $property_type = $this->property_type;
         $promotional_flag = $this->promotional_flag;
-        $buysell = BuySell::with("associatedImages:id,buysell_id,file,type,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng", "createdBy:id,name,email,role")->orderBy("order", "asc")->findOrFail($id);
+        $buysell = BuySell::with("associatedImages:id,buysell_id,file,type,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng", "createdBy:id,name,email,role")->orderBy("order", "asc")->findOrFail($buysell->id);
         return view('admin.buysell.show', compact('title', 'module', 'buysell', "bstype", "property_type", "promotional_flag"));
     }
 
@@ -352,23 +352,18 @@ class BuySellController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param $id
-     * @param  \App\Models\BuySell $buySell
+     * @param  \App\Models\BuySell $buysell
      * @return \Illuminate\Http\Response
      */
-    public function edit(BuySell $buySell, $id)
+    public function edit(BuySell $buysell)
     {
-        $count = BuySell::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
-            $cities = City::active()->get(["id", "name", "postcode"]);
-            $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
-            $listings = BuySell::where("id", $id)->with("associatedImages:id,buysell_id,file,type,order,status")->latest()->first();
-            $title = "buysell";
-            $module = "buysell";
-            return view('admin.buysell.edit', compact('states', 'cities', 'suburbs', 'listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = BuySell::with("associatedImages:id,buysell_id,file,type,order,status")->findOrFail($buysell->id);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+        $title = "buysell";
+        $module = "buysell";
+        return view('admin.buysell.edit', compact('states', 'cities', 'suburbs', 'listings', 'title', 'module'));
     }
 
     /**
@@ -376,10 +371,10 @@ class BuySellController extends Controller
      *
      * @param $id
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BuySell $buySell
+     * @param  \App\Models\BuySell $buysell
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuySell $buySell, $id)
+    public function update(Request $request, BuySell $buysell)
     {
         if ($request->file('images')) {
             if (count($request->file('images')) > 3) {
@@ -411,7 +406,7 @@ class BuySellController extends Controller
         $suburb = (!empty($request->input('suburb'))) ? $request->input('suburb') : $request->input('suburb_id');
 
         // Insert brand data
-        $buySell = BuySell::findOrFail($id);
+        $buySell = BuySell::findOrFail($buysell->id);
         $buySell->user_id = Auth::user()->id;
         $buySell->type = $request->input('type');
         $buySell->property_type = $request->input('property_type');
@@ -431,10 +426,10 @@ class BuySellController extends Controller
 
 
         if (!empty($request->file('images'))) {
-            $buySellMediaCount = BuySellMedia::where("buysell_id", $id)->count();
+            $buySellMediaCount = BuySellMedia::where("buysell_id", $buysell->id)->count();
             if ($buySellMediaCount > 0) {
                 // If Has Image Then Replace.
-                $buySellMedia = BuySellMedia::where("buysell_id", $id)->get();
+                $buySellMedia = BuySellMedia::where("buysell_id", $buysell->id)->get();
                 foreach ($buySellMedia as $key => $val) {
                     $buySellMedia = BuySellMedia::where("buysell_id", $val->buysell_id)->first();
                     $buySellMedia->delete();
@@ -463,7 +458,7 @@ class BuySellController extends Controller
             }
         } else {
             // If Not Then Reorder
-            $buySellMedia = BuySellMedia::where("buysell_id", $id)->get();
+            $buySellMedia = BuySellMedia::where("buysell_id", $buysell->id)->get();
             foreach ($buySellMedia as $key => $val) {
                 $buySellMedia = BuySellMedia::where("id", $val->id)->first();
                 $buySellMedia->order = $request->input($val->id . "_order_image");

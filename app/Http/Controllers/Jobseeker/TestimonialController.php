@@ -132,16 +132,15 @@ class TestimonialController extends Controller
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Testimonial $testimonial, $id)
+    public function show(Request $request, Testimonial $testimonial)
     {
         $title = "Testimonial Details";
         $module = "testimonial";
-        $count = Testimonial::where(["status" => "1", "id" => $id, "user_id" => Auth::user()->id])->with("userdetails", "usermoredetails")->count();
+        $count = Testimonial::where(["status" => "1", "id" => $testimonial->id, "user_id" => Auth::user()->id])->with("userdetails", "usermoredetails")->count();
         if ($count > 0) {
-            $testimonial = Testimonial::where(["status" => "1", "id" => $id, "user_id" => Auth::user()->id])->with("userdetails", "usermoredetails")->first();
+            $testimonial = Testimonial::where(["status" => "1", "id" => $testimonial->id, "user_id" => Auth::user()->id])->with("userdetails", "usermoredetails")->first();
             return view('jobseeker.testimonial.show', compact('title', 'module', 'testimonial'));
         }
-
         abort("404", "Record not found.");
     }
 

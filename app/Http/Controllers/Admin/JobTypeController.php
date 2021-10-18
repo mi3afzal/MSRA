@@ -73,7 +73,7 @@ class JobTypeController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('jobtype.delete', $jobtypedata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the jobtype?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('jobtype.delete', $jobtypedata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to trash this entry?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
@@ -158,17 +158,12 @@ class JobTypeController extends Controller
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */
-    public function edit(JobType $jobtype, $id)
+    public function edit(JobType $jobtype)
     {
-        $count = JobType::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = JobType::where("id", $id)->latest()->first();
-            $title = "jobtype";
-            $module = "Jobtype";
-            return view('admin.jobtype.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = JobType::findOrFail($jobtype->id);
+        $title = "jobtype";
+        $module = "Jobtype";
+        return view('admin.jobtype.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -179,7 +174,7 @@ class JobTypeController extends Controller
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JobType $jobtype, $id)
+    public function update(Request $request, JobType $jobtype)
     {
         $this->validate(
             $request,
@@ -188,10 +183,9 @@ class JobTypeController extends Controller
             ]
         );
 
-        // Update data
-        $jobType = JobType::find($id);
-        $jobType->jobtype = $request->input("jobtype");
-        $jobType->save();
+        $jobCategory = JobType::findOrFail($jobtype->id);
+        $jobCategory->jobtype = $request->input("jobtype");
+        $jobCategory->save();
 
         return redirect()->route('admin.jobtype.list')->with('success', 'Details Updated.');
     }

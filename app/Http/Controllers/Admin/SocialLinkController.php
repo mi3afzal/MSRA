@@ -40,10 +40,10 @@ class SocialLinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SocialLink  $socialLink
+     * @param  \App\Models\SocialLink  $sociallink
      * @return \Illuminate\Http\Response
      */
-    public function edit(SocialLink $socialLink)
+    public function edit(SocialLink $sociallink)
     {
         $count = SocialLink::latest()->count();
         if ($count > 0) {

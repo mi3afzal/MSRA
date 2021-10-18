@@ -74,7 +74,7 @@ class ProfessionController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('profession.delete', $professiondata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the profession?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('profession.delete', $professiondata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to trash the entry?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
@@ -158,17 +158,12 @@ class ProfessionController extends Controller
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profession $profession, $id)
+    public function edit(Profession $profession)
     {
-        $count = Profession::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = Profession::where("id", $id)->latest()->first();
-            $title = "profession";
-            $module = "profession";
-            return view('admin.profession.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = Profession::findOrFail($profession->id);
+        $title = "profession";
+        $module = "profession";
+        return view('admin.profession.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -179,7 +174,7 @@ class ProfessionController extends Controller
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profession $profession, $id)
+    public function update(Request $request, Profession $profession)
     {
         $this->validate(
             $request,
@@ -189,7 +184,7 @@ class ProfessionController extends Controller
         );
 
         // Update data
-        $jobCategory = Profession::findOrFail($id);
+        $jobCategory = Profession::findOrFail($profession->id);
         $jobCategory->profession = $request->input("profession");
         $jobCategory->save();
 

@@ -263,11 +263,11 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Job $job, $id)
+    public function show(Request $request, Job $job)
     {
         $title = "Job Details";
         $module = "job";
-        $job = Job::with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->findOrFail($id);
+        $job = Job::with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->findOrFail($job->id);
         return view('admin.job.show', compact('title', 'module', 'job'));
     }
 
@@ -278,9 +278,9 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function edit(Job $job, $id)
+    public function edit(Job $job)
     {
-        $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($id);
+        $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($job->id);
         $title = "job edit";
         $module = "job";
         $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
@@ -302,7 +302,7 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job, $id)
+    public function update(Request $request, Job $job)
     {
         $this->validate(
             $request,
@@ -328,7 +328,7 @@ class JobController extends Controller
         );
 
         // Update data
-        $job = Job::findOrFail($id);
+        $job = Job::findOrFail($job->id);
         $job->job_type = $request->input('job_type');
         $job->job_category = $request->input('job_category');
         $job->medical_center = $request->input('medical_center');

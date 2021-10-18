@@ -357,6 +357,7 @@
         @endif
 
         @if (Gate::allows('isJobseeker'))
+        <!--         
         <li class="nav-item">
             <a href="javascript:void(0);" class="nav-link <?php if ((url()->current() == route('admin.recommendation.create')) || url()->current() == route('admin.recommendation.list')) {
                                                                 echo 'active';
@@ -388,6 +389,7 @@
                 </li>
             </ul>
         </li>
+         -->
         <li class="nav-item">
             <a href="{{ route('admin.jobapplication.myapplications') }}" class="nav-link <?php if (url()->current() == route('admin.jobapplication.list')) {
                                                                                                 echo 'active';
