@@ -22,17 +22,6 @@ use Illuminate\Support\Facades\Gate;
 class JobController extends Controller
 {
     /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
-
-
-    /**
      * Display a listing of the resource.
      * @return "Returns a view contain the list of Jobs created at the backend."
      * @return \Illuminate\Http\Response

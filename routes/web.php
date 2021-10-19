@@ -152,7 +152,6 @@ Route::post(
 Route::get('admin/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.dashboard')->middleware("loginhistorystore");;
 
 
-
 Route::prefix('admin')->middleware([isAdmin::class, 'auth'])->group(function () {
 
     /**
@@ -447,81 +446,84 @@ Route::prefix('admin')->middleware([isAdmin::class, 'auth'])->group(function () 
     // Settings Front Pages
     Route::get('/setting', [App\Http\Controllers\Admin\SettingsController::class, 'edit'])->name('admin.setting.edit');
     Route::put('/setting/update/{id}', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.setting.update');
-
-
-    // Ajax Route
-    Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class]);
-    Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class]);
-
-    // Ajax Route For Edit
-    Route::post('editgetcities', [App\Http\Controllers\Admin\StateController::class, 'editgetcities'])->name('editgetcities')->withoutMiddleware([isAdmin::class]);
-    Route::post('editgetasuburbs', [App\Http\Controllers\Admin\StateController::class, 'editgetasuburbs'])->name('editgetasuburbs')->withoutMiddleware([isAdmin::class]);
-
-    Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class]);
-
-    // Ajax Routes Registration
-    Route::post('register-getcities', [App\Http\Controllers\Admin\StateController::class, 'register_getcities'])->name('register-getcities')->withoutMiddleware([isAdmin::class]);
-    Route::post('register-getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'register_getasuburbs'])->name('register-getasuburbs')->withoutMiddleware([isAdmin::class]);
 });
 
 
-Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(function () {
-    // Route for medical center profile update.
-    Route::get('/profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('medicalcenterprofile.edit');
-    Route::put('/update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('medicalcenterprofile.update');
-});
+Route::middleware(['auth'])->group(
+    function () {
+        Route::prefix('medical-center')->middleware([IsMedicalCenter::class])->group(function () {
+            // Route for medical center profile update.
+            Route::get('/profile', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'edit'])->name('medicalcenterprofile.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\Admin\MedicalCenterRegistrationController::class, 'update'])->name('medicalcenterprofile.update');
+        });
+
+        Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () {
+
+            // Route Group For testimonial Module.
+            Route::prefix('testimonial')->group(function () {
+                // Route for job seeker.
+                Route::get('/create', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'create'])->name('jobseeker.testimonial.create');
+                Route::post('/store', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'store'])->name('jobseeker.testimonial.store');
+                Route::get('/list', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'lists'])->name('jobseeker.testimonial.list');
+                Route::get('/show/{testimonial}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'show'])->name('jobseeker.testimonial.show');
+
+                Route::get('/enable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'enable'])->name('jobseeker.testimonial.enable');
+                Route::get('/disable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'disable'])->name('jobseeker.testimonial.disable');
+
+                Route::get(
+                    '/datatable',
+                    [App\Http\Controllers\Jobseeker\TestimonialController::class, 'datatable']
+                )->name('testimonial.datatables');
+
+                Route::get(
+                    '/delete/{id}',
+                    [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
+                )->name('testimonial.delete');
+            });
+
+            // Route Group For recommendation Module.
+            Route::prefix('recommendation')->group(function () {
+                // Recommendation Module
+                Route::get('/create', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'create'])->name('admin.recommendation.create');
+
+                Route::post('/store', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'store'])->name('admin.recommendation.store');
+                Route::get('/list', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'lists'])->name('admin.recommendation.list')->withoutMiddleware([isAdmin::class]);
+                Route::get('/show/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'show'])->name('admin.recommendation.show');
+
+                Route::get('/enable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'enable'])->name('admin.recommendation.enable');
+                Route::get('/disable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'disable'])->name('admin.recommendation.disable');
+
+                Route::get(
+                    '/datatable',
+                    [App\Http\Controllers\Jobseeker\RecommendationController::class, 'datatable']
+                )->name('recommendation.datatables')->withoutMiddleware([isAdmin::class]);
+
+                Route::get(
+                    '/delete/{id}',
+                    [App\Http\Controllers\Jobseeker\RecommendationController::class, 'destroy']
+                )->name('recommendation.delete');
+            });
+
+            Route::get('/my-jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'myapplications'])->name('admin.jobapplication.myapplications');
+
+            // Jobseeker Profile Update Routes
+            Route::get('/profile', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'edit'])->name('jobseekerprofile.edit');
+            Route::put('/profile-update/{id}', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'update'])->name('jobseekerprofile.update');
+        });
+    }
+);
 
 
-Route::prefix('jobseeker')->middleware([IsJobSeeker::class])->group(function () {
+// Ajax Route
+Route::post('getcities', [App\Http\Controllers\Admin\StateController::class, 'getcities'])->name('getcities')->withoutMiddleware([isAdmin::class, "auth"]);
+Route::post('getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'getasuburbs'])->name('getasuburbs')->withoutMiddleware([isAdmin::class, "auth"]);
 
-    // Route Group For testimonial Module.
-    Route::prefix('testimonial')->group(function () {
-        // Route for job seeker.
-        Route::get('/create', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'create'])->name('jobseeker.testimonial.create');
-        Route::post('/store', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'store'])->name('jobseeker.testimonial.store');
-        Route::get('/list', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'lists'])->name('jobseeker.testimonial.list');
-        Route::get('/show/{testimonial}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'show'])->name('jobseeker.testimonial.show');
+// Ajax Route For Edit
+Route::post('editgetcities', [App\Http\Controllers\Admin\StateController::class, 'editgetcities'])->name('editgetcities')->withoutMiddleware([isAdmin::class, "auth"]);
+Route::post('editgetasuburbs', [App\Http\Controllers\Admin\StateController::class, 'editgetasuburbs'])->name('editgetasuburbs')->withoutMiddleware([isAdmin::class, "auth"]);
 
-        Route::get('/enable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'enable'])->name('jobseeker.testimonial.enable');
-        Route::get('/disable/{id}', [App\Http\Controllers\Jobseeker\TestimonialController::class, 'disable'])->name('jobseeker.testimonial.disable');
+Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'filterjobs'])->name('filterjobs')->withoutMiddleware([isAdmin::class, "auth"]);
 
-        Route::get(
-            '/datatable',
-            [App\Http\Controllers\Jobseeker\TestimonialController::class, 'datatable']
-        )->name('testimonial.datatables');
-
-        Route::get(
-            '/delete/{id}',
-            [App\Http\Controllers\Jobseeker\TestimonialController::class, 'destroy']
-        )->name('testimonial.delete');
-    });
-
-    // Route Group For recommendation Module.
-    Route::prefix('recommendation')->group(function () {
-        // Recommendation Module
-        Route::get('/create', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'create'])->name('admin.recommendation.create');
-
-        Route::post('/store', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'store'])->name('admin.recommendation.store');
-        Route::get('/list', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'lists'])->name('admin.recommendation.list')->withoutMiddleware([isAdmin::class]);
-        Route::get('/show/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'show'])->name('admin.recommendation.show');
-
-        Route::get('/enable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'enable'])->name('admin.recommendation.enable');
-        Route::get('/disable/{id}', [App\Http\Controllers\Jobseeker\RecommendationController::class, 'disable'])->name('admin.recommendation.disable');
-
-        Route::get(
-            '/datatable',
-            [App\Http\Controllers\Jobseeker\RecommendationController::class, 'datatable']
-        )->name('recommendation.datatables')->withoutMiddleware([isAdmin::class]);
-
-        Route::get(
-            '/delete/{id}',
-            [App\Http\Controllers\Jobseeker\RecommendationController::class, 'destroy']
-        )->name('recommendation.delete');
-    });
-
-    Route::get('/my-jobapplication', [App\Http\Controllers\Admin\JobApplicationController::class, 'myapplications'])->name('admin.jobapplication.myapplications');
-
-    // Jobseeker Profile Update Routes
-    Route::get('/profile', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'edit'])->name('jobseekerprofile.edit');
-    Route::put('/profile-update/{id}', [App\Http\Controllers\Jobseeker\JobSeekerRegistrationController::class, 'update'])->name('jobseekerprofile.update');
-});
+// Ajax Routes Registration
+Route::post('register-getcities', [App\Http\Controllers\Admin\StateController::class, 'register_getcities'])->name('register-getcities')->withoutMiddleware([isAdmin::class, "auth"]);
+Route::post('register-getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'register_getasuburbs'])->name('register-getasuburbs')->withoutMiddleware([isAdmin::class, "auth"]);

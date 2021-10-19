@@ -23,15 +23,6 @@ use Illuminate\Support\Facades\Gate;
 
 class JobApplicationController extends Controller
 {
-    /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Display a listing of the resource.

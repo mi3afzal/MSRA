@@ -33,7 +33,6 @@ class BuySellController extends Controller
      */
     public function __construct(Request $request, BuySell $buySell)
     {
-        $this->middleware('auth');
         $this->bstype = config("constants.bstype");
         $this->property_type = config("constants.property_type");
         $this->promotional_flag = config("constants.promotional_flag");
