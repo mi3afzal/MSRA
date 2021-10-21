@@ -388,6 +388,10 @@ class JobController extends Controller
         $request->session()->forget('suburb');
         $request->session()->forget('profession');
         $request->session()->forget('specialty');
+        $request->session()->forget('postcode');
+        $request->session()->forget('min');
+        $request->session()->forget('max');
+        $request->session()->forget('city');
         return redirect()->route('job');
     }
 }

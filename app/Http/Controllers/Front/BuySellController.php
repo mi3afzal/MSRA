@@ -7,6 +7,7 @@ use App\Models\About;
 use App\Models\SocialLink;
 use App\Models\JobType;
 use App\Models\Profession;
+use App\Models\Specialty;
 use App\Models\BuySell;
 use App\Models\BuySellMedia;
 use App\Models\State;
@@ -59,5 +60,46 @@ class BuySellController extends Controller
         } else {
             abort(404, 'No record found');
         }
+    }
+
+    /**
+     * Search a resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\BuySell  $buysell
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request, BuySell $buysell)
+    {
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
+
+        // Pipeline implementation for searching.
+        $data = BuySell::searchResult();
+
+        $settings = Settings::orderBy("created_at", "desc")->first();
+        return view('front.buysellsearch', compact("sociallinks", "professions", "specialties", "states", "cities", "suburbs", "data", "jobtypes", "settings"));
+    }
+
+    public function clearsearch(Request $request, BuySell $buysell)
+    {
+        $data = $request->session()->all();
+        // echo "<pre>"; print_r($data); die;
+        $request->session()->forget('jobtype');
+        $request->session()->forget('states');
+        $request->session()->forget('cities');
+        $request->session()->forget('suburb');
+        $request->session()->forget('profession');
+        $request->session()->forget('specialty');
+        $request->session()->forget('postcode');
+        $request->session()->forget('min');
+        $request->session()->forget('max');
+        $request->session()->forget('city');
+        return redirect()->route('buysell');
     }
 }

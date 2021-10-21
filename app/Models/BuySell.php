@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\BuySellMediaTrait;
 use App\Traits\StatusTrait;
-
+use Illuminate\Pipeline\Pipeline;
+use Session;
 
 class BuySell extends Model
 {
@@ -57,5 +58,27 @@ class BuySell extends Model
         $this->attributes['title'] = $value;
         $slug = Str::slug($value, '-');
         $this->attributes['slug'] = strtolower($slug) . "-" . time();
+    }
+
+    /**
+     * Search function that implement QueryFilter on Query..
+     * 
+     * @return "returns search result based according to various query filter defined."
+     */
+    public static function searchResult()
+    {
+        $buysells = app(Pipeline::class)
+            ->send(\App\Models\BuySell::query()->active()->with("associatedSuburb"))
+            ->through([
+                \App\QueryFilters\BuySellState::class,
+                \App\QueryFilters\CityString::class,
+                \App\QueryFilters\PostCode::class,
+                \App\QueryFilters\Price::class,
+            ])
+            ->thenReturn()
+            ->simplePaginate(3);
+        // ->get();
+
+        return $buysells;
     }
 }

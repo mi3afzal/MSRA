@@ -26,6 +26,8 @@
             <div class="col-xl-3 col-lg-4">
                 @include('partials._buysellfilter',
                 [
+                'states' => $states,
+                'cities' => $cities,
                 'settings' => $settings,
                 ])
 

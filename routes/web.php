@@ -38,7 +38,7 @@ Route::post('/newsletter', [App\Http\Controllers\Front\NewsletterController::cla
 Route::get('/jobdetails/{slug}', [App\Http\Controllers\Front\JobDetailController::class, 'show'])->name('jobdetails');
 
 
-Route::get('/buy-sale', [App\Http\Controllers\Front\BuySellController::class, 'index'])->name('buysale');
+Route::get('/buy-sell', [App\Http\Controllers\Front\BuySellController::class, 'index'])->name('buysell');
 
 // Job Application Module
 Route::post('/job/quickapply', [App\Http\Controllers\Front\JobApplicationController::class, 'quickapply'])->name('quickapply');
@@ -48,6 +48,10 @@ Route::post('/job/application/store', [App\Http\Controllers\Front\JobApplication
 
 Route::get('/job-search', [App\Http\Controllers\Front\JobController::class, 'search'])->name("front.job.search");
 Route::get('/job-clearsearch', [App\Http\Controllers\Front\JobController::class, 'clearsearch'])->name("front.job.clearsearch");
+
+// Buysell Search
+Route::get('/buysell-search', [App\Http\Controllers\Front\BuySellController::class, 'search'])->name("front.buysell.search");
+Route::get('/buysell-clearsearch', [App\Http\Controllers\Front\BuySellController::class, 'clearsearch'])->name("front.buysell.clearsearch");
 
 
 // Job Achive Routes JobArchiveController
