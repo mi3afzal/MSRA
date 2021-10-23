@@ -18,6 +18,8 @@ use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreJobFormRequest;
+use App\Http\Requests\UpdateJobFormRequest;
 
 class JobController extends Controller
 {
@@ -191,52 +193,12 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreJobFormRequest $request)
     {
-        $this->validate(
-            $request,
-            [
-                'job_type' => 'required',
-                'job_category' => 'required',
-                'medical_center' => 'required',
-                'profession' => 'required',
-                'speciality' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'suburb' => 'required',
-                'rate' => 'required',
-                'work_days' => 'required',
-                'title' => 'required|max:500|unique:jobs',
-                'from_date' => 'required',
-                'to_date' => 'required',
-                'address' => 'required|max:500',
-                'description' => 'required',
-                'practice_offer' => 'required',
-                'essential_criteria' => 'required',
-            ]
-        );
-
-        $job = new Job;
-        $job->job_type = $request->input('job_type');
-        $job->job_category = $request->input('job_category');
-        $job->medical_center = $request->input('medical_center');
-        $job->profession = $request->input('profession');
-        $job->speciality = $request->input('speciality');
-        $job->state = $request->input('state');
-        $job->city = $request->input('city');
-        $job->suburb = $request->input('suburb');
-        $job->rate = $request->input('rate');
-        $job->work_days = $request->input('work_days');
-        $job->title = $request->input('title');
-        $job->from_date = $request->input('from_date');
-        $job->to_date = $request->input('to_date');
-        $job->address = $request->input('address');
-        $job->description = $request->input('description');
-        $job->practice_offer = $request->input('practice_offer');
-        $job->essential_criteria = $request->input('essential_criteria');
-        $job->user_id = Auth::user()->id;
-        $job->save();
-
+        $request->merge(["user_id" => Auth::user()->id]);
+        $validated = $request->validated();
+        $input = $request->all();
+        $user = Job::create($input);
         return redirect()->route('admin.job.list')->with('success', 'Job created added successfully.');
     }
 
@@ -285,52 +247,12 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(UpdateJobFormRequest $request, Job $job)
     {
-        $this->validate(
-            $request,
-            [
-                'job_type' => 'required',
-                'job_category' => 'required',
-                'medical_center' => 'required',
-                'profession' => 'required',
-                'speciality' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'suburb' => 'required',
-                'rate' => 'required',
-                'work_days' => 'required',
-                'title' => 'required|max:500',
-                'from_date' => 'required',
-                'to_date' => 'required',
-                'address' => 'required|max:500',
-                'description' => 'required',
-                'practice_offer' => 'required',
-                'essential_criteria' => 'required',
-            ]
-        );
-
-        // Update data
-        $job = Job::findOrFail($job->id);
-        $job->job_type = $request->input('job_type');
-        $job->job_category = $request->input('job_category');
-        $job->medical_center = $request->input('medical_center');
-        $job->profession = $request->input('profession');
-        $job->speciality = $request->input('speciality');
-        $job->state = $request->input('state');
-        $job->city = $request->input('city');
-        $job->suburb = $request->input('suburb');
-        $job->rate = $request->input('rate');
-        $job->work_days = $request->input('work_days');
-        $job->title = $request->input('title');
-        $job->from_date = $request->input('from_date');
-        $job->to_date = $request->input('to_date');
-        $job->address = $request->input('address');
-        $job->description = $request->input('description');
-        $job->practice_offer = $request->input('practice_offer');
-        $job->essential_criteria = $request->input('essential_criteria');
-        $job->user_id = Auth::user()->id;
-        $job->save();
+        $request->merge(["user_id" => Auth::user()->id]);
+        $validated = $request->validated();
+        $input = $request->all();
+        $user = $job->update($input);
 
         return redirect()->route('admin.job.list')->with('success', 'Details Updated.');
     }

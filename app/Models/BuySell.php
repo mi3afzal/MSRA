@@ -24,7 +24,11 @@ class BuySell extends Model
 
     // const EXCERPT_LENGTH = 250;
 
-    protected $fillable = ['description', 'user_id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'type', 'property_type', 'promotional_flag', 'state_id',
+        'city_id', 'suburb_id', 'price', 'title', 'number',
+        'email', 'description', 'user_id', 'created_at', 'updated_at'
+    ];
 
     /**
      * Function for return excerpt of given text.

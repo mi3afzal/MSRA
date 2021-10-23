@@ -64,8 +64,6 @@ class MedicalCenterRegistrationController extends Controller
             'address' => 'max:500',
         ]);
 
-
-
         // Update data
         $user = User::find($id);
         $user->name = $request->input("name");

@@ -20,6 +20,9 @@ use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreBuySellRequest;
+use App\Http\Requests\UpdateBuySellRequest;
+use Illuminate\Support\Facades\DB;
 
 class BuySellController extends Controller
 {
@@ -88,7 +91,7 @@ class BuySellController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, BuySell $buySell)
+    public function store(StoreBuySellRequest $request, BuySell $buySell)
     {
         if ($request->file('images')) {
             if (count($request->file('images')) > 3) {
@@ -96,54 +99,39 @@ class BuySellController extends Controller
             }
         }
 
-        // BuySellMedia
-        $this->validate(
-            $request,
-            [
-                'type' => 'required',
-                'property_type' => 'required',
-                'promotional_flag' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'suburb' => 'required',
-                'price' => 'required',
-                'title' => 'required|max:250',
-                'number' => 'required',
-                'email' => 'required|max:250',
-                'description' => 'required|max:600',
-            ]
-        );
+        DB::beginTransaction();
 
-        // Insert brand data
-        $buySell = new BuySell;
-        $buySell->user_id = Auth::user()->id;
-        $buySell->type = $request->input('type');
-        $buySell->property_type = $request->input('property_type');
-        $buySell->promotional_flag = $request->input('promotional_flag');
-        $buySell->state_id = $request->input('state');
-        $buySell->city_id = $request->input('city');
-        $buySell->suburb_id = $request->input('suburb');
-        $buySell->price = $request->input('price');
-        $buySell->title = $request->input('title');
-        $buySell->description = $request->input('description');
-        $buySell->number = $request->input('number');
-        $buySell->email = $request->input('email');
-        $buySell->rating = $request->input('rating');
-        $buySell->save();
+        try {
+            $request->merge([
+                "user_id" => Auth::user()->id,
+                "state_id" => $request->input('state'),
+                "city_id" => $request->input('city'),
+                "suburb_id" => $request->input('suburb')
+            ]);
+            $validated = $request->validated();
+            $input = $request->all();
+            $buySell = BuySell::create($input);
 
-        foreach ($request->file('images') as $key => $value) {
-            $nam = ($request->input('state')) . "_" . ($request->input('city'));
-            $name = $key . '_' . $nam . '_image_' . time() . '.' . $value->getClientOriginalExtension();
-            $destinationPath = public_path('/images/buysell');
-            $value->move($destinationPath, $name);
+            foreach ($request->file('images') as $key => $value) {
+                $nam = ($request->input('state')) . "_" . ($request->input('city'));
+                $name = $key . '_' . $nam . '_image_' . time() . '.' . $value->getClientOriginalExtension();
+                $destinationPath = public_path('/images/buysell');
+                $value->move($destinationPath, $name);
 
-            // Insert Image into Buy media.
-            $buySellMedia = new BuySellMedia;
-            $buySellMedia->file = (isset($name)) ? $name : "default.png";
-            $buySellMedia->type = "1";
-            $buySellMedia->user_id = Auth::user()->id;
-            $buySellMedia->buysell_id = $buySell->id;
-            $buySellMedia->save();
+                // Insert Image into Buy media.
+                $buySellMedia = new BuySellMedia;
+                $buySellMedia->file = (isset($name)) ? $name : "default.png";
+                $buySellMedia->type = "1";
+                $buySellMedia->user_id = Auth::user()->id;
+                $buySellMedia->buysell_id = $buySell->id;
+                $buySellMedia->save();
+            }
+
+            DB::commit();
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
         }
 
         return redirect()->route('admin.buysell.create')->with('success', 'Property added successfully.');
@@ -354,7 +342,7 @@ class BuySellController extends Controller
      * @param  \App\Models\BuySell $buysell
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuySell $buysell)
+    public function update(UpdateBuySellRequest $request, BuySell $buysell)
     {
         if ($request->file('images')) {
             if (count($request->file('images')) > 3) {
@@ -362,48 +350,15 @@ class BuySellController extends Controller
             }
         }
 
-        // BuySellMedia
-        $this->validate(
-            $request,
-            [
-                'type' => 'required',
-                'property_type' => 'required',
-                'promotional_flag' => 'required',
-                // 'state' => 'required',
-                // 'city' => 'required',
-                // 'suburb' => 'required',
-                'price' => 'required',
-                // 'order' => 'unique:buy_sells,order,' . $buySell->order,
-                'title' => 'required|max:250',
-                'number' => 'required',
-                'email' => 'required|max:250',
-                'description' => 'required|max:600',
-            ]
-        );
-
-        $state = (!empty($request->input('state'))) ? $request->input('state') : $request->input('state_id');
-        $city = (!empty($request->input('city'))) ? $request->input('city') : $request->input('city_id');
-        $suburb = (!empty($request->input('suburb'))) ? $request->input('suburb') : $request->input('suburb_id');
-
-        // Insert brand data
-        $buySell = BuySell::findOrFail($buysell->id);
-        $buySell->user_id = Auth::user()->id;
-        $buySell->type = $request->input('type');
-        $buySell->property_type = $request->input('property_type');
-        $buySell->promotional_flag = $request->input('promotional_flag');
-        $buySell->state_id = $state;
-        $buySell->city_id = $city;
-        $buySell->suburb_id = $suburb;
-        $buySell->price = $request->input('price');
-        $buySell->title = $request->input('title');
-        $buySell->description = $request->input('description');
-        $buySell->number = $request->input('number');
-        $buySell->email = $request->input('email');
-        $buySell->rating = $request->input('rating');
-        $buySell->order = $request->input('order');
-        $buySell->save();
-
-
+        $request->merge([
+            "user_id" => Auth::user()->id,
+            "state_id" => $request->input('state_id'),
+            "city_id" => $request->input('city_id'),
+            "suburb_id" => $request->input('suburb_id')
+        ]);
+        $validated = $request->validated();
+        $input = $request->all();
+        $buySell = $buysell->update($input);
 
         if (!empty($request->file('images'))) {
             $buySellMediaCount = BuySellMedia::where("buysell_id", $buysell->id)->count();
@@ -445,7 +400,6 @@ class BuySellController extends Controller
                 $buySellMedia->save();
             }
         }
-
 
         return redirect()->route('admin.buysell.list')->with('success', 'Property updated successfully.');
     }
