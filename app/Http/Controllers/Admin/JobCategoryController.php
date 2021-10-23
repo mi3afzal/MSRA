@@ -134,12 +134,6 @@ class JobCategoryController extends Controller
         $jobcategory->user_id = Auth::user()->id;
         $jobcategory->save();
 
-        $str = "JBCAT";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobcategory->id;
-
-        $jobcategory->unique_code = $uid;
-        $jobcategory->save();
-
         return redirect()->route('admin.jobcategory.list')->with('success', 'Job Category added successfully.');
     }
 

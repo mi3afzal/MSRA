@@ -131,19 +131,6 @@ class BuySellController extends Controller
         $buySell->rating = $request->input('rating');
         $buySell->save();
 
-        $str = "BYSLL";
-        $uid = str_pad(
-            $str,
-            10,
-            "0",
-            STR_PAD_RIGHT
-        ) . $buySell->id;
-
-        $buySell->order = $buySell->id;
-        $buySell->unique_code = $uid;
-        $buySell->save();
-
-
         foreach ($request->file('images') as $key => $value) {
             $nam = ($request->input('state')) . "_" . ($request->input('city'));
             $name = $key . '_' . $nam . '_image_' . time() . '.' . $value->getClientOriginalExtension();
@@ -156,12 +143,6 @@ class BuySellController extends Controller
             $buySellMedia->type = "1";
             $buySellMedia->user_id = Auth::user()->id;
             $buySellMedia->buysell_id = $buySell->id;
-            $buySellMedia->save();
-
-            $str = "BYSLMD";
-            $ubid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $buySellMedia->id;
-
-            $buySellMedia->unique_code = $ubid;
             $buySellMedia->save();
         }
 

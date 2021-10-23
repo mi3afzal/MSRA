@@ -132,12 +132,6 @@ class JobTypeController extends Controller
         $jobtype->user_id = Auth::user()->id;
         $jobtype->save();
 
-        $str = "JBTP";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobtype->id;
-
-        $jobtype->unique_id = $uid;
-        $jobtype->save();
-
         return redirect()->route('admin.jobtype.list')->with('success', 'Job Type added successfully.');
     }
 

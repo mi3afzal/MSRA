@@ -133,12 +133,6 @@ class ProfessionController extends Controller
         $profession->user_id = Auth::user()->id;
         $profession->save();
 
-        $str = "PROFS";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $profession->id;
-
-        $profession->unique_code = $uid;
-        $profession->save();
-
         return redirect()->route('admin.profession.list')->with('success', 'Profession added successfully.');
     }
 

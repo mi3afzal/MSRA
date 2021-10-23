@@ -137,12 +137,6 @@ class SpecialtyController extends Controller
         $specialty->user_id = Auth::user()->id;
         $specialty->save();
 
-        $str = "SPETY";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $specialty->id;
-
-        $specialty->unique_code = $uid;
-        $specialty->save();
-
         return redirect()->route('admin.specialty.list')->with('success', 'Specialty added successfully.');
     }
 

@@ -237,12 +237,6 @@ class JobController extends Controller
         $job->user_id = Auth::user()->id;
         $job->save();
 
-        $str = "JBPST";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $job->id;
-
-        $job->unique_code = $uid;
-        $job->save();
-
         return redirect()->route('admin.job.list')->with('success', 'Job created added successfully.');
     }
 

@@ -61,12 +61,6 @@ class JobApplicationController extends Controller
         $jobApplication->job_type = $request->input("job_type");
         $jobApplication->save();
 
-        $str = "JOBALTN";
-        $ubid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobApplication->id;
-
-        $jobApplication->unique_code = $ubid;
-        $jobApplication->save();
-
         return redirect()->route('job')->with('success', 'Application sent successfully.');
     }
 

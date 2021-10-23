@@ -57,12 +57,6 @@ class ContactController extends Controller
         $contact->message = $request->input('message');
         $contact->save();
 
-        $str = "CNCT";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $contact->id;
-
-        $contact->unique_code = $uid;
-        $contact->save();
-
         return redirect()->route('contactus')->with('success', 'Your quote has been submitted successfully, wait for the response.');
     }
 }
