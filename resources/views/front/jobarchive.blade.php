@@ -55,7 +55,7 @@
 
                                 </ul>
                                 <p>
-                                    {!! Str::limit($jobarchive->description, $limit = 250, $end = '...') !!}
+                                    @excerpt($jobarchive->description)
                                     <a href="{{route('jobarchivedetails', [$jobarchive->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
@@ -95,7 +95,8 @@
                                     </li>
 
                                 </ul>
-                                <p>{!! Str::limit($jobarchive->description, $limit = 250, $end = '...') !!}
+                                <p>
+                                    @excerpt($jobarchive->description)
                                     <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">

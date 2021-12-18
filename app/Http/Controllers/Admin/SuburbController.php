@@ -34,7 +34,7 @@ class SuburbController extends Controller
     {
         $title = "suburb lists";
         $module = "suburb";
-        $data = Suburb::where("status", "1")->orderBy('id', 'asc')->get();
+        $data = Suburb::active()->orderBy('id', 'asc')->get();
         return view('admin.suburb.index', compact('data', 'title', 'module'));
     }
 

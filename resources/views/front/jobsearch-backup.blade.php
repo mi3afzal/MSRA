@@ -2,18 +2,20 @@
 [
 'settings' => $settings,
 ])
-@include('partials._bootstrapModal')
+
 <section class=" innerbanner text-center" style="background: url(images/dreamjobbg.png) top center no-repeat;">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="borderbox">
-                    <h3 class="text-uppercase">General Practice</h3>
+                    <h3>General Practice</h3>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
 <section class="latestjob">
     <div class="container">
         <div class="row">
@@ -23,6 +25,7 @@
         </div>
         <div class="row">
             <div class="col-xl-3 col-lg-4">
+
                 @include('partials._sidebarJobs',
                 [
                 'professions' => $professions,
@@ -32,6 +35,7 @@
                 'cities' => $cities,
                 'suburbs' => $suburbs,
                 ])
+
                 <ul class="fixedbutton list-unstyled d-none  d-xl-block d-lg-block">
                     <li>
                         <a href="#">
@@ -64,28 +68,37 @@
             </div>
             <div class="col-xl-9 col-lg-8">
                 <div class="topheadingbar">
-                    <h3>Job Type</h3>
+                    <h3>Job Type </h3>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Permanent</button>
+                            <button class="nav-link <?php if (isset($_GET["jobtype"]) && ($_GET["jobtype"] == 1)) {
+                                                        echo "active";
+                                                    } ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Permanent</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Locum</button>
+                            <button class="nav-link <?php if (isset($_GET["jobtype"]) && ($_GET["jobtype"] == 2)) {
+                                                        echo "active";
+                                                    } ?>" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Locum</button>
                         </li>
+
                     </ul>
+
                 </div>
-                <div class="joblisting" id="js-joblisting">
+                <div class="joblisting">
                     <div class="tab-content" id="myTabContent">
                         @if(count($jobs) > 0 )
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                        <div class="tab-pane fade <?php if (isset($_GET["jobtype"]) && ($_GET["jobtype"] == 1)) {
+                                                        echo "show active";
+                                                    } ?>" id="home" role="tabpanel" aria-labelledby="home-tab">
                             @foreach($jobs as $job )
                             @if($job->job_type == 1)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M, Y', strtotime($job->created_at)); }}</strong>
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
-                                <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
+                                <a href="#" class="card-tittle">{!! $job->title !!}</a>
                                 <span class="jobtype">
                                     {!! $job->associatedJobtype->jobtype !!}
                                 </span>
@@ -101,29 +114,78 @@
                                         <i class="far fa-clock"></i>
                                         {!! $job->work_days !!}
                                     </li>
+
                                 </ul>
-                                <p>
-                                    {!! $job->excerpt() !!}
-                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
+                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
+                                    <a href="javascript:void(0);">Read More</a>
                                 </p>
+                                <?php
+                                $param =  $job->id . '+' . $job->slug;
+                                ?>
                                 <div class="bottombar">
-                                    <a href="javascript:void(0);" data-toggle="modal" onclick="quickapply(<?php echo $job->id; ?>);" class="linkgreen">Quick Application</a>
+                                    <a href="javascript:void(0);" onclick="quickapply(<?php echo $job->id; ?>);" class="linkgreen">Quick Application</a>
                                     <span>|</span>
-                                    <?php
-                                    $param =  $job->id . '+' . $job->slug;
-                                    ?>
                                     <a href="javascript:void(0);" onclick="applyform('<?php echo $param; ?>');" class="linkblue">Apply Now</a>
                                 </div>
+
                             </div>
                             @endif
                             @endforeach
+
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                        <div class="tab-pane fade <?php if (isset($_GET["jobtype"]) && ($_GET["jobtype"] == 2)) {
+                                                        echo "show active";
+                                                    } ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             @foreach($jobs as $job )
                             @if($job->job_type == 2)
                             <div class="card">
                                 <div class="jobdate">
-                                    <strong>{{ date('d M, Y', strtotime($job->created_at)); }}</strong>
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
+                                    <span>Job Id: {!! $job->unique_code !!}</span>
+                                </div>
+                                <a href="#" class="card-tittle">{!! $job->title !!}</a>
+                                <span class="jobtype">
+                                    {!! $job->associatedJobtype->jobtype !!}
+                                </span>
+                                <ul class="joblabels">
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {!! $job->jobcategory->name !!}
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-dollar-sign"></i>{!! $job->rate !!}
+                                    </li>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                        {!! $job->work_days !!}
+                                    </li>
+
+                                </ul>
+                                <p>Are you looking to hit the ground running ? Enjoy been kept busy with a influx of patients? Wanting to work for a practice with fully...
+                                    <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
+                                </p>
+                                <?php
+                                $param =  $job->id . '+' . $job->slug;
+                                ?>
+                                <div class="bottombar">
+                                    <a href="javascript:void(0);" onclick="quickapply(<?php echo $job->id; ?>);" class="linkgreen">Quick Application</a>
+                                    <span>|</span>
+                                    <a href="javascript:void(0);" onclick="applyform('<?php echo $param; ?>');" class="linkblue">Apply Now</a>
+                                </div>
+
+                            </div>
+                            @endif
+                            @endforeach
+                        </div>
+
+                        <div class="tab-pane fade <?php if (empty($_GET["jobtype"])) {
+                                                        echo "show active";
+                                                    } ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            @foreach($jobs as $job )
+                            <div class="card">
+                                <div class="jobdate">
+                                    <strong>{{ date('d M', strtotime($job->created_at)); }}</strong>
                                     <span>Job Id: {!! $job->unique_code !!}</span>
                                 </div>
                                 <a href="{{route('jobdetails', [$job->slug])}}" class="card-tittle">{!! $job->title !!}</a>
@@ -142,24 +204,27 @@
                                         <i class="far fa-clock"></i>
                                         {!! $job->work_days !!}
                                     </li>
+
                                 </ul>
-                                <p>@excerpt($job->description)
+                                <p>
+                                    @excerpt($job->description)
                                     <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">
-                                    <a href="javascript:void(0);" data-toggle="modal" onclick="quickapply(<?php echo $job->id; ?>);" class="linkgreen">Quick Application</a>
+                                    <a href="javascript:void(0);" onclick="quickapply(<?php echo $job->id; ?>);" class="linkgreen">Quick Application</a>
                                     <span>|</span>
                                     <a href="javascript:void(0);" onclick="applyform('<?php echo $param; ?>');" class="linkblue">Apply Now</a>
                                 </div>
+
                             </div>
-                            @endif
                             @endforeach
                         </div>
                         @else
                         <div class=" card text-muted text-center">
-                            <h3> <strong>CURRENTY NO JOB OPENING </strong></h3>
+                            <h3> <strong>CURRENTY NO JOB OPENING FOR THIS CRITERIA</strong></h3>
                         </div>
                         @endif
+
                     </div>
                 </div>
                 <ul class="fixedbutton list-unstyled d-xl-none d-lg-none">
@@ -192,15 +257,16 @@
                     </li>
                 </ul>
             </div>
-            <div id="job_ajax">
-            </div>
         </div>
     </div>
 </section>
+
+
 <div class="modal fade" id="quickapply" tabindex="-1" aria-labelledby="quickapplyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-green">
+
                 <h4 class="modal-title" id="quickapplyModalLabel">
                     Quick Apply
                 </h4>
@@ -230,10 +296,13 @@
                         </div>
                         @endif
                     </div>
+
                     <input type="hidden" name="job_id" value="" class="job_id" id="job_id" />
+
                     <div class="input-group">
                         <label for="cv" class="col-form-label">Upload C.V.</label>
                     </div>
+
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Upload C.V.</span>
@@ -243,6 +312,7 @@
                             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
                     </div>
+
                     @if(isset($jobtypes))
                     <div class="form-group mt-3">
                         <label for="job_type" class="col-form-label">Job Type:</label>
@@ -256,6 +326,7 @@
                         </select>
                     </div>
                     @endif
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -265,6 +336,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -288,8 +360,10 @@
                                 @endif
                             </div>
                         </div>
+
                         <input type="hidden" name="apply_job_id" id="apply_job_id" value="" />
                         <input type="hidden" name="slug" id="slug" value="" />
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Last Name</label>
@@ -301,6 +375,7 @@
                                 @endif
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
@@ -312,6 +387,7 @@
                                 @endif
                             </div>
                         </div>
+
                         <div class=" col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Contact Number</label>
@@ -387,6 +463,7 @@
                             </div>
                         </div>
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -396,16 +473,19 @@
         </div>
     </div>
 </div>
+
 @if (session('quickapplication'))
 <script>
     $('#quickapply').modal('show');
 </script>
 @endif
+
 @if (session('application'))
 <script>
     $('#exampleModal1').modal('show');
 </script>
 @endif
+
 <script>
     function quickapply(id) {
         $("#job_id").val(id);
@@ -452,5 +532,6 @@
         $('#quickapply').modal('hide');
     }
 </script>
+
 @include('partials._downloadApp', ['sociallinks' => $sociallinks])
-@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings,"professions" => $professions, "jobtypes" => $jobtypes])
+@include('partials._footer', ['sociallinks' => $sociallinks, "settings" => $settings, "professions" => $professions, "jobtypes" => $jobtypes])

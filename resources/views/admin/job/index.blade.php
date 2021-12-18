@@ -31,15 +31,6 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-lg-12 text-muted">
-                    <div class="col-lg-4">
-                        <h3>FILTERS</h3>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="row col-md-12">
                 <div class="col-md-3">
                     <div class="form-group">

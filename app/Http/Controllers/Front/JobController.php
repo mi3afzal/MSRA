@@ -16,6 +16,7 @@ use App\Models\Settings;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use QueryHelper;
+use Illuminate\Pipeline\Pipeline;
 
 class JobController extends Controller
 {
@@ -26,15 +27,15 @@ class JobController extends Controller
      */
     public function index()
     {
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
-        $sociallinks = SocialLink::where("status", "1")->first();
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
         $settings = Settings::orderBy("created_at", "desc")->first();
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
-        $jobs = Job::where("status", "1")->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->get();
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
+        $jobs = Job::active()->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->get();
         // QueryHelper::logquery($jobs);
         return view('front.jobs', compact("jobtypes", "sociallinks", "professions", "specialties", "states", "cities", "suburbs", "jobs", "settings"));
     }
@@ -48,270 +49,16 @@ class JobController extends Controller
      */
     public function search(Request $request, Job $job)
     {
-        $jobtype = (int) $request->input("jobtype");
-        $state = (int) $request->input("states");
-        $city = (int) $request->input("cities");
-        $suburb = (int) $request->input("suburb");
-        $profession = (int) $request->input("profession");
-        $specialty = (int) $request->input("specialty");
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
 
-        if (!empty($jobtype)) {
-            $request->session()->put('jobtype', $jobtype);
-        }
-
-        if (!empty($state)) {
-            $request->session()->put('states', $state);
-        }
-
-        if (!empty($city)) {
-            $request->session()->put('cities', $city);
-        }
-
-        if (!empty($suburb)) {
-            $request->session()->put('suburb', $suburb);
-        }
-
-        if (!empty($profession)) {
-            $request->session()->put('profession', $profession);
-        }
-
-        if (!empty($specialty)) {
-            $request->session()->put('specialty', $specialty);
-        }
-
-        $data = $request->session()->all();
-        // echo "<pre>";
-        // print_r($data);
-        // die;
-
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
-        $sociallinks = SocialLink::where("status", "1")->first();
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
-
-        $sjobtype = $request->session()->get('jobtype');
-        $sstate = $request->session()->get('states');
-        $scity = $request->session()->get('cities');
-        $ssuburb = $request->session()->get('suburb');
-        $sprofession = $request->session()->get('profession');
-        $sspecialty = $request->session()->get('specialty');
-
-        if (!empty($sjobtype) && !empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "state" => $sstate,
-                    "city" => $scity,
-                    "suburb" => $ssuburb
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && !empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "state" => $sstate,
-                    "city" => $scity
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && !empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "state" => $sstate,
-                    "city" => $scity,
-                    "suburb" => $ssuburb
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && !empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "state" => $sstate,
-                    "city" => $scity,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "state" => $sstate,
-                    "suburb" => $ssuburb
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "city" => $scity,
-                    "suburb" => $ssuburb
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "city" => $scity,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "suburb" => $ssuburb
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "state" => $sstate
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "state" => $sstate
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && !empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "state" => $sstate,
-                    "profession" => $sprofession,
-                    "speciality" => $sspecialty,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "state" => $sstate,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "state" => $sstate,
-                    "profession" => $sprofession,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "state" => $sstate,
-                    "profession" => $sprofession,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "profession" => $sprofession,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && !empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "profession" => $sprofession,
-                    "speciality" => $sspecialty,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $sjobtype,
-                    "speciality" => $sspecialty,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "state" => $sstate,
-                    "speciality" => $sspecialty,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "profession" => $sprofession,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "speciality" => $sspecialty,
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        } else {
-            $jobs = Job::where(
-                [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype')
-                ]
-            )
-                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
-                ->get();
-        }
+        // Pipeline implementation for searching.
+        $jobs = Job::searchResult();
 
         $settings = Settings::orderBy("created_at", "desc")->first();
         return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "cities", "suburbs", "jobs", "jobtypes", "settings"));
@@ -319,13 +66,13 @@ class JobController extends Controller
 
 
     /**
-     * Search a resource in storage.
+     * Search a resource in storage (Previous approch).
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function searchold(Request $request, Job $job)
+    public function search_backup(Request $request, Job $job)
     {
         $jobtype = (int) $request->input("jobtype");
         $state = (int) $request->input("states");
@@ -358,171 +105,221 @@ class JobController extends Controller
             $request->session()->put('specialty', $specialty);
         }
 
-        $data = $request->session()->all();
+        // $data = $request->session()->all();
+        // // echo "<pre>";
+        // // print_r($data);
+        // // die;
 
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
-        $sociallinks = SocialLink::where("status", "1")->first();
-        $states = State::where("status", "1")->get();
-        $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
 
-        if (!empty($request->session()->get('jobtype')) && !empty($sstate) && !empty($scity) && !empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        $sjobtype = $request->session()->get('jobtype');
+        $sstate = $request->session()->get('states');
+        $scity = $request->session()->get('cities');
+        $ssuburb = $request->session()->get('suburb');
+        $sprofession = $request->session()->get('profession');
+        $sspecialty = $request->session()->get('specialty');
+
+        if (!empty($sjobtype) && !empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "state" => $request->session()->get('states'),
+                    "job_type" => $sjobtype,
+                    "state" => $sstate,
                     "city" => $scity,
-                    "suburb" => $request->session()->get('suburb')
+                    "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && !empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (!empty($sjobtype) && !empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "state" => $request->session()->get('states'),
+                    "job_type" => $sjobtype,
+                    "state" => $sstate,
                     "city" => $scity
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && !empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "state" => $request->session()->get('states')
+                    "state" => $sstate,
+                    "city" => $scity,
+                    "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && !empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "state" => $request->session()->get('states')
+                    "state" => $sstate,
+                    "city" => $scity,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && !empty($request->session()->get('profession')) && !empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "state" => $request->session()->get('states'),
-                    "profession" => $request->session()->get('profession'),
-                    "speciality" => $request->session()->get('specialty'),
+                    "state" => $sstate,
+                    "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "state" => $request->session()->get('states'),
+                    "city" => $scity,
+                    "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && !empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && empty($sstate) && !empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "state" => $request->session()->get('states'),
-                    "profession" => $request->session()->get('profession'),
+                    "city" => $scity,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && !empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && !empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "state" => $request->session()->get('states'),
-                    "profession" => $request->session()->get('profession'),
+                    "suburb" => $ssuburb
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && !empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "profession" => $request->session()->get('profession'),
+                    "job_type" => $sjobtype,
+                    "state" => $sstate
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && !empty($request->session()->get('profession')) && !empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "profession" => $request->session()->get('profession'),
-                    "speciality" => $request->session()->get('specialty'),
+                    "state" => $sstate
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (!empty($request->session()->get('jobtype')) && empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && !empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && !empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "job_type" => $request->session()->get('jobtype'),
-                    "speciality" => $request->session()->get('specialty'),
+                    "job_type" => $sjobtype,
+                    "state" => $sstate,
+                    "profession" => $sprofession,
+                    "speciality" => $sspecialty,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (empty($request->session()->get('jobtype')) && !empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && !empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "state" => $request->session()->get('states'),
-                    "speciality" => $request->session()->get('specialty'),
+                    "job_type" => $sjobtype,
+                    "state" => $sstate,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (empty($request->session()->get('jobtype')) && empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && !empty($request->session()->get('profession')) && empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (!empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "profession" => $request->session()->get('profession'),
+                    "job_type" => $sjobtype,
+                    "state" => $sstate,
+                    "profession" => $sprofession,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
-        } elseif (empty($request->session()->get('jobtype')) && empty($request->session()->get('states')) && empty($scity) && empty($request->session()->get('suburb')) && empty($request->session()->get('profession')) && !empty($request->session()->get('specialty'))) {
-            $jobs = Job::where(
+        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
-                    "speciality" => $request->session()->get('specialty'),
+                    "state" => $sstate,
+                    "profession" => $sprofession,
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
+                ->get();
+        } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
+                [
+                    "job_type" => $sjobtype,
+                    "profession" => $sprofession,
+                ]
+            )
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
+                ->get();
+        } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && !empty($sspecialty)) {
+            $jobs = Job::active()->where(
+                [
+                    "job_type" => $sjobtype,
+                    "profession" => $sprofession,
+                    "speciality" => $sspecialty,
+                ]
+            )
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
+                ->get();
+        } elseif (!empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
+            $jobs = Job::active()->where(
+                [
+                    "job_type" => $sjobtype,
+                    "speciality" => $sspecialty,
+                ]
+            )
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
+                ->get();
+        } elseif (empty($sjobtype) && !empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
+            $jobs = Job::active()->where(
+                [
+                    "state" => $sstate,
+                    "speciality" => $sspecialty,
+                ]
+            )
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
+                ->get();
+        } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && !empty($sprofession) && empty($sspecialty)) {
+            $jobs = Job::active()->where(
+                [
+                    "profession" => $sprofession,
+                ]
+            )
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
+                ->get();
+        } elseif (empty($sjobtype) && empty($sstate) && empty($scity) && empty($ssuburb) && empty($sprofession) && !empty($sspecialty)) {
+            $jobs = Job::active()->where(
+                [
+                    "speciality" => $sspecialty,
+                ]
+            )
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         } else {
-            $jobs = Job::where(
+            $jobs = Job::active()->where(
                 [
-                    "status" => "1",
                     "job_type" => $request->session()->get('jobtype')
                 ]
             )
-                ->with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")
+                ->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")
                 ->get();
         }
 
         $settings = Settings::orderBy("created_at", "desc")->first();
-        return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "jobs", "jobtypes", "settings"));
+        return view('front.jobsearch', compact("sociallinks", "professions", "specialties", "states", "cities", "suburbs", "jobs", "jobtypes", "settings"));
     }
 
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\BuySellMediaTrait;
+use App\Traits\StatusTrait;
 
 
 class BuySell extends Model
@@ -16,6 +17,7 @@ class BuySell extends Model
 
     // Relation belongs to Buy Sell Media are in this trait.
     use BuySellMediaTrait;
+    use StatusTrait;
 
     protected $table = 'buy_sells';
 

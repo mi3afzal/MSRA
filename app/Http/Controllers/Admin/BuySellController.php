@@ -46,7 +46,6 @@ class BuySellController extends Controller
      */
     public function list(Request $request, BuySell $buySell)
     {
-
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
         $bstype = $this->bstype;
         $property_type = $this->property_type;
@@ -54,13 +53,13 @@ class BuySellController extends Controller
         $title = "buy sell listing";
         $module = "buysell";
 
-        $count = BuySell::orderBy('created_at', 'desc')->count();
+        $count = BuySell::latest()->count();
         if ($count > 0) {
-            $buysellrecords = BuySell::where("status", "1")->with("associatedImages")->orderBy('order', 'asc')->get();
-            $users = User::where(["status" => "1"])->orderBy('created_at', 'desc')->get();
-            $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-            $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-            $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+            $buysellrecords = BuySell::active()->with("associatedImages")->orderBy('order', 'asc')->get();
+            $users = User::active()->latest()->get();
+            $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+            $cities = City::active()->get(["id", "name", "postcode"]);
+            $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
             return view('admin.buysell.index', compact("title", "module", "users", "states", "cities", "suburbs", "buysellrecords", "promotional_flag", "property_type"));
         } else {
             abort(404, 'No record found');
@@ -79,7 +78,7 @@ class BuySellController extends Controller
         $title = "buysell create";
         $description = "buysell";
         $module = "buysell";
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
         return view('admin.buysell.add', compact("title", "description", "states", "module"));
     }
 
@@ -358,12 +357,12 @@ class BuySellController extends Controller
      */
     public function edit(BuySell $buySell, $id)
     {
-        $count = BuySell::where("id", $id)->orderBy('created_at', 'desc')->count();
+        $count = BuySell::where("id", $id)->latest()->count();
         if ($count > 0) {
-            $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-            $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-            $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
-            $listings = BuySell::where("id", $id)->with("associatedImages:id,buysell_id,file,type,order,status")->orderBy('created_at', 'desc')->first();
+            $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+            $cities = City::active()->get(["id", "name", "postcode"]);
+            $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+            $listings = BuySell::where("id", $id)->with("associatedImages:id,buysell_id,file,type,order,status")->latest()->first();
             $title = "buysell";
             $module = "buysell";
             return view('admin.buysell.edit', compact('states', 'cities', 'suburbs', 'listings', 'title', 'module'));

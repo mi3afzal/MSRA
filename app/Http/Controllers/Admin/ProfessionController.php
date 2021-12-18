@@ -33,7 +33,7 @@ class ProfessionController extends Controller
     {
         $title = "profession lists";
         $module = "profession";
-        $data = Profession::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Profession::active()->latest()->get();
         return view('admin.profession.index', compact('data', 'title', 'module'));
     }
 
@@ -160,9 +160,9 @@ class ProfessionController extends Controller
      */
     public function edit(Profession $profession, $id)
     {
-        $count = Profession::where("id", $id)->orderBy('created_at', 'desc')->count();
+        $count = Profession::where("id", $id)->latest()->count();
         if ($count > 0) {
-            $listings = Profession::where("id", $id)->orderBy('created_at', 'desc')->first();
+            $listings = Profession::where("id", $id)->latest()->first();
             $title = "profession";
             $module = "profession";
             return view('admin.profession.edit', compact('listings', 'title', 'module'));

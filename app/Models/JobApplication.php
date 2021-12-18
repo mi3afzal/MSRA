@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Traits\StatusTrait;
+use App\Traits\RoleTrait;
 
 class JobApplication extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use StatusTrait;
+    use RoleTrait;
 
     protected $table = 'job_applications';
 

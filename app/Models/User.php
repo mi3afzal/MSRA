@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\StatusTrait;
+use App\Traits\RoleTrait;
+use App\Traits\UserModelTrait;
 
 class User extends Authenticatable
 {
@@ -17,6 +20,9 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use StatusTrait;
+    use RoleTrait;
+    use UserModelTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -58,84 +64,4 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function jobseekerregistration()
-    {
-        return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function jobtype()
-    {
-        return $this->hasMany(JobType::class);
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function jobcategory()
-    {
-        return $this->hasMany(JobCategory::class);
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function profession()
-    {
-        return $this->hasMany(Profession::class);
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function specialty()
-    {
-        return $this->hasMany(Specialty::class);
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function job()
-    {
-        return $this->hasMany(Job::class);
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function profile()
-    {
-        return $this->hasOne('App\Models\MedicalCenterRegistration', 'user_id');
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function jobseekerprofile()
-    {
-        return $this->hasOne('App\Models\JobSeekerRegistration', 'user_id');
-    }
 }
