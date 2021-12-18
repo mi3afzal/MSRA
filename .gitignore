@@ -23,3 +23,5 @@ yarn-error.log
 phpDocumentor.phar
 *.env
 .env.dev.env
+/live-env
+/live-database
