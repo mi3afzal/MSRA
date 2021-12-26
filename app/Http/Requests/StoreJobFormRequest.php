@@ -43,4 +43,30 @@ class StoreJobFormRequest extends FormRequest
             'essential_criteria' => 'required',
         ];
     }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'job_type.required' => 'Job Type is required!',
+            'job_category.required' => 'Job Category is required!',
+        ];
+    }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'job_type' => 'trim',
+            'job_category' => 'trim'
+        ];
+    }
 }

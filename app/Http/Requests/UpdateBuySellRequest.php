@@ -34,4 +34,30 @@ class UpdateBuySellRequest extends FormRequest
             'description' => 'required|max:1000',
         ];
     }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'type.required' => 'Job Type is required!',
+            'property_type.required' => 'Job Category is required!',
+        ];
+    }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'type' => 'trim',
+            'property_type' => 'trim'
+        ];
+    }
 }

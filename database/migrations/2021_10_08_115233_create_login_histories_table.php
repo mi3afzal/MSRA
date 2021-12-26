@@ -24,6 +24,9 @@ class CreateLoginHistoriesTable extends Migration
             $table->string('role')->nullable($value = true);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+        });
+
+        Schema::table('recommendations', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -25,6 +25,9 @@ class CreateBuySellMediaTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
+        });
+
+        Schema::table('buy_sell_media', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('buysell_id')->references('id')->on('buy_sells')->onDelete('cascade')->onUpdate('cascade');
         });

@@ -27,7 +27,10 @@ class CreateRecommendationsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        });
+
+        Schema::table('recommendations', function ($table) {
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('for')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -43,4 +43,30 @@ class UpdateJobFormRequest extends FormRequest
             'essential_criteria' => 'required',
         ];
     }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'job_type.required' => 'Job Type is required!',
+            'property_type.required' => 'Poperty Type is required!',
+        ];
+    }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'job_type' => 'trim',
+            'property_type' => 'trim'
+        ];
+    }
 }
