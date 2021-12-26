@@ -12,7 +12,7 @@
 
                 <form action="{{ route('front.job.search') }}" method="GET" enctype="multipart/form-data">
                     {{ method_field('GET') }}
-                    @csrf
+
                     <input type="hidden" name="profession" id="filter-profession" val="" />
                     <input type="hidden" name="specialty" id="filter-specialty" val="" />
                     <div class="borderbox">
@@ -96,10 +96,10 @@
                     <h3>Practice <strong>Acquisition</strong></h3>
                     <ul class="btnlist list-unstyled">
                         <li>
-                            <a href="{{ route('buysale'); }}">Buy</a>
+                            <a href="{{ route('buysell'); }}">Buy</a>
                         </li>
                         <li>
-                            <a href="{{ route('buysale'); }}">Sell</a>
+                            <a href="{{ route('buysell'); }}">Sell</a>
                         </li>
                         <li>
                             <a href="javascript:void(0);">Startup</a>

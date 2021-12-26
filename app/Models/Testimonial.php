@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Traits\StatusTrait;
 
 class Testimonial extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use StatusTrait;
 
     protected $table = 'testimonials';
 

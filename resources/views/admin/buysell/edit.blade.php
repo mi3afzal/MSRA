@@ -36,7 +36,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="type">TYPE (&nbsp;BUY / SELL&nbsp;) :</label>
-                            <select name="type" id="type" class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}">
+                            <select name="type" id="type" class="form-control select2 {{ $errors->has('type') ? 'is-invalid' : '' }}">
                                 <option value="">Select Type</option>
                                 @foreach($bstype as $id => $type)
                                 <option value="{{ $id }}" {{ (old("type", $listings->type) == $id ? "selected":"") }}> {{ ucwords($type) }}</option>
@@ -54,7 +54,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="property_type">PROPERTY TYPE :</label>
-                            <select name="property_type" id="property_type" class="form-control {{ $errors->has('property_type') ? 'is-invalid' : '' }}">
+                            <select name="property_type" id="property_type" class="form-control select2 {{ $errors->has('property_type') ? 'is-invalid' : '' }}">
                                 <option value="">Select Property Type</option>
                                 @foreach($property_type as $id => $type)
                                 <option value="{{ $id }}" {{ (old("property_type",$listings->property_type) == $id ? "selected":"") }}>{{ ucwords($type) }}</option>
@@ -71,7 +71,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="promotional_flag">PROMOTIONAL FLAG :</label>
-                            <select name="promotional_flag" id="promotional_flag" class="form-control {{ $errors->has('promotional_flag') ? 'is-invalid' : '' }}">
+                            <select name="promotional_flag" id="promotional_flag" class="form-control select2 {{ $errors->has('promotional_flag') ? 'is-invalid' : '' }}">
                                 <option value="">Select Promotional Flag</option>
                                 @foreach($promotional_flag as $id => $type)
                                 <option value="{{ $id }}" {{ (old("promotional_flag", $listings->promotional_flag) == $id ? "selected":"") }}>{{ ucwords($type) }}</option>
@@ -88,7 +88,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="state">STATES :</label>
-                            <select name="state" id="state" class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}">
+                            <select name="state" id="state" class="form-control select2 {{ $errors->has('state') ? 'is-invalid' : '' }}">
                                 <option value="">Select States</option>
                                 @foreach($states as $state)
                                 <option value="{{ $state->id }}" {{ (old("state", $listings->state_id) == $state->id ? "selected":"") }}>{{ ucwords($state->name) }}</option>
@@ -109,7 +109,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
                     <div id="city_div" class="col-md-4">
                         <div class="form-group">
                             <label for="city">Cities :</label>
-                            <select name="city" id="city" class="form-control">
+                            <select name="city" id="city" class="form-control select2">
                                 <option value="">Select City</option>
                             </select>
                         </div>
@@ -118,7 +118,7 @@ $promotional_flag = Config::get('constants.promotional_flag');
                     <div id="suburb_div" class="col-md-4">
                         <div class="form-group">
                             <label for="suburb">Suburbs :</label>
-                            <select name="suburb" id="suburb" class="form-control">
+                            <select name="suburb" id="suburb" class="form-control select2">
                                 <option value="">Select Suburb</option>
                             </select>
                         </div>

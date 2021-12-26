@@ -15,16 +15,6 @@ class ProfessionController extends Controller
 {
 
     /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -33,7 +23,7 @@ class ProfessionController extends Controller
     {
         $title = "profession lists";
         $module = "profession";
-        $data = Profession::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Profession::active()->latest()->get();
         return view('admin.profession.index', compact('data', 'title', 'module'));
     }
 
@@ -74,7 +64,7 @@ class ProfessionController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('profession.delete', $professiondata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the profession?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('profession.delete', $professiondata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to trash the entry?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
@@ -143,12 +133,6 @@ class ProfessionController extends Controller
         $profession->user_id = Auth::user()->id;
         $profession->save();
 
-        $str = "PROFS";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $profession->id;
-
-        $profession->unique_code = $uid;
-        $profession->save();
-
         return redirect()->route('admin.profession.list')->with('success', 'Profession added successfully.');
     }
 
@@ -158,17 +142,12 @@ class ProfessionController extends Controller
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profession $profession, $id)
+    public function edit(Profession $profession)
     {
-        $count = Profession::where("id", $id)->orderBy('created_at', 'desc')->count();
-        if ($count > 0) {
-            $listings = Profession::where("id", $id)->orderBy('created_at', 'desc')->first();
-            $title = "profession";
-            $module = "profession";
-            return view('admin.profession.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = Profession::findOrFail($profession->id);
+        $title = "profession";
+        $module = "profession";
+        return view('admin.profession.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -179,7 +158,7 @@ class ProfessionController extends Controller
      * @param  \App\Models\Profession  $profession
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profession $profession, $id)
+    public function update(Request $request, Profession $profession)
     {
         $this->validate(
             $request,
@@ -189,7 +168,7 @@ class ProfessionController extends Controller
         );
 
         // Update data
-        $jobCategory = Profession::findOrFail($id);
+        $jobCategory = Profession::findOrFail($profession->id);
         $jobCategory->profession = $request->input("profession");
         $jobCategory->save();
 

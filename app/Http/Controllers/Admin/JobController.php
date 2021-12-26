@@ -18,20 +18,11 @@ use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreJobFormRequest;
+use App\Http\Requests\UpdateJobFormRequest;
 
 class JobController extends Controller
 {
-    /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
-
-
     /**
      * Display a listing of the resource.
      * @return "Returns a view contain the list of Jobs created at the backend."
@@ -41,13 +32,13 @@ class JobController extends Controller
     {
         $title = "job lists";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $data = Job::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $data = Job::active()->latest()->get();
         return view('admin.job.index', compact('data', 'title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
     }
 
@@ -185,14 +176,14 @@ class JobController extends Controller
     {
         $title = "create a job";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        // $cities = City::where("status", "1")->get();
-        // $suburbs = Suburb::where("status", "1")->get();
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        // $cities = City::active()->get();
+        // $suburbs = Suburb::active()->get();
         return view('admin.job.add', compact('title', 'module', "jobtypes", "jobcategories", "medicalcenters", "professions", "specialities", "states"));
     }
 
@@ -202,58 +193,12 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreJobFormRequest $request)
     {
-        $this->validate(
-            $request,
-            [
-                'job_type' => 'required',
-                'job_category' => 'required',
-                'medical_center' => 'required',
-                'profession' => 'required',
-                'speciality' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'suburb' => 'required',
-                'rate' => 'required',
-                'work_days' => 'required',
-                'title' => 'required|max:500|unique:jobs',
-                'from_date' => 'required',
-                'to_date' => 'required',
-                'address' => 'required|max:500',
-                'description' => 'required',
-                'practice_offer' => 'required',
-                'essential_criteria' => 'required',
-            ]
-        );
-
-        $job = new Job;
-        $job->job_type = $request->input('job_type');
-        $job->job_category = $request->input('job_category');
-        $job->medical_center = $request->input('medical_center');
-        $job->profession = $request->input('profession');
-        $job->speciality = $request->input('speciality');
-        $job->state = $request->input('state');
-        $job->city = $request->input('city');
-        $job->suburb = $request->input('suburb');
-        $job->rate = $request->input('rate');
-        $job->work_days = $request->input('work_days');
-        $job->title = $request->input('title');
-        $job->from_date = $request->input('from_date');
-        $job->to_date = $request->input('to_date');
-        $job->address = $request->input('address');
-        $job->description = $request->input('description');
-        $job->practice_offer = $request->input('practice_offer');
-        $job->essential_criteria = $request->input('essential_criteria');
-        $job->user_id = Auth::user()->id;
-        $job->save();
-
-        $str = "JBPST";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $job->id;
-
-        $job->unique_code = $uid;
-        $job->save();
-
+        $request->merge(["user_id" => Auth::user()->id]);
+        $validated = $request->validated();
+        $input = $request->all();
+        $user = Job::create($input);
         return redirect()->route('admin.job.list')->with('success', 'Job created added successfully.');
     }
 
@@ -263,11 +208,11 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Job $job, $id)
+    public function show(Request $request, Job $job)
     {
         $title = "Job Details";
         $module = "job";
-        $job = Job::with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->findOrFail($id);
+        $job = Job::with("createdby", "associatedJobtype", "jobcategory", "medicalcenter", "associatedProfession", "associatedSpeciality", "associatedState", "associatedCity", "associatedSuburb")->findOrFail($job->id);
         return view('admin.job.show', compact('title', 'module', 'job'));
     }
 
@@ -278,19 +223,19 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function edit(Job $job, $id)
+    public function edit(Job $job)
     {
-        $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($id);
+        $listings = Job::with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->findOrFail($job->id);
         $title = "job edit";
         $module = "job";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name", "status"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $city = City::where(["status" => "1", "id" => $listings->city])->first(["id", "name", "postcode", "state_code"]);
-        $suburb = Suburb::where(["status" => "1", "id" => $listings->suburb])->first(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $city = City::active()->where(["id" => $listings->city])->first(["id", "name", "postcode", "state_code"]);
+        $suburb = Suburb::active()->where(["id" => $listings->suburb])->first(["id", "suburb", "postcode"]);
         return view('admin.job.edit', compact('listings', 'title', 'module', 'jobtypes', 'jobcategories', 'medicalcenters', 'professions', 'specialities', 'states', 'city', 'suburb'));
     }
 
@@ -302,52 +247,12 @@ class JobController extends Controller
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job, $id)
+    public function update(UpdateJobFormRequest $request, Job $job)
     {
-        $this->validate(
-            $request,
-            [
-                'job_type' => 'required',
-                'job_category' => 'required',
-                'medical_center' => 'required',
-                'profession' => 'required',
-                'speciality' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'suburb' => 'required',
-                'rate' => 'required',
-                'work_days' => 'required',
-                'title' => 'required|max:500',
-                'from_date' => 'required',
-                'to_date' => 'required',
-                'address' => 'required|max:500',
-                'description' => 'required',
-                'practice_offer' => 'required',
-                'essential_criteria' => 'required',
-            ]
-        );
-
-        // Update data
-        $job = Job::findOrFail($id);
-        $job->job_type = $request->input('job_type');
-        $job->job_category = $request->input('job_category');
-        $job->medical_center = $request->input('medical_center');
-        $job->profession = $request->input('profession');
-        $job->speciality = $request->input('speciality');
-        $job->state = $request->input('state');
-        $job->city = $request->input('city');
-        $job->suburb = $request->input('suburb');
-        $job->rate = $request->input('rate');
-        $job->work_days = $request->input('work_days');
-        $job->title = $request->input('title');
-        $job->from_date = $request->input('from_date');
-        $job->to_date = $request->input('to_date');
-        $job->address = $request->input('address');
-        $job->description = $request->input('description');
-        $job->practice_offer = $request->input('practice_offer');
-        $job->essential_criteria = $request->input('essential_criteria');
-        $job->user_id = Auth::user()->id;
-        $job->save();
+        $request->merge(["user_id" => Auth::user()->id]);
+        $validated = $request->validated();
+        $input = $request->all();
+        $user = $job->update($input);
 
         return redirect()->route('admin.job.list')->with('success', 'Details Updated.');
     }

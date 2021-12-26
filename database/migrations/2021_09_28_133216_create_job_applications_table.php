@@ -35,6 +35,9 @@ class CreateJobApplicationsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
+        });
+
+        Schema::table('job_applications', function ($table) {
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('job_type')->references('id')->on('job_types')->onDelete('cascade')->onUpdate('cascade');
         });

@@ -7,6 +7,7 @@ use App\Models\About;
 use App\Models\SocialLink;
 use App\Models\JobType;
 use App\Models\Profession;
+use App\Models\Specialty;
 use App\Models\BuySell;
 use App\Models\BuySellMedia;
 use App\Models\State;
@@ -41,23 +42,64 @@ class BuySellController extends Controller
     {
         // die("Buy and sell");
         $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
-        $count = BuySell::orderBy('created_at', 'desc')->count();
+        $count = BuySell::latest()->count();
         if ($count > 0) {
-            // $listings = BuySell::orderBy('created_at', 'desc')->first();
-            $listings = BuySell::where("status", "1")->with("associatedImages:id,buysell_id,type,file,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->orderBy('order', 'asc')->get();
-            $sociallinks = SocialLink::where("status", "1")->first();
+            // $listings = BuySell::latest()->first();
+            $listings = BuySell::active()->with("associatedImages:id,buysell_id,type,file,order,status", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng")->orderBy('order', 'asc')->get();
+            $sociallinks = SocialLink::active()->first();
             $settings = Settings::orderBy("created_at", "desc")->first();
-            $totalJobSeekers = User::where(["status" => "1", "role" => 2])->orderBy('created_at', 'desc')->count();
-            $totalMedicalCenters = User::where(["status" => "1", "role" => 3])->orderBy('created_at', 'desc')->count();
-            $totalDoctors = User::where(["status" => "1", "role" => 4])->orderBy('created_at', 'desc')->count();
-            $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-            $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-            $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
-            $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
-            $jobtypes = JobType::where("status", "1")->orderBy('created_at', 'desc')->get(["id", "unique_id", "jobtype"]);
+            $totalJobSeekers = User::active()->jobseeker()->latest()->count();
+            $totalMedicalCenters = User::active()->medicalcenter()->latest()->count();
+            $totalDoctors = User::active()->doctor()->latest()->count();
+            $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+            $cities = City::active()->get(["id", "name", "postcode"]);
+            $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+            $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+            $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
             return view('front.buysell', compact("listings", "states", "cities", "suburbs", "sociallinks", "listings", "settings", "jobtypes", "professions", "totalJobSeekers", "totalMedicalCenters", "totalDoctors"));
         } else {
             abort(404, 'No record found');
         }
+    }
+
+    /**
+     * Search a resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\BuySell  $buysell
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request, BuySell $buysell)
+    {
+        $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get(["id", "unique_code", "specialty"]);
+        $sociallinks = SocialLink::active()->first();
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);
+
+        // Pipeline implementation for searching.
+        $data = BuySell::searchResult();
+
+        $settings = Settings::orderBy("created_at", "desc")->first();
+        return view('front.buysellsearch', compact("sociallinks", "professions", "specialties", "states", "cities", "suburbs", "data", "jobtypes", "settings"));
+    }
+
+    public function clearsearch(Request $request, BuySell $buysell)
+    {
+        $data = $request->session()->all();
+        // echo "<pre>"; print_r($data); die;
+        $request->session()->forget('jobtype');
+        $request->session()->forget('states');
+        $request->session()->forget('cities');
+        $request->session()->forget('suburb');
+        $request->session()->forget('profession');
+        $request->session()->forget('specialty');
+        $request->session()->forget('postcode');
+        $request->session()->forget('min');
+        $request->session()->forget('max');
+        $request->session()->forget('city');
+        return redirect()->route('buysell');
     }
 }

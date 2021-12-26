@@ -15,15 +15,6 @@ use Illuminate\Support\Facades\Gate;
 
 class SuburbController extends Controller
 {
-    /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Display a listing of the resource.
@@ -34,7 +25,7 @@ class SuburbController extends Controller
     {
         $title = "suburb lists";
         $module = "suburb";
-        $data = Suburb::where("status", "1")->orderBy('id', 'asc')->get();
+        $data = Suburb::active()->orderBy('id', 'asc')->get();
         return view('admin.suburb.index', compact('data', 'title', 'module'));
     }
 

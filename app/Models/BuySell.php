@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\BuySellMediaTrait;
-
+use App\Traits\StatusTrait;
+use Illuminate\Pipeline\Pipeline;
+use Session;
 
 class BuySell extends Model
 {
@@ -16,12 +18,17 @@ class BuySell extends Model
 
     // Relation belongs to Buy Sell Media are in this trait.
     use BuySellMediaTrait;
+    use StatusTrait;
 
     protected $table = 'buy_sells';
 
     // const EXCERPT_LENGTH = 250;
 
-    protected $fillable = ['description', 'user_id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'type', 'property_type', 'promotional_flag', 'state_id',
+        'city_id', 'suburb_id', 'price', 'title', 'number',
+        'email', 'description', 'user_id', 'created_at', 'updated_at'
+    ];
 
     /**
      * Function for return excerpt of given text.
@@ -44,16 +51,25 @@ class BuySell extends Model
         return url('/images/buysell/') . "/";
     }
 
-
     /**
-     * Mutator function for creating slug from title.
+     * Search function that implement QueryFilter on Query..
      * 
-     * @return "returns slug for given title."
+     * @return "returns search result based according to various query filter defined."
      */
-    public function setTitleAttribute($value)
+    public static function searchResult()
     {
-        $this->attributes['title'] = $value;
-        $slug = Str::slug($value, '-');
-        $this->attributes['slug'] = strtolower($slug) . "-" . time();
+        $buysells = app(Pipeline::class)
+            ->send(\App\Models\BuySell::query()->active()->with("associatedSuburb"))
+            ->through([
+                \App\QueryFilters\BuySellState::class,
+                \App\QueryFilters\CityString::class,
+                \App\QueryFilters\PostCode::class,
+                \App\QueryFilters\Price::class,
+            ])
+            ->thenReturn()
+            ->simplePaginate(3);
+        // ->get();
+
+        return $buysells;
     }
 }

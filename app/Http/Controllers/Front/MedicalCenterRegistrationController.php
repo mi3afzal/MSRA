@@ -26,7 +26,7 @@ class MedicalCenterRegistrationController extends Controller
      */
     public function register_form()
     {
-        $states = State::where("status", "1")->get();
+        $states = State::active()->get();
         return view('front.medicalcenter-register', compact("states"));
     }
 
@@ -77,12 +77,6 @@ class MedicalCenterRegistrationController extends Controller
             $hash = md5($request->input('email')) . time();
             $medicalCenterRegistration->token = $hash;
             $medicalCenterRegistration->attachment = (isset($name1)) ? $name1 : $medicalCenterRegistration->file;
-            $medicalCenterRegistration->save();
-
-            $str = "MDCNTR";
-            $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $medicalCenterRegistration->id;
-
-            $medicalCenterRegistration->unique_code = $uid;
             $medicalCenterRegistration->save();
 
             ##### email send #####

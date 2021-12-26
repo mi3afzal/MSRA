@@ -23,15 +23,6 @@ use Illuminate\Support\Facades\Gate;
 
 class JobApplicationController extends Controller
 {
-    /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Display a listing of the resource.
@@ -42,14 +33,14 @@ class JobApplicationController extends Controller
     {
         $title = "job application lists";
         $module = "jobapplication";
-        $jobtypes = JobType::where("status", "1")->get();
-        $jobcategories = JobCategory::where("status", "1")->get();
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get();
-        $professions = Profession::where("status", "1")->get();
-        $specialities = Specialty::where("status", "1")->get();
-        $states = State::where("status", "1")->get();
-        // $cities = City::where("status", "1")->get();
-        // $suburbs = Suburb::where("status", "1")->get();
+        $jobtypes = JobType::active()->get();
+        $jobcategories = JobCategory::active()->get();
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get();
+        $specialities = Specialty::active()->get();
+        $states = State::active()->get();
+        // $cities = City::active()->get();
+        // $suburbs = Suburb::active()->get();
         return view('admin.jobapplications.index', compact("jobtypes", "title", "module"));
     }
 
@@ -153,14 +144,14 @@ class JobApplicationController extends Controller
      * Display the specified resource.
      *
      * @param $id
-     * @param  \App\Models\JobApplication  $jobApplication
+     * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */
-    public function show(JobApplication $jobApplication, $id)
+    public function show(JobApplication $jobapplication)
     {
         $title = "job application detail";
         $module = "jobapplication";
-        $jobapplication = JobApplication::where('id', $id)->with("jobtypedetails", "jobdetails")->first();
+        $jobapplication = JobApplication::with("jobtypedetails", "jobdetails")->findOrFail($jobapplication->id);
         return view('admin.jobapplications.show', compact("title", "module", "jobapplication"));
     }
 

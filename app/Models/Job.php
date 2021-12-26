@@ -6,18 +6,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Traits\StatusTrait;
+use App\Traits\JobModelTrait;
+use Illuminate\Pipeline\Pipeline;
+use Session;
+use Auth;
 
 class Job extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use StatusTrait;
+    use JobModelTrait;
 
     protected $table = 'jobs';
+
     protected $guarded = [];
 
     const EXCERPT_LENGTH = 250;
 
-    protected $fillable = ['description', 'user_id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'job_type', 'job_category', 'medical_center',
+        'profession', 'speciality', 'state', 'city',
+        'suburb', 'rate', 'work_days', 'title', 'from_date', 'to_date',
+        'address', 'practice_offer', 'essential_criteria', 'description',
+        'user_id', 'created_at', 'updated_at'
+    ];
 
     /**
      * Function for return excerpt of given text.
@@ -31,105 +45,26 @@ class Job extends Model
     }
 
     /**
-     * Mutator function for creating slug from title.
+     * Search function that implement QueryFilter on Query..
      * 
-     * @return "returns slug for given title."
+     * @return "returns search result based according to various query filter defined."
      */
-    public function setTitleAttribute($value)
+    public static function searchResult()
     {
-        $this->attributes['title'] = $value;
-        $slug = Str::slug($value, '-');
-        $this->attributes['slug'] = strtolower($slug) . "-" . time();
-    }
+        $jobs = app(Pipeline::class)
+            ->send(\App\Models\Job::query()->active()->with("createdby:id,name,email", "associatedJobtype:id,jobtype", "jobcategory:id,name", "medicalcenter:id,name,email", "associatedProfession:id,profession", "associatedSpeciality:id,specialty", "associatedState:id,name,iso2,latitude,longitude", "associatedCity:id,name,latitude,longitude", "associatedSuburb:id,suburb,lat,lng"))
+            ->through([
+                \App\QueryFilters\JobType::class,
+                \App\QueryFilters\Profession::class,
+                \App\QueryFilters\Specialty::class,
+                \App\QueryFilters\State::class,
+                \App\QueryFilters\City::class,
+                \App\QueryFilters\Suburb::class,
+            ])
+            ->thenReturn()
+            ->simplePaginate(5);
+        // ->get();
 
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function createdby()
-    {
-        return $this->belongsTo('App\Models\User', 'user_id')->select("name", "email", "id");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function associatedJobtype()
-    {
-        return $this->belongsTo('App\Models\JobType', 'job_type')->select("id", "jobtype");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function jobcategory()
-    {
-        return $this->belongsTo('App\Models\JobCategory', 'job_category')->select("id", "name");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function medicalcenter()
-    {
-        return $this->belongsTo('App\Models\User', 'medical_center')->select("id", "name", "email");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function associatedProfession()
-    {
-        return $this->belongsTo('App\Models\Profession', 'profession')->select("id", "profession");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function associatedSpeciality()
-    {
-        return $this->belongsTo('App\Models\Specialty', 'speciality')->select("id", "specialty");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function associatedState()
-    {
-        return $this->belongsTo('App\Models\State', 'state')->select("id", "name", "iso2", "latitude", "longitude");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function associatedCity()
-    {
-        return $this->belongsTo('App\Models\City', 'city')->select("id", "name", "latitude", "longitude");
-    }
-
-    /**
-     * Function for eloquent relationship.
-     * 
-     * @return "returns eloquent relationship"
-     */
-    public function associatedSuburb()
-    {
-        return $this->belongsTo('App\Models\Suburb', 'suburb')->select("id", "suburb", "lat", "lng");
+        return $jobs;
     }
 }

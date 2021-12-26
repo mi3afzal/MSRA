@@ -31,6 +31,9 @@ class CreateJobSeekerRegistrationsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
+        });
+
+        Schema::table('job_seeker_registrations', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('profession')->references('id')->on('professions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('specialty')->references('id')->on('specialties')->onDelete('cascade')->onUpdate('cascade');

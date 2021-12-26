@@ -22,7 +22,7 @@ class StateController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'register_getcities', 'register_getasuburbs']);
+        $this->middleware('auth')->except(['index', 'register_getcities', 'register_getasuburbs', 'getcities', 'editgetcities', 'getasuburbs', 'editgetasuburbs']);
     }
 
     /**
@@ -32,9 +32,9 @@ class StateController extends Controller
      */
     public function getcities()
     {
-        $cities_count = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
+        $cities_count = City::active()->where(["state_id" => $_POST["state_id"]])->count();
         if ($cities_count > 0) {
-            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+            $cities = City::active()->where(["state_id" => $_POST["state_id"]])->get()->toArray();
 
             if ((isset($_POST["label"])) && ($_POST["label"] == 1)) {
                 return view('ajax.labelstatecities', compact('cities'));
@@ -53,9 +53,9 @@ class StateController extends Controller
      */
     public function editgetcities()
     {
-        $cities_count = City::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["city_id"]])->count();
+        $cities_count = City::active()->where(["state_id" => $_POST["state_id"], "id" => $_POST["city_id"]])->count();
         if ($cities_count > 0) {
-            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["city_id"]])->get()->toArray();
+            $cities = City::where(["state_id" => $_POST["state_id"], "id" => $_POST["city_id"]])->get()->toArray();
 
             if ((isset($_POST["label"])) && ($_POST["label"] == 1)) {
                 return view('ajax.editlabelstatecities', compact('cities'));
@@ -74,9 +74,9 @@ class StateController extends Controller
      */
     public function getasuburbs()
     {
-        $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
+        $suburb_count = Suburb::active()->where(["state_id" => $_POST["state_id"]])->count();
         if ($suburb_count > 0) {
-            $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+            $suburbs = Suburb::active()->where(["state_id" => $_POST["state_id"]])->get()->toArray();
             if (isset($_POST["label"]) && ($_POST["label"] == 1)) {
                 return view('ajax.labelsuburb', compact('suburbs'));
             } else {
@@ -93,9 +93,9 @@ class StateController extends Controller
      */
     public function editgetasuburbs()
     {
-        $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["suburb_id"]])->count();
+        $suburb_count = Suburb::active()->where(["state_id" => $_POST["state_id"], "id" => $_POST["suburb_id"]])->count();
         if ($suburb_count > 0) {
-            $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"], "id" => $_POST["suburb_id"]])->get()->toArray();
+            $suburbs = Suburb::active()->where(["state_id" => $_POST["state_id"], "id" => $_POST["suburb_id"]])->get()->toArray();
             if (isset($_POST["label"]) && ($_POST["label"] == 1)) {
                 return view('ajax.editlabelsuburb', compact('suburbs'));
             } else {
@@ -113,9 +113,9 @@ class StateController extends Controller
      */
     public function register_getcities()
     {
-        $cities_count = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
+        $cities_count = City::active()->where(["state_id" => $_POST["state_id"]])->count();
         if ($cities_count > 0) {
-            $cities = City::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+            $cities = City::active()->where(["state_id" => $_POST["state_id"]])->get()->toArray();
             return view('ajax.register-statecities', compact('cities'));
         } else {
             return view('ajax.default-register-statecities');
@@ -130,9 +130,9 @@ class StateController extends Controller
      */
     public function register_getasuburbs()
     {
-        $suburb_count = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->count();
+        $suburb_count = Suburb::active()->where(["state_id" => $_POST["state_id"]])->count();
         if ($suburb_count > 0) {
-            $suburbs = Suburb::where(["status" => "1", "state_id" => $_POST["state_id"]])->get()->toArray();
+            $suburbs = Suburb::active()->where(["state_id" => $_POST["state_id"]])->get()->toArray();
             return view('ajax.register-suburb', compact('suburbs'));
         } else {
             return view('ajax.default-register-suburb');
@@ -149,7 +149,7 @@ class StateController extends Controller
     {
         $title = "states lists";
         $module = "state";
-        $data = State::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = State::active()->latest()->get();
         return view('admin.state.index', compact('data', 'title', 'module'));
     }
 
@@ -235,17 +235,12 @@ class StateController extends Controller
      * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function edit(State $state, $id)
+    public function edit(State $state)
     {
-        $count = State::where("id", $id)->orderBy('created_at', 'desc')->count();
-        if ($count > 0) {
-            $listings = State::where("id", $id)->orderBy('created_at', 'desc')->first();
-            $title = "state";
-            $module = "state";
-            return view('admin.state.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = State::findOrFail($state->id);
+        $title = "state";
+        $module = "state";
+        return view('admin.state.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -256,7 +251,7 @@ class StateController extends Controller
      * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, State $state, $id)
+    public function update(Request $request, State $state)
     {
         $this->validate(
             $request,
@@ -266,7 +261,7 @@ class StateController extends Controller
         );
 
         // Update data
-        $state = State::findOrFail($id);
+        $state = State::findOrFail($state->id);
         $state->name = $request->input("name");
         $state->save();
 

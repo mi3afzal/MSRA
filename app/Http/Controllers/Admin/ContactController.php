@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\Gate;
 class ContactController extends Controller
 {
     /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -33,7 +23,7 @@ class ContactController extends Controller
     {
         $title = "contact lists";
         $module = "contact";
-        $data = Contact::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $data = Contact::active()->latest()->get();
         return view('admin.contact.index', compact('data', 'title', 'module'));
     }
 

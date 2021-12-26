@@ -143,7 +143,7 @@
                                         {!! $job->work_days !!}
                                     </li>
                                 </ul>
-                                <p>{!! Str::limit($job->description, $limit = 250, $end = '...') !!}
+                                <p>@excerpt($job->description)
                                     <a href="{{route('jobdetails', [$job->slug])}}">Read More</a>
                                 </p>
                                 <div class="bottombar">

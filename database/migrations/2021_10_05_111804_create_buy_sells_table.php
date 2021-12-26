@@ -35,10 +35,13 @@ class CreateBuySellsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
+        });
+
+        Schema::table('buy_sells', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('suburb_id')->references('id')->on('suburbs')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('suburb_id')->references('id')->on('suburbs')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -25,8 +25,8 @@ class JobSeekerRegistrationController extends Controller
      */
     public function index()
     {
-        $professions = Profession::where("status", "1")->orderBy('profession', 'asc')->get();
-        $specialties = Specialty::where("status", "1")->orderBy('specialty', 'asc')->get();
+        $professions = Profession::active()->orderBy('profession', 'asc')->get();
+        $specialties = Specialty::active()->orderBy('specialty', 'asc')->get();
         return view('front.register', compact("professions", "specialties"));
     }
 
@@ -82,12 +82,6 @@ class JobSeekerRegistrationController extends Controller
             $hash = md5($request->input('email')) . time();
             $jobSeekerRegistration->token = $hash;
             $jobSeekerRegistration->cv = (isset($name1)) ? $name1 : $jobSeekerRegistration->file;
-            $jobSeekerRegistration->save();
-
-            $str = "JBSKRG";
-            $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobSeekerRegistration->id;
-
-            $jobSeekerRegistration->unique_code = $uid;
             $jobSeekerRegistration->save();
 
             ##### email send #####

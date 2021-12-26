@@ -24,15 +24,6 @@ use App\Http\Controllers\Controller;
 
 class NewsletterController extends Controller
 {
-    /**
-     *  Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Display a listing of the resource.
@@ -43,7 +34,7 @@ class NewsletterController extends Controller
     {
         $title = "job newsletter lists";
         $module = "newsletters";
-        $newsletters = Newsletter::where("status", "1")->get();
+        $newsletters = Newsletter::active()->get();
         return view('admin.newsletters.index', compact("newsletters", "title", "module"));
     }
 

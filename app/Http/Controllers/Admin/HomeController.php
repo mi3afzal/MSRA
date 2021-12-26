@@ -40,18 +40,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $cities = City::where(["status" => "1"])->count();
-        $states = State::where(["status" => "1"])->count();
-        $suburbs = Suburb::where(["status" => "1"])->count();
-        $jobtypes = JobType::where(["status" => "1"])->count();
-        $professions = Profession::where(["status" => "1"])->count();
-        $specialty = Specialty::where(["status" => "1"])->count();
-        $jobcategories = JobCategory::where(["status" => "1"])->count();
-        $jobs = Job::where(["status" => "1"])->count();
-        $contacts = Contact::where(["status" => "1"])->count();
-        $jobapplications = JobApplication::where(["status" => "1"])->count();
-        $newsletters = Newsletter::where(["status" => "1"])->count();
-        $buysells = BuySell::where(["status" => "1"])->count();
+        $cities = City::active()->count();
+        $states = State::active()->count();
+        $suburbs = Suburb::active()->count();
+        $jobtypes = JobType::active()->count();
+        $professions = Profession::active()->count();
+        $specialty = Specialty::active()->count();
+        $jobcategories = JobCategory::active()->count();
+        $jobs = Job::active()->count();
+        $contacts = Contact::active()->count();
+        $jobapplications = JobApplication::active()->count();
+        $newsletters = Newsletter::active()->count();
+        $buysells = BuySell::active()->count();
         $user = Auth::user();
 
         if ($user->role == 1) {

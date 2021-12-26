@@ -3,7 +3,15 @@
 namespace App\Http\Controllers\Jobseeker;
 
 use App\Models\Recommendation;
+use App\Models\Job;
+use App\Models\JobType;
+use App\Models\JobCategory;
 use App\Models\User;
+use App\Models\Profession;
+use App\Models\Specialty;
+use App\Models\State;
+use App\Models\City;
+use App\Models\Suburb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -33,8 +41,16 @@ class RecommendationController extends Controller
     {
         $title = "recommendation lists";
         $module = "recommendation";
-        $data = Recommendation::where("status", "1")->orderBy('created_at', 'desc')->get();
-        return view('jobseeker.recommendation.index', compact('data', 'title', 'module'));
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name", "status"]);
+        $medicalcenters = User::active()->medicalcenter()->get();
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $city = City::active()->first(["id", "name", "postcode", "state_code"]);
+        $suburb = Suburb::active()->first(["id", "suburb", "postcode"]);
+        $data = Recommendation::active()->latest()->get();
+        return view('jobseeker.recommendation.index', compact('data', 'title', 'module', 'jobtypes', 'jobcategories', 'medicalcenters', 'professions', 'specialities', 'states'));
     }
 
     /**
@@ -114,7 +130,7 @@ class RecommendationController extends Controller
     {
         $title = "add recommendation";
         $module = "recommendation";
-        $users = User::where("status", "1")->orderBy('created_at', 'desc')->get();
+        $users = User::active()->latest()->get();
         return view('jobseeker.recommendation.add', compact('title', 'module', 'users'));
     }
 

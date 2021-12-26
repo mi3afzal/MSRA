@@ -20,15 +20,19 @@
                         <div class="col-md-9 text-right">
                             <ul class="list-unstyled">
                                 <li>
-                                    <a href="https://wa.me/<?php echo $settings->whatsapp; ?>" target="_blank">
+                                    <?php
+                                    $whatsapp = (!empty($settings->whatsapp)) ? $settings->whatsapp : "";
+                                    $email = (!empty($settings->email)) ? $settings->email : "";
+                                    ?>
+                                    <a href="https://wa.me/<?php echo ($whatsapp); ?>" target="_blank">
                                         <img src="{{url('/images/whatsapp.png')}}" alt="Whatsapp">
-                                        {!! $settings->whatsapp !!}
+                                        {!! $whatsapp !!}
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="mailto:<?php echo $settings->email; ?>" target="_blank">
+                                    <a href="mailto:<?php echo $email; ?>" target="_blank">
                                         <i class="fas fa-envelope"></i>
-                                        {!! $settings->email !!}
+                                        {!! $email !!}
                                     </a>
                                 </li>
                                 <li>

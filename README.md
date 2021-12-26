@@ -71,6 +71,25 @@ Application currently has three registrations :
 2. Jobseekers
 3. Medical Center
 
+## Model Factories For Database Testing
+
+1. BuySellFactory
+2. BuySellMediaFactory
+3. JobCategoryFactory
+4. JobFactory
+5. JobSeekerRegistrationFactory
+6. JobTypeFactory
+7. ProfessionFactory
+8. SpecialtyFactory
+9. UserFactory
+
+## Database seeders For seeding database with dummy data for Database Testing
+
+1. BuySellTableSeeder
+2. DatabaseSeeder [ Default]
+3. JobSeekerTableSeeder
+4. JobTableSeeder
+
 ## HOME PAGE
 
 ![Home Page](https://github.com/aadhar-appinop/MSRA/blob/dev/home-page.png)

@@ -61,12 +61,6 @@ class JobApplicationController extends Controller
         $jobApplication->job_type = $request->input("job_type");
         $jobApplication->save();
 
-        $str = "JOBALTN";
-        $ubid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobApplication->id;
-
-        $jobApplication->unique_code = $ubid;
-        $jobApplication->save();
-
         return redirect()->route('job')->with('success', 'Application sent successfully.');
     }
 
@@ -81,14 +75,14 @@ class JobApplicationController extends Controller
     {
         $title = "job application form";
         $module = "jobapplication";
-        $jobtypes = JobType::where("status", "1")->get(["id", "unique_id", "jobtype"]);
-        $jobcategories = JobCategory::where("status", "1")->get(["id", "unique_code", "name"]);
-        $medicalcenters = User::where(["status" => "1", "role" => 3])->get(["id", "name", "email"]);
-        $professions = Profession::where("status", "1")->get(["id", "unique_code", "profession"]);
-        $specialities = Specialty::where("status", "1")->get(["id", "unique_code", "specialty"]);
-        $states = State::where("status", "1")->get(["id", "name", "iso2", "latitude", "longitude"]);
-        $cities = City::where("status", "1")->get(["id", "name", "postcode"]);
-        $suburbs = Suburb::where("status", "1")->get(["id", "suburb", "postcode"]);
+        $jobtypes = JobType::active()->get(["id", "unique_id", "jobtype"]);
+        $jobcategories = JobCategory::active()->get(["id", "unique_code", "name"]);
+        $medicalcenters = User::active()->medicalcenter()->get(["id", "name", "email"]);
+        $professions = Profession::active()->get(["id", "unique_code", "profession"]);
+        $specialities = Specialty::active()->get(["id", "unique_code", "specialty"]);
+        $states = State::active()->get(["id", "name", "iso2", "latitude", "longitude"]);
+        $cities = City::active()->get(["id", "name", "postcode"]);
+        $suburbs = Suburb::active()->get(["id", "suburb", "postcode"]);
         return view('admin.jobapplications.apply', compact("jobtypes", "title", "module", "jobcategories", "medicalcenters", "professions", "specialities", "states", "cities", "suburbs"));
     }
 

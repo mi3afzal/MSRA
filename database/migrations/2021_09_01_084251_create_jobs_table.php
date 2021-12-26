@@ -39,15 +39,18 @@ class CreateJobsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
+        });
+
+        Schema::table('jobs', function ($table) {
             $table->foreign('job_type')->references('id')->on('job_types')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('job_category')->references('id')->on('job_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('medical_center')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('profession')->references('id')->on('professions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('speciality')->references('id')->on('specialties')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('state')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('city')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('suburb')->references('id')->on('suburbs')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('state')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('city')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('suburb')->references('id')->on('suburbs')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
