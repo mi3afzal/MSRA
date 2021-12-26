@@ -15,16 +15,6 @@ class SocialLinkController extends Controller
 {
 
     /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -40,10 +30,10 @@ class SocialLinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SocialLink  $socialLink
+     * @param  \App\Models\SocialLink  $sociallink
      * @return \Illuminate\Http\Response
      */
-    public function edit(SocialLink $socialLink)
+    public function edit(SocialLink $sociallink)
     {
         $count = SocialLink::latest()->count();
         if ($count > 0) {

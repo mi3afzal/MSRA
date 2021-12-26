@@ -235,17 +235,12 @@ class StateController extends Controller
      * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function edit(State $state, $id)
+    public function edit(State $state)
     {
-        $count = State::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = State::where("id", $id)->latest()->first();
-            $title = "state";
-            $module = "state";
-            return view('admin.state.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = State::findOrFail($state->id);
+        $title = "state";
+        $module = "state";
+        return view('admin.state.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -256,7 +251,7 @@ class StateController extends Controller
      * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, State $state, $id)
+    public function update(Request $request, State $state)
     {
         $this->validate(
             $request,
@@ -266,7 +261,7 @@ class StateController extends Controller
         );
 
         // Update data
-        $state = State::findOrFail($id);
+        $state = State::findOrFail($state->id);
         $state->name = $request->input("name");
         $state->save();
 

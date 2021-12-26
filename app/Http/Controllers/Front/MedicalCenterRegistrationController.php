@@ -79,12 +79,6 @@ class MedicalCenterRegistrationController extends Controller
             $medicalCenterRegistration->attachment = (isset($name1)) ? $name1 : $medicalCenterRegistration->file;
             $medicalCenterRegistration->save();
 
-            $str = "MDCNTR";
-            $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $medicalCenterRegistration->id;
-
-            $medicalCenterRegistration->unique_code = $uid;
-            $medicalCenterRegistration->save();
-
             ##### email send #####
 
             // $from_mail = 'oliver7415@googlemail.com';

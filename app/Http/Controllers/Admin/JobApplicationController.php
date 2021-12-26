@@ -23,15 +23,6 @@ use Illuminate\Support\Facades\Gate;
 
 class JobApplicationController extends Controller
 {
-    /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Display a listing of the resource.
@@ -153,14 +144,14 @@ class JobApplicationController extends Controller
      * Display the specified resource.
      *
      * @param $id
-     * @param  \App\Models\JobApplication  $jobApplication
+     * @param  \App\Models\JobApplication  $jobapplication
      * @return \Illuminate\Http\Response
      */
-    public function show(JobApplication $jobApplication, $id)
+    public function show(JobApplication $jobapplication)
     {
         $title = "job application detail";
         $module = "jobapplication";
-        $jobapplication = JobApplication::where('id', $id)->with("jobtypedetails", "jobdetails")->first();
+        $jobapplication = JobApplication::with("jobtypedetails", "jobdetails")->findOrFail($jobapplication->id);
         return view('admin.jobapplications.show', compact("title", "module", "jobapplication"));
     }
 

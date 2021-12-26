@@ -22,7 +22,7 @@ class FrontController extends Controller
      */
     public function index(Request $request)
     {
-        $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty']);
+        $request->session()->forget(['jobtype', 'states', 'cities', 'suburb', 'profession', 'specialty', 'postcode', 'min', 'max', 'city']);
         $states = State::active()->orderBy('name', 'asc')->get(["id", "name", "iso2", "latitude", "longitude"]);
         $professions = Profession::active()->orderBy('profession', 'asc')->get(["id", "unique_code", "profession"]);
         $jobtypes = JobType::active()->latest()->get(["id", "unique_id", "jobtype"]);

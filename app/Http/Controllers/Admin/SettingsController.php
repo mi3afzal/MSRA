@@ -12,15 +12,6 @@ use App\Http\Controllers\Controller;
 
 class SettingsController extends Controller
 {
-    /**
-     *  Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Show the form for editing the specified resource.

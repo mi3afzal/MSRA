@@ -22,4 +22,14 @@ class Suburb extends Model
     {
         return $this->belongsTo('App\Models\State', 'state_id', 'id');
     }
+
+    /**
+     * Function for eloquent relationship.
+     * 
+     * @return "returns eloquent relationship"
+     */
+    public function buysell()
+    {
+        return $this->belongsTo('App\Models\BuySell', 'suburb_id', 'id');
+    }
 }

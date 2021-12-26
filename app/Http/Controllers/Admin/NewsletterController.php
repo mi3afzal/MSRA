@@ -24,15 +24,6 @@ use App\Http\Controllers\Controller;
 
 class NewsletterController extends Controller
 {
-    /**
-     *  Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
 
     /**
      * Display a listing of the resource.

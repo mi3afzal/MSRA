@@ -1,8 +1,3 @@
-<?php
-// echo "<pre>";
-// print_r($jobtypes);
-// die;
-?>
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -44,11 +39,15 @@
             <div class="col-lg-3 col-md-6">
                 <h3>Contact Us</h3>
                 <ul class="contactdetails">
+                    <?php
+                    $whatsapp = (!empty($settings->whatsapp)) ? $settings->whatsapp : "";
+                    $web = (!empty($settings->web)) ? $settings->web : "";
+                    ?>
                     <li>
-                        <a href="tel:<?php echo $settings->whatsapp; ?>" target="_blank"><i class="fas fa-phone-alt"></i> {!! $settings->whatsapp !!}</a>
+                        <a href="tel:<?php echo $whatsapp; ?>" target="_blank"><i class="fas fa-phone-alt"></i> {!! $whatsapp !!}</a>
                     </li>
                     <li>
-                        <a href="mailto:<?php echo $settings->web; ?>" target="_blank"><i class="fas fa-envelope"></i>{!! $settings->web !!}</a>
+                        <a href="mailto:<?php echo $web; ?>" target="_blank"><i class="fas fa-envelope"></i>{!! $web !!}</a>
                     </li>
                 </ul>
             </div>
@@ -71,20 +70,27 @@
             <div class="col-lg-3 col-md-6">
                 <h3>Get In Touch</h3>
                 <ul class="sociallink">
+                    <?php
+                    $facebook = (!empty($sociallinks->facebook)) ? $sociallinks->facebook : "";
+                    $twitter = (!empty($sociallinks->twitter)) ? $sociallinks->twitter : "";
+                    $linkedin = (!empty($sociallinks->linkedin)) ? $sociallinks->linkedin : "";
+                    $instagram = (!empty($sociallinks->instagram)) ? $sociallinks->instagram : "";
+                    $google = (!empty($sociallinks->google)) ? $sociallinks->google : "";
+                    ?>
                     <li>
-                        <a href="<?php echo $sociallinks->facebook; ?>"><i class="fab fa-facebook-f"></i></a>
+                        <a href="<?php echo $facebook; ?>"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li>
-                        <a href="<?php echo $sociallinks->twitter; ?>"><i class="fab fa-twitter"></i></a>
+                        <a href="<?php echo $twitter; ?>"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li>
-                        <a href="<?php echo $sociallinks->linkedin; ?>"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="<?php echo $linkedin; ?>"><i class="fab fa-linkedin-in"></i></a>
                     </li>
                     <li>
-                        <a href="<?php echo $sociallinks->instagram; ?>"><i class="fab fa-instagram"></i></a>
+                        <a href="<?php echo $instagram; ?>"><i class="fab fa-instagram"></i></a>
                     </li>
                     <li>
-                        <a href="<?php echo $sociallinks->google; ?>"><i class="fab fa-google"></i></a>
+                        <a href="<?php echo $google; ?>"><i class="fab fa-google"></i></a>
                     </li>
                 </ul>
             </div>
@@ -95,7 +101,8 @@
 
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p>Copyright @ <?php echo date("Y"); ?> | <a href="{{ route('home') }}" target="_blank">{!! $settings->link !!}</a></p>
+                    <?php $link = (!empty($settings->link)) ? $settings->link : ""; ?>
+                    <p>Copyright @ <?php echo date("Y"); ?> | <a href="{{ route('home') }}" target="_blank">{!! $link !!}</a></p>
                 </div>
 
             </div>

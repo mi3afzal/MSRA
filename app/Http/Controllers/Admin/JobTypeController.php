@@ -14,16 +14,6 @@ use Illuminate\Support\Facades\Gate;
 class JobTypeController extends Controller
 {
     /**
-     * Apply default authentication middleware for backend routes.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -73,7 +63,7 @@ class JobTypeController extends Controller
 
                 $link = '
                     <div class="btn-group">
-                        <a href="' . route('jobtype.delete', $jobtypedata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to delete the jobtype?\');" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="' . route('jobtype.delete', $jobtypedata->id) . '" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm(\'Do you really want to trash this entry?\');" ><i class="fas fa-trash-alt"></i></a>
                     </div>
                 ';
 
@@ -142,12 +132,6 @@ class JobTypeController extends Controller
         $jobtype->user_id = Auth::user()->id;
         $jobtype->save();
 
-        $str = "JBTP";
-        $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobtype->id;
-
-        $jobtype->unique_id = $uid;
-        $jobtype->save();
-
         return redirect()->route('admin.jobtype.list')->with('success', 'Job Type added successfully.');
     }
 
@@ -158,17 +142,12 @@ class JobTypeController extends Controller
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */
-    public function edit(JobType $jobtype, $id)
+    public function edit(JobType $jobtype)
     {
-        $count = JobType::where("id", $id)->latest()->count();
-        if ($count > 0) {
-            $listings = JobType::where("id", $id)->latest()->first();
-            $title = "jobtype";
-            $module = "Jobtype";
-            return view('admin.jobtype.edit', compact('listings', 'title', 'module'));
-        } else {
-            abort(404, 'No record found');
-        }
+        $listings = JobType::findOrFail($jobtype->id);
+        $title = "jobtype";
+        $module = "Jobtype";
+        return view('admin.jobtype.edit', compact('listings', 'title', 'module'));
     }
 
     /**
@@ -179,7 +158,7 @@ class JobTypeController extends Controller
      * @param  \App\Models\JobType  $jobtype
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JobType $jobtype, $id)
+    public function update(Request $request, JobType $jobtype)
     {
         $this->validate(
             $request,
@@ -188,10 +167,9 @@ class JobTypeController extends Controller
             ]
         );
 
-        // Update data
-        $jobType = JobType::find($id);
-        $jobType->jobtype = $request->input("jobtype");
-        $jobType->save();
+        $jobCategory = JobType::findOrFail($jobtype->id);
+        $jobCategory->jobtype = $request->input("jobtype");
+        $jobCategory->save();
 
         return redirect()->route('admin.jobtype.list')->with('success', 'Details Updated.');
     }

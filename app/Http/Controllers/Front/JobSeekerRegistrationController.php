@@ -84,12 +84,6 @@ class JobSeekerRegistrationController extends Controller
             $jobSeekerRegistration->cv = (isset($name1)) ? $name1 : $jobSeekerRegistration->file;
             $jobSeekerRegistration->save();
 
-            $str = "JBSKRG";
-            $uid = str_pad($str, 10, "0", STR_PAD_RIGHT) . $jobSeekerRegistration->id;
-
-            $jobSeekerRegistration->unique_code = $uid;
-            $jobSeekerRegistration->save();
-
             ##### email send #####
 
             // $from_mail = 'oliver7415@googlemail.com';

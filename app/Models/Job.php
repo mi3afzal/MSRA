@@ -10,6 +10,7 @@ use App\Traits\StatusTrait;
 use App\Traits\JobModelTrait;
 use Illuminate\Pipeline\Pipeline;
 use Session;
+use Auth;
 
 class Job extends Model
 {
@@ -24,7 +25,13 @@ class Job extends Model
 
     const EXCERPT_LENGTH = 250;
 
-    protected $fillable = ['description', 'user_id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'job_type', 'job_category', 'medical_center',
+        'profession', 'speciality', 'state', 'city',
+        'suburb', 'rate', 'work_days', 'title', 'from_date', 'to_date',
+        'address', 'practice_offer', 'essential_criteria', 'description',
+        'user_id', 'created_at', 'updated_at'
+    ];
 
     /**
      * Function for return excerpt of given text.
@@ -35,18 +42,6 @@ class Job extends Model
     {
         return Str::limit($this->description, env('EXCERPT_LENGTH', 250));
         // return Str::limit($this->description, BuySell::EXCERPT_LENGTH);
-    }
-
-    /**
-     * Mutator function for creating slug from title.
-     * 
-     * @return "returns slug for given title."
-     */
-    public function setTitleAttribute($value)
-    {
-        $this->attributes['title'] = $value;
-        $slug = Str::slug($value, '-');
-        $this->attributes['slug'] = strtolower($slug) . "-" . time();
     }
 
     /**

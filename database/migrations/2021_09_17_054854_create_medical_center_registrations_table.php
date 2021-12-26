@@ -32,10 +32,13 @@ class CreateMedicalCenterRegistrationsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
+        });
+
+        Schema::table('medical_center_registrations', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('state')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('city')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('suburb')->references('id')->on('suburbs')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('state')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('city')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('suburb')->references('id')->on('suburbs')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

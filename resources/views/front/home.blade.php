@@ -96,10 +96,10 @@
                     <h3>Practice <strong>Acquisition</strong></h3>
                     <ul class="btnlist list-unstyled">
                         <li>
-                            <a href="{{ route('buysale'); }}">Buy</a>
+                            <a href="{{ route('buysell'); }}">Buy</a>
                         </li>
                         <li>
-                            <a href="{{ route('buysale'); }}">Sell</a>
+                            <a href="{{ route('buysell'); }}">Sell</a>
                         </li>
                         <li>
                             <a href="javascript:void(0);">Startup</a>
