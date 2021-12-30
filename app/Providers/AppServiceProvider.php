@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Blade;
@@ -26,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // without wrapping with data key.
+        JsonResource::withoutWrapping();
+
         $length = env('EXCERPT_LENGTH', 300);
         Blade::directive('excerpt', function ($text, $length = 300) {
             return "<?php echo Str::limit($text, $length); ?>";

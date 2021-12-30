@@ -531,3 +531,12 @@ Route::post('filterjobs', [App\Http\Controllers\Front\JobController::class, 'fil
 // Ajax Routes Registration
 Route::post('register-getcities', [App\Http\Controllers\Admin\StateController::class, 'register_getcities'])->name('register-getcities')->withoutMiddleware([isAdmin::class, "auth"]);
 Route::post('register-getasuburbs', [App\Http\Controllers\Admin\StateController::class, 'register_getasuburbs'])->name('register-getasuburbs')->withoutMiddleware([isAdmin::class, "auth"]);
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
+Route::fallback(function () {
+    return 'Hm, why did you land here somehow?';
+});
